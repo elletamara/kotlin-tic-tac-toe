@@ -10,4 +10,11 @@ internal class Board(private val grid: Grid) {
         var index = position - 1
         this.grid.setSquare(index, newValue)
     }
+
+    fun isPositionValid(position: Int): Boolean {
+        val index = position - 1
+        val gridSize = grid.size() - 1
+
+        return index in 0..gridSize
+    }
 }

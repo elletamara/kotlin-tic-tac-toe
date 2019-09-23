@@ -13,4 +13,8 @@ internal data class Grid (private val squares: ArrayList<Square>) {
     fun setSquare(index: Int, newValue: String) {
         squares[index].setValue(newValue)
     }
+
+    fun size():Int {
+        return squares.size
+    }
 }
