@@ -1,8 +1,10 @@
 package player
 
-class HumanPlayer(private val mark: String): Player {
+import io.ConsoleIO
+
+class HumanPlayer(private val mark: String, private val consoleIO: ConsoleIO): Player {
     override fun chooseMove(): Int {
-        return 2
+        return consoleIO.getInput().toInt()
     }
 
     override fun getMark(): String {
