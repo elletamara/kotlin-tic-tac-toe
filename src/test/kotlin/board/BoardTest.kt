@@ -19,4 +19,14 @@ internal class BoardTest {
 
         assertEquals(board.getGrid(), grid)
     }
+
+    @Test
+    fun `changes the value of the Square from "5" to "x"`() {
+        var grid = defaultGrid()
+        var board = Board(grid)
+
+        board.takeSquare(5, "x")
+
+        assertEquals(grid.getSquare(4), "x")
+    }
 }

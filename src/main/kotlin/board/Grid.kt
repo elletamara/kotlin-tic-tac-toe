@@ -9,4 +9,8 @@ internal data class Grid (private val squares: ArrayList<Square>) {
     fun getSquare(index: Int): Any {
         return squares[index].getValue()
     }
+
+    fun setSquare(index: Int, newValue: String) {
+        squares[index].setValue(newValue)
+    }
 }

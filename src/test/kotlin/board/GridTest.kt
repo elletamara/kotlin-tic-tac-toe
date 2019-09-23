@@ -23,5 +23,15 @@ internal class GridTest {
 
         assertEquals(grid.getSquare(1), "2")
     }
+
+    @Test
+    fun `changes the value of the Square from "1", to "x"`() {
+        var squares = defaultSquares();
+        var grid = Grid(squares)
+
+        grid.setSquare(0, "x")
+
+        assertEquals(grid.getSquare(0), "x")
+    }
 }
 
