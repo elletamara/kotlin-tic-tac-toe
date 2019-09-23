@@ -1,6 +1,6 @@
 package board
 
-data class Square(private var value: Any) {
+internal data class Square(private var value: Any) {
     fun setValue(newValue: Any) {
         this.value = newValue
     }
