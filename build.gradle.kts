@@ -5,14 +5,18 @@ plugins {
     kotlin("jvm") version kotlinVersion
 }
 
-group = "kotlin-testing"
+group = "tic-tac-toe"
 version = "1.0-SNAPSHOT"
-
 
 val junitPlatformVersion = "5.4.1"
 
 repositories {
     mavenCentral()
+}
+
+apply {
+    plugin("application")
+
 }
 
 dependencies {
@@ -31,6 +35,11 @@ dependencies {
 configure<JavaPluginConvention> {
     sourceCompatibility = JavaVersion.VERSION_11
     targetCompatibility = JavaVersion.VERSION_11
+}
+
+configure<ApplicationPluginConvention> {
+    mainClassName = "TicTacToeKt"
+    applicationName = "TicTacToe"
 }
 
 tasks {
