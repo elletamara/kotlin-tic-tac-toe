@@ -21,7 +21,7 @@ internal class GridTest {
         var squares = defaultSquares();
         var grid = Grid(squares)
 
-        assertEquals(grid.getSquare(1), 2)
+        assertEquals(grid.getSquare(1), "2")
     }
 }
 

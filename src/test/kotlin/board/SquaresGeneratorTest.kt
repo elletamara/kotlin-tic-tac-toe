@@ -11,15 +11,15 @@ internal class SquaresGeneratorTest {
         val squares = SquaresGenerator.generateNineSquares()
 
         assertEquals(squares.size, 9)
-        assertEquals(squares[0].getValue(), 1)
-        assertEquals(squares[1].getValue(), 2)
-        assertEquals(squares[2].getValue(), 3)
-        assertEquals(squares[3].getValue(), 4)
-        assertEquals(squares[4].getValue(), 5)
-        assertEquals(squares[5].getValue(), 6)
-        assertEquals(squares[6].getValue(), 7)
-        assertEquals(squares[7].getValue(), 8)
-        assertEquals(squares[8].getValue(), 9)
+        assertEquals(squares[0].getValue(), "1")
+        assertEquals(squares[1].getValue(), "2")
+        assertEquals(squares[2].getValue(), "3")
+        assertEquals(squares[3].getValue(), "4")
+        assertEquals(squares[4].getValue(), "5")
+        assertEquals(squares[5].getValue(), "6")
+        assertEquals(squares[6].getValue(), "7")
+        assertEquals(squares[7].getValue(), "8")
+        assertEquals(squares[8].getValue(), "9")
     }
 }
 
