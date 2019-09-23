@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
 internal class GridTest {
-    private fun defaultSquares (): ArrayList<Square> {
+    private fun defaultSquares(): ArrayList<Square> {
         return arrayListOf(
             Square(1),
             Square(2),
