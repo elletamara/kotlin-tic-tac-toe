@@ -6,6 +6,7 @@ internal class InputValidator(private val consoleIO: ConsoleIO) {
     fun validateMove(board: Board): Int {
         var move = getMoveFromUser()
         while (!board.isPositionValid(move)) {
+            consoleIO.println(ErrorMessage.INVALID_MOVE.string)
             move = getMoveFromUser()
         }
 
@@ -13,6 +14,7 @@ internal class InputValidator(private val consoleIO: ConsoleIO) {
     }
 
     private fun getMoveFromUser(): Int {
+        consoleIO.println(Prompt.CHOOSE_MOVE.string)
         val input = consoleIO.getInput()
 
         return when (input.matches(ValidMoveInput.DIGIT.value)) {

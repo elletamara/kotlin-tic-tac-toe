@@ -17,7 +17,6 @@ fun main(args: Array<String>) {
     val game = Game(board, humanPlayer)
 
     display.displayBoard(board.getGrid())
-    println("make move")
     game.playMove()
     display.displayBoard(board.getGrid())
 
