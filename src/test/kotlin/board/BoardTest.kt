@@ -8,8 +8,26 @@ internal class BoardTest {
         return SquaresGenerator.generateNineSquares()
     }
 
-    private fun defaultGrid(): Grid3By3 {
+    private fun defaultGrid(): Grid {
         return Grid3By3(defaultSquares())
+    }
+
+    private fun fullGrid(): Grid {
+        val squares: ArrayList<Square> = arrayListOf()
+        val squareValues: Array<String> = arrayOf("x", "o", "o", "o", "x", "x", "o", "x", "o")
+        for(value in squareValues) {
+            squares.add(Square(value))
+        }
+        return Grid3By3(squares)
+    }
+
+    private fun gridWithOneAvailableSquare(): Grid {
+        val squares: ArrayList<Square> = arrayListOf()
+        val squareValues: Array<String> = arrayOf("1", "o", "o", "o", "x", "x", "o", "x", "o")
+        for(value in squareValues) {
+            squares.add(Square(value))
+        }
+        return Grid3By3(squares)
     }
 
     @Test
@@ -90,5 +108,23 @@ internal class BoardTest {
         val availableSquares = board.getAvailableSquares("x", "o")
 
         assertEquals(expectedAvailableSquares, availableSquares)
+    }
+
+    @Test
+    fun `returns true when there are zero available squares`() {
+        val board = Board(fullGrid())
+
+        val isBoardFull = board.isFull("x", "o")
+
+        assertTrue(isBoardFull)
+    }
+
+    @Test
+    fun `returns false when there are available squares`() {
+        val board = Board(gridWithOneAvailableSquare())
+
+        val isBoardFull = board.isFull("x", "o")
+
+        assertFalse(isBoardFull)
     }
 }

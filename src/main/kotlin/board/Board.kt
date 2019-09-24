@@ -24,6 +24,10 @@ internal class Board(private val grid: Grid) {
         return ArrayList(availableSquares)
     }
 
+    fun isFull(player1Mark: String, player2Mark: String): Boolean {
+        return getAvailableSquares(player1Mark, player2Mark).isEmpty()
+    }
+
     private fun isPositionValid(position: Int): Boolean {
         val index = position - 1
         val gridSize = grid.size() - 1
@@ -35,6 +39,6 @@ internal class Board(private val grid: Grid) {
         val index = position - 1
         val square = grid.getSquare(index)
 
-        return (square != player1Mark && square != player2Mark)
+        return square != player1Mark && square != player2Mark
     }
 }
