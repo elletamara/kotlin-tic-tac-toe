@@ -154,4 +154,22 @@ internal class BoardTest {
 
         assertFalse(isWinningPlayer)
     }
+
+    @Test
+    fun `returns true when either mark has a winning line`() {
+        val board = Board(gridWithWinningCombination())
+
+        val winningLineExists = board.winningLineExists("x", "o")
+
+        assertTrue(winningLineExists)
+    }
+
+    @Test
+    fun `returns false when the marks do not have a winning line`() {
+        val board = Board(fullGrid())
+
+        val winningLineExists = board.winningLineExists("x", "o")
+
+        assertFalse(winningLineExists)
+    }
 }

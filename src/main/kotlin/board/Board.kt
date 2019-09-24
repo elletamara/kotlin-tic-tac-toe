@@ -32,9 +32,15 @@ internal class Board(private val grid: Grid) {
         val winningCombinations = grid.winningCombinations
         val squares = grid.getSquares()
 
-        return winningCombinations.any {it.all {
-            squares[it].getValue() == playerMark }
+        return winningCombinations.any {
+            it.all {
+                squares[it].getValue() == playerMark
+            }
         }
+    }
+
+    fun winningLineExists(player1Mark: String, player2Mark: String): Boolean {
+        return isWinningPlayer(player1Mark) || isWinningPlayer(player2Mark)
     }
 
     private fun isPositionValid(position: Int): Boolean {
