@@ -1,10 +1,13 @@
 package player
 
-import io.ConsoleIO
+import io.InputValidator
 
-class HumanPlayer(private val mark: String, private val consoleIO: ConsoleIO): Player {
+internal class HumanPlayer(private val mark: String, private val inputValidator: InputValidator): Player {
     override fun chooseMove(): Int {
-        return consoleIO.getInput().toInt()
+        println("hello")
+        val move = inputValidator.validateMove()
+        println(move)
+        return move
     }
 
     override fun getMark(): String {

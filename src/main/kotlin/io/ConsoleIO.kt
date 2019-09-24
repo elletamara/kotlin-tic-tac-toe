@@ -10,6 +10,10 @@ class ConsoleIO(private val input: BufferedReader, private val output: PrintStre
     }
 
     fun getInput(): String {
-        return input.use { it.readText() }
+        val userInput = input.readLine()
+        return when(userInput.isEmpty()) {
+            true -> ""
+            false -> userInput
+        }
     }
 }

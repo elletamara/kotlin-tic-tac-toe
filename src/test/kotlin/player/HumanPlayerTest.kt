@@ -1,6 +1,7 @@
 package player
 
 import io.ConsoleIO
+import io.InputValidator
 import org.junit.jupiter.api.Test
 
 import org.junit.jupiter.api.Assertions.*
@@ -16,7 +17,8 @@ internal class HumanPlayerTest {
         System.setIn(ByteArrayInputStream(simulatedInput.toByteArray()))
         val input = BufferedReader(InputStreamReader(System.`in`))
         val consoleIO = ConsoleIO(input)
-        val humanPlayer = HumanPlayer("x", consoleIO)
+        val inputValidator = InputValidator(consoleIO)
+        val humanPlayer = HumanPlayer("x", inputValidator)
 
         val move = humanPlayer.chooseMove()
 
@@ -27,7 +29,8 @@ internal class HumanPlayerTest {
     fun `returns the player's mark`() {
         val input = BufferedReader(InputStreamReader(System.`in`))
         val consoleIO = ConsoleIO(input)
-        val humanPlayer = HumanPlayer("x", consoleIO)
+        val inputValidator = InputValidator(consoleIO)
+        val humanPlayer = HumanPlayer("x", inputValidator)
 
         val playerMark = humanPlayer.getMark()
 
