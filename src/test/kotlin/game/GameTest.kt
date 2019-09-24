@@ -32,4 +32,29 @@ internal class GameTest {
 
         assertEquals(board.getGrid().getSquare(1), "x")
     }
+
+    @Test
+    fun `toggles the current player`() {
+        val board = BoardFactory.create3by3Board()
+        val input = BufferedReader(InputStreamReader(System.`in`))
+        val consoleIO = ConsoleIO(input)
+        val boardPresenter = BoardPresenter3By3()
+        val displayer = Displayer(consoleIO, boardPresenter)
+        val inputValidator = InputValidator(consoleIO, displayer)
+        val player1 = HumanPlayer("x", inputValidator)
+        val player2 = HumanPlayer("o", inputValidator)
+        val game = Game(board, player1, player2)
+
+        game.toggleCurrentPlayer()
+        println(game.currentPlayersMark())
+        println(game.opponentsMark())
+
+        assertEquals("o", game.currentPlayersMark())
+        assertEquals("x", game.opponentsMark())
+
+        game.toggleCurrentPlayer()
+
+        assertEquals("x", game.currentPlayersMark())
+        assertEquals("o", game.opponentsMark())
+    }
 }

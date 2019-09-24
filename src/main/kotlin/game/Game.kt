@@ -12,11 +12,18 @@ internal class Game(val board: Board, private val player1: Player, private val p
         board.takeSquare(move, currentPlayersMark())
     }
 
-    private fun currentPlayersMark():String {
+    fun currentPlayersMark():String {
         return currentPlayer.getMark()
     }
 
-    private fun opponentsMark():String {
+    fun opponentsMark():String {
         return opponent.getMark()
+    }
+
+    fun toggleCurrentPlayer() {
+        when (currentPlayer == player1) {
+            true -> { currentPlayer = player2; opponent = player1 }
+            false -> { currentPlayer = player1; opponent = player2 }
+        }
     }
 }
