@@ -8,8 +8,8 @@ internal class BoardTest {
         return SquaresGenerator.generateNineSquares()
     }
 
-    private fun defaultGrid(): Grid {
-        return Grid(defaultSquares())
+    private fun defaultGrid(): Grid3By3 {
+        return Grid3By3(defaultSquares())
     }
 
     @Test
