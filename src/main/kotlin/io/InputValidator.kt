@@ -3,6 +3,7 @@ package io
 import board.Board
 
 internal class InputValidator(private val consoleIO: ConsoleIO) {
+
     fun validateMove(board: Board): Int {
         var move = getMoveFromUser()
         while (!board.isPositionValid(move)) {

@@ -10,6 +10,7 @@ internal class HumanPlayer(private val mark: String, private val inputValidator:
     }
 
     override fun getMark(): String {
-        return this.mark
+        val mark: String by lazy { this.mark }
+        return mark
     }
 }
