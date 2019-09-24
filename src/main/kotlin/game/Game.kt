@@ -26,4 +26,13 @@ internal class Game(val board: Board, private val player1: Player, private val p
             false -> { currentPlayer = player1; opponent = player2 }
         }
     }
+
+    fun getWinnersMark(): String {
+        val hasCurrentPlayerWon: Boolean = board.isWinningPlayer(currentPlayersMark())
+
+        return when (hasCurrentPlayerWon) {
+            true -> currentPlayersMark()
+            false -> opponentsMark()
+        }
+    }
 }

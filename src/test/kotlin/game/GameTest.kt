@@ -1,6 +1,6 @@
 package game
 
-import board.BoardFactory
+import board.*
 import io.BoardPresenter3By3
 import io.ConsoleIO
 import io.Displayer
@@ -13,6 +13,15 @@ import java.io.ByteArrayInputStream
 import java.io.InputStreamReader
 
 internal class GameTest {
+
+    private fun gridWithWinningCombination(): Grid {
+        val squares: ArrayList<Square> = arrayListOf()
+        val squareValues: Array<String> = arrayOf("o", "o", "o", "x", "x", "6", "x", "8", "9")
+        for(value in squareValues) {
+            squares.add(Square(value))
+        }
+        return Grid3By3(squares)
+    }
 
     @Test
     fun `puts the player's mark on the board at position 2`() {
@@ -46,8 +55,6 @@ internal class GameTest {
         val game = Game(board, player1, player2)
 
         game.toggleCurrentPlayer()
-        println(game.currentPlayersMark())
-        println(game.opponentsMark())
 
         assertEquals("o", game.currentPlayersMark())
         assertEquals("x", game.opponentsMark())
@@ -56,5 +63,22 @@ internal class GameTest {
 
         assertEquals("x", game.currentPlayersMark())
         assertEquals("o", game.opponentsMark())
+    }
+
+    @Test
+    fun `returns the winning player's mark`() {
+        val board = Board(gridWithWinningCombination())
+        val input = BufferedReader(InputStreamReader(System.`in`))
+        val consoleIO = ConsoleIO(input)
+        val boardPresenter = BoardPresenter3By3()
+        val displayer = Displayer(consoleIO, boardPresenter)
+        val inputValidator = InputValidator(consoleIO, displayer)
+        val player1 = HumanPlayer("x", inputValidator)
+        val player2 = HumanPlayer("o", inputValidator)
+        val game = Game(board, player1, player2)
+
+        val winnersMark = game.getWinnersMark()
+
+        assertEquals("o", winnersMark)
     }
 }
