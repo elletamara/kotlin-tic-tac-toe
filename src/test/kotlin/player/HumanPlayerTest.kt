@@ -26,7 +26,7 @@ internal class HumanPlayerTest {
         val humanPlayer = HumanPlayer("x", inputValidator)
         val board = BoardFactory.create3by3Board()
 
-        val move = humanPlayer.chooseMove(board)
+        val move = humanPlayer.chooseMove(board, "o")
 
         assertEquals(2, move)
     }

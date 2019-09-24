@@ -17,7 +17,7 @@ internal class InputValidatorTest {
         val inputValidator = InputValidator(consoleIO, displayer)
         val board = BoardFactory.create3by3Board()
 
-        val move = inputValidator.validateMove(board)
+        val move = inputValidator.validateMove(board, "x", "o")
 
 
         assertEquals(9, move)
@@ -34,7 +34,7 @@ internal class InputValidatorTest {
         val inputValidator = InputValidator(consoleIO, displayer)
         val board = BoardFactory.create3by3Board()
 
-        val move = inputValidator.validateMove(board)
+        val move = inputValidator.validateMove(board, "x", "o")
 
 
         assertEquals(1, move)
