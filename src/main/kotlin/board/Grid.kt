@@ -10,5 +10,4 @@ internal interface Grid {
     fun setSquare(index: Int, newValue: String)
 
     fun size():Int
-
 }

@@ -35,7 +35,7 @@ internal class BoardTest {
         val grid = defaultGrid()
         val board = Board(grid)
 
-        val isPositionValid = board.isPositionValid(4)
+        val isPositionValid = board.isMoveValid(4, "x", "o")
 
         assertTrue(isPositionValid)
     }
@@ -45,8 +45,29 @@ internal class BoardTest {
         val grid = defaultGrid()
         val board = Board(grid)
 
-        val isPositionValid = board.isPositionValid(10)
+        val isPositionValid = board.isMoveValid(10, "x", "o")
 
         assertFalse(isPositionValid)
+    }
+
+    @Test
+    fun `returns true when the Square does not contain a mark`() {
+        val grid = defaultGrid()
+        val board = Board(grid)
+
+        val isSquareAvailable = board.isMoveValid(1, "x", "o")
+
+        assertTrue(isSquareAvailable)
+    }
+
+    @Test
+    fun `returns false when the Square contains a mark`() {
+        val grid = defaultGrid()
+        val board = Board(grid)
+        board.takeSquare(1, "x")
+
+        val isSquareAvailable = board.isMoveValid(1, "x", "o")
+
+        assertFalse(isSquareAvailable)
     }
 }
