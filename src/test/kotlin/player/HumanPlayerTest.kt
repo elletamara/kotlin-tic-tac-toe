@@ -1,5 +1,6 @@
 package player
 
+import board.BoardFactory
 import io.ConsoleIO
 import io.InputValidator
 import org.junit.jupiter.api.Test
@@ -12,17 +13,18 @@ import java.io.InputStreamReader
 internal class HumanPlayerTest {
 
     @Test
-    fun `returns a move`() {
+    fun `returns the user's move`() {
         val simulatedInput = "2"
         System.setIn(ByteArrayInputStream(simulatedInput.toByteArray()))
         val input = BufferedReader(InputStreamReader(System.`in`))
         val consoleIO = ConsoleIO(input)
         val inputValidator = InputValidator(consoleIO)
         val humanPlayer = HumanPlayer("x", inputValidator)
+        val board = BoardFactory.create3by3Board()
 
-        val move = humanPlayer.chooseMove()
+        val move = humanPlayer.chooseMove(board)
 
-        assertEquals(move, 2)
+        assertEquals(2, move)
     }
 
     @Test
@@ -34,6 +36,6 @@ internal class HumanPlayerTest {
 
         val playerMark = humanPlayer.getMark()
 
-        assertEquals(playerMark, "x")
+        assertEquals("x", playerMark)
     }
 }

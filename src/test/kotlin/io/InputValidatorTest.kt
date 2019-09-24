@@ -1,35 +1,38 @@
 package io
 
+import board.BoardFactory
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import java.io.*
 
 internal class InputValidatorTest {
     @Test
-    fun `returns the input as a digit, when it is a digit`() {
+    fun `returns the input as a digit, when the string contains digits only`() {
         val simulatedInput = "9"
         System.setIn(ByteArrayInputStream(simulatedInput.toByteArray()))
         val input = BufferedReader(InputStreamReader(System.`in`))
         val consoleIO = ConsoleIO(input)
         val inputValidator = InputValidator(consoleIO)
+        val board = BoardFactory.create3by3Board()
 
-        val move = inputValidator.validateMove()
+        val move = inputValidator.validateMove(board)
 
 
         assertEquals(9, move)
     }
 
     @Test
-    fun `returns 0 when the input is not a digit`() {
-        val simulatedInput = "h"
+    fun `prompts user for input again when it is not valid`() {
+        val simulatedInput = "h\n1"
         System.setIn(ByteArrayInputStream(simulatedInput.toByteArray()))
         val input = BufferedReader(InputStreamReader(System.`in`))
         val consoleIO = ConsoleIO(input)
         val inputValidator = InputValidator(consoleIO)
+        val board = BoardFactory.create3by3Board()
 
-        val move = inputValidator.validateMove()
+        val move = inputValidator.validateMove(board)
 
 
-        assertEquals(0, move)
+        assertEquals(1, move)
     }
 }
