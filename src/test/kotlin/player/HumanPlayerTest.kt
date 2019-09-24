@@ -12,9 +12,9 @@ internal class HumanPlayerTest {
 
     @Test
     fun `returns a move`() {
-        var simulatedInput = "2"
+        val simulatedInput = "2"
         System.setIn(ByteArrayInputStream(simulatedInput.toByteArray()))
-        var input = BufferedReader(InputStreamReader(System.`in`))
+        val input = BufferedReader(InputStreamReader(System.`in`))
         val consoleIO = ConsoleIO(input)
         val humanPlayer = HumanPlayer("x", consoleIO)
 

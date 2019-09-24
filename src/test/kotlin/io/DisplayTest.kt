@@ -29,7 +29,7 @@ internal class DisplayTest {
         """.trimIndent()
         val grid = defaultGrid()
         val output = ByteArrayOutputStream()
-        var input = BufferedReader(InputStreamReader(System.`in`))
+        val input = BufferedReader(InputStreamReader(System.`in`))
         val consoleIO = ConsoleIO(input, PrintStream(output))
         val display = Display(consoleIO)
 

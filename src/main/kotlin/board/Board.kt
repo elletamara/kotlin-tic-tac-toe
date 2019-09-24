@@ -7,7 +7,7 @@ internal class Board(private val grid: Grid) {
     }
 
     fun takeSquare(position: Int, newValue: String) {
-        var index = position - 1
+        val index = position - 1
         this.grid.setSquare(index, newValue)
     }
 
