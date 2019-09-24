@@ -1,7 +1,9 @@
 package game
 
 import board.BoardFactory
+import io.BoardPresenter3By3
 import io.ConsoleIO
+import io.Displayer
 import io.InputValidator
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
@@ -17,9 +19,11 @@ internal class GameTest {
         val board = BoardFactory.create3by3Board()
         var simulatedInput = "2"
         System.setIn(ByteArrayInputStream(simulatedInput.toByteArray()))
-        var input = BufferedReader(InputStreamReader(System.`in`))
+        val input = BufferedReader(InputStreamReader(System.`in`))
         val consoleIO = ConsoleIO(input)
-        val inputValidator = InputValidator(consoleIO)
+        val boardPresenter = BoardPresenter3By3()
+        val displayer = Displayer(consoleIO, boardPresenter)
+        val inputValidator = InputValidator(consoleIO, displayer)
         val humanPlayer = HumanPlayer("x", inputValidator)
         val game = Game(board, humanPlayer)
 
