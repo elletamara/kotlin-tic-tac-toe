@@ -30,6 +30,15 @@ internal class BoardTest {
         return Grid3By3(squares)
     }
 
+    private fun gridWithWinningCombination(): Grid {
+        val squares: ArrayList<Square> = arrayListOf()
+        val squareValues: Array<String> = arrayOf("x", "x", "x", "o", "o", "6", "o", "8", "9")
+        for(value in squareValues) {
+            squares.add(Square(value))
+        }
+        return Grid3By3(squares)
+    }
+
     @Test
     fun `returns the grid`() {
         val grid = defaultGrid()
@@ -126,5 +135,23 @@ internal class BoardTest {
         val isBoardFull = board.isFull("x", "o")
 
         assertFalse(isBoardFull)
+    }
+
+    @Test
+    fun `returns true when the mark is in squares of a winning combination`() {
+        val board = Board(gridWithWinningCombination())
+
+        val isWinningPlayer = board.isWinningPlayer("x")
+
+        assertTrue(isWinningPlayer)
+    }
+
+    @Test
+    fun `returns false when the mark not in the squares of a winning combination`() {
+        val board = Board(fullGrid())
+
+        val isWinningPlayer = board.isWinningPlayer("x")
+
+        assertFalse(isWinningPlayer)
     }
 }

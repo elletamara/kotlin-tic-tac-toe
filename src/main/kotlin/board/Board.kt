@@ -28,6 +28,15 @@ internal class Board(private val grid: Grid) {
         return getAvailableSquares(player1Mark, player2Mark).isEmpty()
     }
 
+    fun isWinningPlayer(playerMark: String): Boolean {
+        val winningCombinations = grid.winningCombinations
+        val squares = grid.getSquares()
+
+        return winningCombinations.any {it.all {
+            squares[it].getValue() == playerMark }
+        }
+    }
+
     private fun isPositionValid(position: Int): Boolean {
         val index = position - 1
         val gridSize = grid.size() - 1
