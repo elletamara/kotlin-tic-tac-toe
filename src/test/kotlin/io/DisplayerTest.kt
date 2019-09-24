@@ -1,6 +1,7 @@
 package io
 
 import board.BoardFactory
+import game.GameOutcome
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import java.io.BufferedReader
@@ -54,6 +55,38 @@ internal class DisplayerTest {
         val board = BoardFactory.create3by3Board()
 
         displayer.humanPlayerMakeMoveMessages(board.getGrid(), false)
+
+        assertEquals(expectedOutput, output.toString())
+    }
+
+    @Test
+    fun `returns "Congratulations x when x has won `() {
+        val expectedOutput = "Congratulations x!\n"
+        val output = ByteArrayOutputStream()
+        val input = BufferedReader(InputStreamReader(System.`in`))
+        val consoleIO = ConsoleIO(input, PrintStream(output))
+        val boardPresenter = BoardPresenter3By3()
+        val displayer = Displayer(consoleIO, boardPresenter)
+        val board = BoardFactory.create3by3Board()
+        val outcome = "x"
+
+        displayer.gameOutcomeMessage(outcome)
+
+        assertEquals(expectedOutput, output.toString())
+    }
+
+    @Test
+    fun `returns "It's a tie!" when the game is a tie `() {
+        val expectedOutput = "It's a tie!\n"
+        val output = ByteArrayOutputStream()
+        val input = BufferedReader(InputStreamReader(System.`in`))
+        val consoleIO = ConsoleIO(input, PrintStream(output))
+        val boardPresenter = BoardPresenter3By3()
+        val displayer = Displayer(consoleIO, boardPresenter)
+        val board = BoardFactory.create3by3Board()
+        val outcome = GameOutcome.TIE.string
+
+        displayer.gameOutcomeMessage(outcome)
 
         assertEquals(expectedOutput, output.toString())
     }
