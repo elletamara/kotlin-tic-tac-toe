@@ -4,7 +4,7 @@
 
 ## Features 
 
-- A 3x3 tic tac toe board is displayed
+- A user can place a single mark in a position on the Tic Tac Toe board
 
 
 ## Getting Started

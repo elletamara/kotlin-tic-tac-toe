@@ -55,4 +55,8 @@ tasks {
     withType<KotlinCompile> {
         kotlinOptions.jvmTarget = "1.8"
     }
+
+    withType<JavaExec> {
+        standardInput = System.`in`
+    }
 }

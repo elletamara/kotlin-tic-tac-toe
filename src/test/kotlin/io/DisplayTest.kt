@@ -4,7 +4,9 @@ import board.Grid
 import board.SquaresGenerator
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
+import java.io.BufferedReader
 import java.io.ByteArrayOutputStream
+import java.io.InputStreamReader
 import java.io.PrintStream
 
 internal class DisplayTest {
@@ -27,7 +29,8 @@ internal class DisplayTest {
         """.trimIndent()
         val grid = defaultGrid()
         val output = ByteArrayOutputStream()
-        val consoleIO = ConsoleIO(PrintStream(output))
+        val input = BufferedReader(InputStreamReader(System.`in`))
+        val consoleIO = ConsoleIO(input, PrintStream(output))
         val display = Display(consoleIO)
 
         display.displayBoard(grid)
