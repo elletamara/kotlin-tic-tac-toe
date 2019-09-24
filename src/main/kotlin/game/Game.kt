@@ -45,4 +45,8 @@ internal class Game(val board: Board, private val player1: Player, private val p
             false -> GameOutcome.TIE.string
         }
     }
+
+    fun isOver(): Boolean {
+        return board.isComplete(currentPlayersMark(), opponentsMark())
+    }
 }
