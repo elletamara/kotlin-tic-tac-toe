@@ -28,6 +28,12 @@ internal class Board(private val grid: Grid) {
         return getAvailableSquares(player1Mark, player2Mark).isEmpty()
     }
 
+    fun isComplete(player1Mark: String, player2Mark: String): Boolean {
+        println(winningLineExists(player1Mark, player2Mark))
+        return isFull(player1Mark, player2Mark) ||
+                winningLineExists(player1Mark, player2Mark)
+    }
+
     fun isWinningPlayer(playerMark: String): Boolean {
         val winningCombinations = grid.winningCombinations
         val squares = grid.getSquares()

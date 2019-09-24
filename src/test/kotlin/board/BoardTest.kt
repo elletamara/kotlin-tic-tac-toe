@@ -172,4 +172,31 @@ internal class BoardTest {
 
         assertFalse(winningLineExists)
     }
+
+    @Test
+    fun `returns true when the board is full`() {
+        val board = Board(fullGrid())
+
+        val isComplete = board.isComplete("x", "o")
+
+        assertTrue(isComplete)
+    }
+
+    @Test
+    fun `returns true when a mark has a winning line`() {
+        val board = Board(gridWithWinningCombination())
+
+        val isComplete = board.isComplete("x", "o")
+
+        assertTrue(isComplete)
+    }
+
+    @Test
+    fun `returns false when the board is not full and a mark does not have a winning line`() {
+        val board = Board(gridWithOneAvailableSquare())
+
+        val isComplete = board.isComplete("x", "o")
+
+        assertFalse(isComplete)
+    }
 }
