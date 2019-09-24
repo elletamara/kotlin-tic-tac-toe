@@ -23,6 +23,15 @@ internal class GameTest {
         return Grid3By3(squares)
     }
 
+    private fun fullGrid(): Grid {
+        val squares: ArrayList<Square> = arrayListOf()
+        val squareValues: Array<String> = arrayOf("x", "o", "o", "o", "x", "x", "o", "x", "o")
+        for(value in squareValues) {
+            squares.add(Square(value))
+        }
+        return Grid3By3(squares)
+    }
+
     @Test
     fun `puts the player's mark on the board at position 2`() {
         val board = BoardFactory.create3by3Board()
@@ -80,5 +89,39 @@ internal class GameTest {
         val winnersMark = game.getWinnersMark()
 
         assertEquals("o", winnersMark)
+    }
+
+    @Test
+    fun `returns the winning player's mark as the outcome`() {
+        val board = Board(gridWithWinningCombination())
+        val input = BufferedReader(InputStreamReader(System.`in`))
+        val consoleIO = ConsoleIO(input)
+        val boardPresenter = BoardPresenter3By3()
+        val displayer = Displayer(consoleIO, boardPresenter)
+        val inputValidator = InputValidator(consoleIO, displayer)
+        val player1 = HumanPlayer("x", inputValidator)
+        val player2 = HumanPlayer("o", inputValidator)
+        val game = Game(board, player1, player2)
+
+        val outcome = game.outcome()
+
+        assertEquals("o", outcome)
+    }
+
+    @Test
+    fun `returns "tie" as the outcome when no players have a winning line`() {
+        val board = Board(fullGrid())
+        val input = BufferedReader(InputStreamReader(System.`in`))
+        val consoleIO = ConsoleIO(input)
+        val boardPresenter = BoardPresenter3By3()
+        val displayer = Displayer(consoleIO, boardPresenter)
+        val inputValidator = InputValidator(consoleIO, displayer)
+        val player1 = HumanPlayer("x", inputValidator)
+        val player2 = HumanPlayer("o", inputValidator)
+        val game = Game(board, player1, player2)
+
+        val outcome = game.outcome()
+
+        assertEquals("tie", outcome)
     }
 }

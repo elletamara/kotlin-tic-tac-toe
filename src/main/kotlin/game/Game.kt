@@ -28,11 +28,21 @@ internal class Game(val board: Board, private val player1: Player, private val p
     }
 
     fun getWinnersMark(): String {
-        val hasCurrentPlayerWon: Boolean = board.isWinningPlayer(currentPlayersMark())
+        val hasCurrentPlayerWon = board.isWinningPlayer(currentPlayersMark())
 
         return when (hasCurrentPlayerWon) {
             true -> currentPlayersMark()
             false -> opponentsMark()
+        }
+    }
+
+    fun outcome(): String {
+        val doesWinningLineExist = board.winningLineExists(
+            currentPlayersMark(), opponentsMark())
+
+        return when (doesWinningLineExist) {
+            true -> getWinnersMark()
+            false -> GameOutcome.TIE.string
         }
     }
 }
