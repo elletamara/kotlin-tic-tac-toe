@@ -70,4 +70,25 @@ internal class BoardTest {
 
         assertFalse(isSquareAvailable)
     }
+
+    @Test
+    fun `returns a list of available squares`() {
+        val expectedAvailableSquares = (arrayListOf<Square>(
+            Square("2"),
+            Square("3"),
+            Square("4"),
+            Square("6"),
+            Square("7"),
+            Square("8")
+        ))
+        val grid = defaultGrid()
+        val board = Board(grid)
+        board.takeSquare(1, "x")
+        board.takeSquare(9, "o")
+        board.takeSquare(5, "x")
+
+        val availableSquares = board.getAvailableSquares("x", "o")
+
+        assertEquals(expectedAvailableSquares, availableSquares)
+    }
 }
