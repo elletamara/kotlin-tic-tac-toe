@@ -1,11 +1,13 @@
 package player
 
 import board.Board
+import io.BoardPresenter
 import io.InputValidator
 
 internal class HumanPlayer(private val mark: String, private val inputValidator: InputValidator): Player {
 
     override fun chooseMove(board: Board): Int {
+
         return inputValidator.validateMove(board)
     }
 

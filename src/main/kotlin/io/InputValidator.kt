@@ -2,12 +2,13 @@ package io
 
 import board.Board
 
-internal class InputValidator(private val consoleIO: ConsoleIO) {
+internal class InputValidator(private val consoleIO: ConsoleIO, private val displayer: Displayer) {
 
     fun validateMove(board: Board): Int {
+        displayer.humanPlayerMakeMoveMessages(board.getGrid())
         var move = getMoveFromUser()
         while (!board.isPositionValid(move)) {
-            consoleIO.println(ErrorMessage.INVALID_MOVE.string)
+            displayer.humanPlayerMakeMoveMessages(board.getGrid(), false)
             move = getMoveFromUser()
         }
 
@@ -15,12 +16,15 @@ internal class InputValidator(private val consoleIO: ConsoleIO) {
     }
 
     private fun getMoveFromUser(): Int {
-        consoleIO.println(Prompt.CHOOSE_MOVE.string)
-        val input = consoleIO.getInput()
+        val input = getInput()
 
         return when (input.matches(ValidMoveInput.DIGIT.value)) {
             true -> input.toInt()
             false -> 0
         }
+    }
+
+    private fun getInput(): String {
+        return consoleIO.getInput()
     }
 }

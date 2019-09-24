@@ -1,5 +1,6 @@
-package board
+package io
 
+import board.BoardFactory
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
