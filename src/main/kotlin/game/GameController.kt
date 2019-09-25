@@ -10,6 +10,10 @@ internal class GameController(private val game: Game, private val displayer: Dis
             game.toggleCurrentPlayer()
         }
 
+        displayGameOutcome()
+    }
+
+    private fun displayGameOutcome() {
         displayer.gameOutcomeMessage(game.outcome())
     }
 }

@@ -5,6 +5,7 @@ import board.Board
 internal class InputValidator(private val consoleIO: ConsoleIO, private val displayer: Displayer) {
 
     fun validateMove(board: Board, currentPlayerMark: String, opponentMark: String): Int {
+        displayer.playerTurnMessage(currentPlayerMark)
         displayer.humanPlayerMakeMoveMessages(board.getGrid())
         var move = getMoveFromUser()
 

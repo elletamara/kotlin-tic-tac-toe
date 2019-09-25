@@ -4,6 +4,7 @@ import board.Grid
 import game.GameOutcome
 
 internal class Displayer(private val consoleIO: ConsoleIO, private val boardPresenter: BoardPresenter) {
+
     fun humanPlayerMakeMoveMessages(grid: Grid, isMoveValid: Boolean = true) {
         when (isMoveValid) {
             true -> consoleIO.println(Prompt.CHOOSE_MOVE.string)
@@ -19,6 +20,10 @@ internal class Displayer(private val consoleIO: ConsoleIO, private val boardPres
             false -> consoleIO.println(GameOutcomeMessage.WIN.string +
                     outcome + GameOutcomeMessage.EXCLAMATION.string)
         }
+    }
+
+    fun playerTurnMessage(playerMark: String) {
+        consoleIO.println(playerMark + Prompt.PLAYER_TURN.string)
     }
 
     private fun showBoard(grid: Grid) {

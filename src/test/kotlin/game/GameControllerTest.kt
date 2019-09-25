@@ -1,6 +1,5 @@
 package game
 
-import board.Board
 import board.BoardFactory
 import io.BoardPresenter3By3
 import io.ConsoleIO
@@ -12,18 +11,6 @@ import player.HumanPlayer
 import java.io.*
 
 internal class GameControllerTest {
-    fun gameSetup() {
-        val board = BoardFactory.create3by3Board()
-        val input = BufferedReader(InputStreamReader(System.`in`))
-        val consoleIO = ConsoleIO(input)
-        val boardPresenter = BoardPresenter3By3()
-        val displayer = Displayer(consoleIO, boardPresenter)
-        val inputValidator = InputValidator(consoleIO, displayer)
-        val player1 = HumanPlayer("x", inputValidator)
-        val player2 = HumanPlayer("o", inputValidator)
-        val game = Game(board, player1, player2)
-    }
-
 
     @Test
     fun `displays the winner outcome message when a player has won`() {

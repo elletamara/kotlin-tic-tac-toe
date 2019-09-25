@@ -67,7 +67,6 @@ internal class DisplayerTest {
         val consoleIO = ConsoleIO(input, PrintStream(output))
         val boardPresenter = BoardPresenter3By3()
         val displayer = Displayer(consoleIO, boardPresenter)
-        val board = BoardFactory.create3by3Board()
         val outcome = "x"
 
         displayer.gameOutcomeMessage(outcome)
@@ -83,11 +82,24 @@ internal class DisplayerTest {
         val consoleIO = ConsoleIO(input, PrintStream(output))
         val boardPresenter = BoardPresenter3By3()
         val displayer = Displayer(consoleIO, boardPresenter)
-        val board = BoardFactory.create3by3Board()
         val outcome = GameOutcome.TIE.string
 
         displayer.gameOutcomeMessage(outcome)
 
         assertEquals(expectedOutput, output.toString())
+    }
+
+    @Test
+    fun `displays "x, it's your turn!`() {
+        val output = ByteArrayOutputStream()
+        val input = BufferedReader(InputStreamReader(System.`in`))
+        val consoleIO = ConsoleIO(input, PrintStream(output))
+        val boardPresenter = BoardPresenter3By3()
+        val displayer = Displayer(consoleIO, boardPresenter)
+        val board = BoardFactory.create3by3Board()
+
+        displayer.playerTurnMessage("x")
+
+        assertEquals("x, it's your turn!\n", output.toString())
     }
 }
