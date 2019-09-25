@@ -1,7 +1,7 @@
 package player.moveStrategy
 
-import board.Square
+import board.Board
 
 internal interface MoveStrategy {
-    fun getMove(availableSquares: ArrayList<Square>, currentPlayersMark: String, opponentsMark: String): Int
+    fun getMove(board: Board, currentPlayersMark: String, opponentsMark: String): Int
 }

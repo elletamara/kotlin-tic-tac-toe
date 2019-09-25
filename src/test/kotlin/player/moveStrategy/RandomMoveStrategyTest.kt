@@ -25,10 +25,9 @@ internal class RandomMoveStrategyTest {
         val currentPlayersMark = "x"
         val opponentsMark = "o"
         val board = Board(grid)
-        val availableSquares = board.getAvailableSquares(currentPlayersMark, opponentsMark)
         val strategy = RandomMoveStrategy()
 
-        val move = strategy.getMove(availableSquares, currentPlayersMark, opponentsMark)
+        val move = strategy.getMove(board, currentPlayersMark, opponentsMark)
 
         assertTrue(move in 1..9)
     }

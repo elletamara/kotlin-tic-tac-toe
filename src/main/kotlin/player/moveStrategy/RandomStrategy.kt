@@ -1,12 +1,15 @@
 package player.moveStrategy
 
-import board.Square
+import board.Board
 import kotlin.random.Random
 
 internal class RandomMoveStrategy: MoveStrategy {
-    override fun getMove(
-        availableSquares: ArrayList<Square>, currentPlayersMark: String, opponentsMark: String): Int {
-        val square = availableSquares[Random.nextInt(availableSquares.size)]
+
+    override fun getMove(board: Board, currentPlayersMark: String, opponentsMark: String): Int {
+        val availableSquares = board.getAvailableSquares(currentPlayersMark, opponentsMark)
+        val availableSquaresSize = availableSquares.size
+        val square = availableSquares[Random.nextInt(availableSquaresSize)]
+
         return square.getValue().toInt()
     }
 }
