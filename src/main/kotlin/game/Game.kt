@@ -8,7 +8,7 @@ internal class Game(val board: Board, private val player1: Player, private val p
     private var opponent: Player = player2
 
     fun playMove() {
-        val move = currentPlayer.chooseMove(this.board, opponentsMark())
+        val move = currentPlayer.chooseMove(this.board, currentPlayersMark(), opponentsMark())
         board.takeSquare(move, currentPlayersMark())
     }
 
