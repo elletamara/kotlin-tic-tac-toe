@@ -30,4 +30,12 @@ internal data class Grid3By3 (private val squares: ArrayList<Square>): Grid {
         return this.squares.size
     }
 
+    override fun copy(): Grid {
+        val squaresCopy: ArrayList<Square> = arrayListOf()
+        this.squares.mapTo(squaresCopy) {
+            it.copy()
+        }
+
+        return Grid3By3(squaresCopy)
+    }
 }
