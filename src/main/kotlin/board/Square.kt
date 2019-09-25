@@ -1,11 +1,11 @@
 package board
 
-internal data class Square(private var value: Any) {
-    fun setValue(newValue: Any) {
+internal data class Square(private var value: String) {
+    fun setValue(newValue: String) {
         this.value = newValue
     }
 
-    fun getValue(): Any {
+    fun getValue(): String {
         return this.value
     }
 }

@@ -1,5 +1,6 @@
 package game
 
+import board.Grid
 import io.Displayer
 
 internal class GameController(private val game: Game, private val displayer: Displayer) {
@@ -12,11 +13,11 @@ internal class GameController(private val game: Game, private val displayer: Dis
             game.toggleCurrentPlayer()
         }
 
-        displayGameOutcomeAndGoodbyeMessage()
+        displayGameOutcomeAndGoodbyeMessage(game.board.getGrid())
     }
 
-    private fun displayGameOutcomeAndGoodbyeMessage() {
-        displayer.gameOutcomeMessage(game.outcome())
+    private fun displayGameOutcomeAndGoodbyeMessage(grid: Grid) {
+        displayer.gameOutcomeMessage(grid, game.outcome())
         displayer.goodbyeMessage()
     }
 }
