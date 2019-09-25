@@ -13,10 +13,6 @@ internal class Displayer(private val consoleIO: ConsoleIO, private val boardPres
         clearScreen()
     }
 
-    fun showGrid(grid: Grid) {
-        consoleIO.println(boardPresenter.presentBoard(grid))
-    }
-
     fun playerTurnMessage(playersMark: String) {
         clearScreen()
         consoleIO.println(playersMark + Prompt.PLAYER_TURN.string)
@@ -42,8 +38,9 @@ internal class Displayer(private val consoleIO: ConsoleIO, private val boardPres
         sleep(3500L)
     }
 
-    fun gameOutcomeMessage(outcome: String) {
+    fun gameOutcomeMessage(grid: Grid, outcome: String) {
         clearScreen()
+        showGrid(grid)
 
         when (outcome == GameOutcome.TIE.string) {
             true -> consoleIO.println(GameOutcomeMessage.TIE.string)
@@ -54,6 +51,10 @@ internal class Displayer(private val consoleIO: ConsoleIO, private val boardPres
 
     fun goodbyeMessage() {
         consoleIO.println(GreetingMessage.GOODBYE.string)
+    }
+
+    private fun showGrid(grid: Grid) {
+        consoleIO.println(boardPresenter.presentBoard(grid))
     }
 
     private fun clearScreen() {

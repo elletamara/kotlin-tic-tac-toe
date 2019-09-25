@@ -1,6 +1,9 @@
 package io
 
 import board.BoardFactory
+import board.Grid
+import board.Grid3By3
+import board.Square
 import game.GameOutcome
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
@@ -15,28 +18,13 @@ internal class DisplayerTest {
         return "\u001b[H\u001b[2J\n"
     }
 
-    @Test
-    fun `displays the grid`() {
-        val expectedOutput = """ 
-            1 | 2 | 3
-            ---------
-            4 | 5 | 6
-            ---------
-            7 | 8 | 9
-            
-            
-        """.trimIndent()
-        val output = ByteArrayOutputStream()
-        val input = BufferedReader(InputStreamReader(System.`in`))
-        val consoleIO = ConsoleIO(input, PrintStream(output))
-        val boardPresenter = BoardPresenter3By3()
-        val displayer = Displayer(consoleIO, boardPresenter)
-        val board = BoardFactory.create3by3Board()
-
-        displayer.showGrid(board.getGrid())
-
-        assertEquals(expectedOutput, output.toString())
-
+    private fun fullGrid(): Grid {
+        val squares: ArrayList<Square> = arrayListOf()
+        val squareValues: Array<String> = arrayOf("x", "o", "o", "o", "x", "x", "o", "x", "o")
+        for(value in squareValues) {
+            squares.add(Square(value))
+        }
+        return Grid3By3(squares)
     }
 
     @Test
@@ -130,34 +118,34 @@ internal class DisplayerTest {
 
     @Test
     fun `outputs "Congratulations x, you're the winner!" when x has won `() {
-        val expectedOutput = clearScreen() +
-                "Congratulations x, you're the winner!\n"
+        val expectedOutput = "Congratulations x, you're the winner!\n"
         val output = ByteArrayOutputStream()
         val input = BufferedReader(InputStreamReader(System.`in`))
         val consoleIO = ConsoleIO(input, PrintStream(output))
         val boardPresenter = BoardPresenter3By3()
         val displayer = Displayer(consoleIO, boardPresenter)
+        val grid = fullGrid()
         val outcome = "x"
 
-        displayer.gameOutcomeMessage(outcome)
+        displayer.gameOutcomeMessage(grid, outcome)
 
-        assertEquals(expectedOutput, output.toString())
+        assertTrue(expectedOutput in output.toString())
     }
 
     @Test
     fun `returns "It's a tie!" when the game is a tie `() {
-        val expectedOutput = clearScreen() +
-                "It's a tie!\n"
+        val expectedOutput = "It's a tie!\n"
         val output = ByteArrayOutputStream()
         val input = BufferedReader(InputStreamReader(System.`in`))
         val consoleIO = ConsoleIO(input, PrintStream(output))
         val boardPresenter = BoardPresenter3By3()
         val displayer = Displayer(consoleIO, boardPresenter)
         val outcome = GameOutcome.TIE.string
+        val grid = fullGrid()
 
-        displayer.gameOutcomeMessage(outcome)
+        displayer.gameOutcomeMessage(grid, outcome)
 
-        assertEquals(expectedOutput, output.toString())
+        assertTrue(expectedOutput in output.toString())
     }
 
     @Test
