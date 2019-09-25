@@ -32,6 +32,11 @@ internal class Displayer(private val consoleIO: ConsoleIO, private val boardPres
         showBoard(grid)
     }
 
+    fun computerIsThinkingMessage(playersMark: String) {
+        consoleIO.println("$playersMark" + Prompt.WAIT.string)
+        sleep(3500L)
+    }
+
     fun gameOutcomeMessage(outcome: String) {
         clearScreen()
 

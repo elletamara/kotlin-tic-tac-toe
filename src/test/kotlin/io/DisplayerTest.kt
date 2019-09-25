@@ -92,7 +92,20 @@ internal class DisplayerTest {
     }
 
     @Test
-    fun `returns "Congratulations x when x has won `() {
+    fun `outputs 'x is thinking Please wait'`() {
+        val output = ByteArrayOutputStream()
+        val input = BufferedReader(InputStreamReader(System.`in`))
+        val consoleIO = ConsoleIO(input, PrintStream(output))
+        val boardPresenter = BoardPresenter3By3()
+        val displayer = Displayer(consoleIO, boardPresenter)
+
+        displayer.computerIsThinkingMessage("x")
+
+        assertEquals("x is thinking. Please wait...\n", output.toString())
+    }
+
+    @Test
+    fun `outputs "Congratulations x, you're the winner!" when x has won `() {
         val expectedOutput = clearScreen() +
                 "Congratulations x, you're the winner!\n"
         val output = ByteArrayOutputStream()
