@@ -48,6 +48,10 @@ internal class Board(private val grid: Grid) {
         return isWinningPlayer(player1Mark) || isWinningPlayer(player2Mark)
     }
 
+    fun copy():Board {
+        return Board(this.grid.copy())
+    }
+
     private fun isPositionValid(position: Int): Boolean {
         val index = position - 1
         val gridSize = grid.size() - 1
