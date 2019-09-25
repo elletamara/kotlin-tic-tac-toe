@@ -12,6 +12,7 @@ internal class GameController(private val game: Game, private val displayer: Dis
             game.toggleCurrentPlayer()
         }
 
+        displayer.showGrid(game.board.getGrid())
         displayGameOutcomeAndGoodbyeMessage()
     }
 

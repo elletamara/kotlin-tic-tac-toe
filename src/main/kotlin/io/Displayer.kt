@@ -4,12 +4,17 @@ import board.Grid
 import game.GameOutcome
 
 internal class Displayer(private val consoleIO: ConsoleIO, private val boardPresenter: BoardPresenter) {
+    private val clearScreen: String = "\u001b[H\u001b[2J"
 
     fun welcomeMessage() {
         clearScreen()
         consoleIO.println(GreetingMessage.WELCOME.string)
         sleep(3500L)
         clearScreen()
+    }
+
+    fun showGrid(grid: Grid) {
+        consoleIO.println(boardPresenter.presentBoard(grid))
     }
 
     fun playerTurnMessage(playersMark: String) {
@@ -23,17 +28,17 @@ internal class Displayer(private val consoleIO: ConsoleIO, private val boardPres
             false -> consoleIO.println(ErrorMessage.INVALID_MOVE.string)
         }
 
-        showBoard(grid)
+        showGrid(grid)
     }
 
     fun computerPlayerMakeMoveMessages(grid: Grid, playersMark: String) {
         playerTurnMessage(playersMark)
         consoleIO.println(Prompt.CHOOSE_MOVE.string)
-        showBoard(grid)
+        showGrid(grid)
     }
 
     fun computerIsThinkingMessage(playersMark: String) {
-        consoleIO.println("$playersMark" + Prompt.WAIT.string)
+        consoleIO.println(playersMark + Prompt.WAIT.string)
         sleep(3500L)
     }
 
@@ -52,14 +57,10 @@ internal class Displayer(private val consoleIO: ConsoleIO, private val boardPres
     }
 
     private fun clearScreen() {
-        consoleIO.println("\u001b[H\u001b[2J")
+        consoleIO.println(clearScreen)
     }
 
     private fun sleep(delay: Long) {
         Thread.sleep(delay)
-    }
-
-    private fun showBoard(grid: Grid) {
-        consoleIO.println(boardPresenter.presentBoard(grid))
     }
 }

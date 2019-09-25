@@ -16,7 +16,31 @@ internal class DisplayerTest {
     }
 
     @Test
-    fun `displays the move prompt and the board when the move is valid`() {
+    fun `displays the grid`() {
+        val expectedOutput = """ 
+            1 | 2 | 3
+            ---------
+            4 | 5 | 6
+            ---------
+            7 | 8 | 9
+            
+            
+        """.trimIndent()
+        val output = ByteArrayOutputStream()
+        val input = BufferedReader(InputStreamReader(System.`in`))
+        val consoleIO = ConsoleIO(input, PrintStream(output))
+        val boardPresenter = BoardPresenter3By3()
+        val displayer = Displayer(consoleIO, boardPresenter)
+        val board = BoardFactory.create3by3Board()
+
+        displayer.showGrid(board.getGrid())
+
+        assertEquals(expectedOutput, output.toString())
+
+    }
+
+    @Test
+    fun `displays the move prompt and the grid when the move is valid`() {
         val expectedOutput = """
             Select an available move:
             
@@ -66,7 +90,7 @@ internal class DisplayerTest {
     }
 
     @Test
-    fun `displays the move prompt and the board`() {
+    fun `displays the move prompt and the grid`() {
         val expectedOutput = clearScreen() + """
             x, it's your turn!
             Select an available move:
