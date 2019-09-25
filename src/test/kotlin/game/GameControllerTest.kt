@@ -35,6 +35,7 @@ internal class GameControllerTest {
 
         gameController.startGame()
 
+        assertTrue("Hello! Welcome to Elle's Tic Tac Toe.\n" in output.toString())
         assertTrue("Congratulations x, you're the winner!" in output.toString())
     }
 
@@ -65,6 +66,7 @@ internal class GameControllerTest {
 
         gameController.startGame()
 
+        assertTrue("Hello! Welcome to Elle's Tic Tac Toe.\n" in output.toString())
         assertTrue("It's a tie!" in output.toString())
     }
 }

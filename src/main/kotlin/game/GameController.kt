@@ -5,15 +5,18 @@ import io.Displayer
 internal class GameController(private val game: Game, private val displayer: Displayer) {
 
     fun startGame() {
+        displayer.welcomeMessage()
+
         while (!game.isOver()) {
             game.playMove()
             game.toggleCurrentPlayer()
         }
 
-        displayGameOutcome()
+        displayGameOutcomeAndGoodbyeMessage()
     }
 
-    private fun displayGameOutcome() {
+    private fun displayGameOutcomeAndGoodbyeMessage() {
         displayer.gameOutcomeMessage(game.outcome())
+        displayer.goodbyeMessage()
     }
 }
