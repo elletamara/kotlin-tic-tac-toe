@@ -1,20 +1,13 @@
 package board
 
-internal data class Grid (private val squares: ArrayList<Square>) {
+internal interface Grid {
+    val winningCombinations: ArrayList<ArrayList<Int>>
 
-    fun getSquares(): ArrayList<Square> {
-        return this.squares
-    }
+    fun getSquares(): ArrayList<Square>
 
-    fun getSquare(index: Int): Any {
-        return this.squares[index].getValue()
-    }
+    fun getSquare(index: Int): Any
 
-    fun setSquare(index: Int, newValue: String) {
-        this.squares[index].setValue(newValue)
-    }
+    fun setSquare(index: Int, newValue: String)
 
-    fun size():Int {
-        return this.squares.size
-    }
+    fun size():Int
 }

@@ -1,10 +1,12 @@
 [![Build Status](https://travis-ci.com/elletamara/kotlin-tic-tac-toe.svg?branch=master)](https://travis-ci.com/elletamara/kotlin-tic-tac-toe)
 # Kotlin Tic Tac Toe 
 
+A Kotlin application, which allows the user to play Tic Tac Toe on the command line.
+
 
 ## Features 
 
-- A user can place a single mark in a position on the Tic Tac Toe board
+- Play a game of Tic Tac Toe against a human player
 
 
 ## Getting Started

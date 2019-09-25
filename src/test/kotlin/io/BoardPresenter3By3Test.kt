@@ -4,7 +4,7 @@ import board.BoardFactory
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
-internal class BoardPresenter3by3Test {
+internal class BoardPresenter3By3Test {
     @Test
     fun `presents the board as a string`() {
         val expected = """

@@ -1,5 +1,6 @@
 import board.BoardFactory
 import game.Game
+import game.GameController
 import io.*
 import io.BoardPresenter3By3
 import io.Displayer
@@ -15,9 +16,11 @@ fun main(args: Array<String>) {
     val boardPresenter = BoardPresenter3By3()
     val displayer = Displayer(consoleIO, boardPresenter)
     val inputValidator = InputValidator(consoleIO, displayer)
-    val humanPlayer = HumanPlayer("x", inputValidator)
-    val game = Game(board, humanPlayer)
+    val player1 = HumanPlayer("x", inputValidator)
+    val player2 = HumanPlayer("o", inputValidator)
+    val game = Game(board, player1, player2)
+    val gameController = GameController(game, displayer)
 
-    game.playMove()
+    gameController.startGame()
 
 }

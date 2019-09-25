@@ -6,9 +6,9 @@ import io.InputValidator
 
 internal class HumanPlayer(private val mark: String, private val inputValidator: InputValidator): Player {
 
-    override fun chooseMove(board: Board): Int {
+    override fun chooseMove(board: Board, opponentMark: String): Int {
 
-        return inputValidator.validateMove(board)
+        return inputValidator.validateMove(board, getMark(), opponentMark)
     }
 
     override fun getMark(): String {
