@@ -17,8 +17,8 @@ internal class Displayer(private val consoleIO: ConsoleIO, private val boardPres
     fun gameOutcomeMessage(outcome: String) {
         when (outcome == GameOutcome.TIE.string) {
             true -> consoleIO.println(GameOutcomeMessage.TIE.string)
-            false -> consoleIO.println(GameOutcomeMessage.WIN.string +
-                    outcome + GameOutcomeMessage.EXCLAMATION.string)
+            false -> consoleIO.println(GameOutcomeMessage.CONGRATS.string +
+                    outcome + GameOutcomeMessage.WINNER.string)
         }
     }
 

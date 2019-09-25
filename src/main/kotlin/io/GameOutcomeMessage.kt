@@ -1,7 +1,7 @@
 package io
 
 internal enum class GameOutcomeMessage(val string: String) {
-    WIN("Congratulations "),
+    CONGRATS("Congratulations "),
+    WINNER(", you're the winner!"),
     TIE("It's a tie!"),
-    EXCLAMATION("!")
 }

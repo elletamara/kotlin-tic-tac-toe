@@ -61,7 +61,7 @@ internal class DisplayerTest {
 
     @Test
     fun `returns "Congratulations x when x has won `() {
-        val expectedOutput = "Congratulations x!\n"
+        val expectedOutput = "Congratulations x, you're the winner!\n"
         val output = ByteArrayOutputStream()
         val input = BufferedReader(InputStreamReader(System.`in`))
         val consoleIO = ConsoleIO(input, PrintStream(output))

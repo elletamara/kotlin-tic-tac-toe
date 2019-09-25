@@ -35,7 +35,7 @@ internal class GameControllerTest {
 
         gameController.startGame()
 
-        assertTrue("Congratulations x!" in output.toString())
+        assertTrue("Congratulations x, you're the winner!" in output.toString())
     }
 
     @Test
