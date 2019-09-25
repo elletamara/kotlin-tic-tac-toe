@@ -10,6 +10,11 @@ import java.io.InputStreamReader
 import java.io.PrintStream
 
 internal class DisplayerTest {
+
+    private fun clearScreen(): String {
+        return "\u001b[H\u001b[2J\n"
+    }
+
     @Test
     fun `displays the move prompt and the board when the move is valid`() {
         val expectedOutput = """
@@ -62,7 +67,8 @@ internal class DisplayerTest {
 
     @Test
     fun `returns "Congratulations x when x has won `() {
-        val expectedOutput = "Congratulations x, you're the winner!\n"
+        val expectedOutput = clearScreen() +
+                "Congratulations x, you're the winner!\n"
         val output = ByteArrayOutputStream()
         val input = BufferedReader(InputStreamReader(System.`in`))
         val consoleIO = ConsoleIO(input, PrintStream(output))
@@ -77,7 +83,8 @@ internal class DisplayerTest {
 
     @Test
     fun `returns "It's a tie!" when the game is a tie `() {
-        val expectedOutput = "It's a tie!\n"
+        val expectedOutput = clearScreen() +
+                "It's a tie!\n"
         val output = ByteArrayOutputStream()
         val input = BufferedReader(InputStreamReader(System.`in`))
         val consoleIO = ConsoleIO(input, PrintStream(output))
@@ -100,7 +107,8 @@ internal class DisplayerTest {
 
         displayer.playerTurnMessage("x")
 
-        assertEquals("x, it's your turn!\n", output.toString())
+        assertEquals(clearScreen() +
+                "x, it's your turn!\n", output.toString())
     }
 
     @Test
@@ -113,7 +121,9 @@ internal class DisplayerTest {
 
         displayer.welcomeMessage()
 
-        assertEquals("Hello! Welcome to Elle's Tic Tac Toe.\n\n", output.toString())
+        assertEquals(clearScreen() +
+                "Hello! Welcome to Elle's Tic Tac Toe.\n\n" +
+                clearScreen(), output.toString())
     }
 
     @Test
