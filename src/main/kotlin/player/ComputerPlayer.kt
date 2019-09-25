@@ -8,6 +8,7 @@ internal class ComputerPlayer(
     private val mark: String, private val displayer: Displayer, private val moveStrategy: MoveStrategy): Player {
 
     override fun chooseMove(board: Board, currentPlayersMark: String, opponentsMark: String): Int {
+        displayer.computerPlayerMakeMoveMessages(board.getGrid(), currentPlayersMark)
         return this.moveStrategy.getMove(board, currentPlayersMark, opponentsMark)
     }
 

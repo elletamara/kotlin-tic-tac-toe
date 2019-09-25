@@ -66,6 +66,32 @@ internal class DisplayerTest {
     }
 
     @Test
+    fun `displays the move prompt and the board`() {
+        val expectedOutput = clearScreen() + """
+            x, it's your turn!
+            Select an available move:
+            
+            1 | 2 | 3
+            ---------
+            4 | 5 | 6
+            ---------
+            7 | 8 | 9
+            
+            
+        """.trimIndent()
+        val output = ByteArrayOutputStream()
+        val input = BufferedReader(InputStreamReader(System.`in`))
+        val consoleIO = ConsoleIO(input, PrintStream(output))
+        val boardPresenter = BoardPresenter3By3()
+        val displayer = Displayer(consoleIO, boardPresenter)
+        val board = BoardFactory.create3by3Board()
+
+        displayer.computerPlayerMakeMoveMessages(board.getGrid(), "x")
+
+        assertEquals(expectedOutput, output.toString())
+    }
+
+    @Test
     fun `returns "Congratulations x when x has won `() {
         val expectedOutput = clearScreen() +
                 "Congratulations x, you're the winner!\n"

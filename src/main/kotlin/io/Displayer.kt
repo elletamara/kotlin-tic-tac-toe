@@ -12,12 +12,23 @@ internal class Displayer(private val consoleIO: ConsoleIO, private val boardPres
         clearScreen()
     }
 
+    fun playerTurnMessage(playersMark: String) {
+        clearScreen()
+        consoleIO.println(playersMark + Prompt.PLAYER_TURN.string)
+    }
+
     fun humanPlayerMakeMoveMessages(grid: Grid, isMoveValid: Boolean = true) {
         when (isMoveValid) {
             true -> consoleIO.println(Prompt.CHOOSE_MOVE.string)
             false -> consoleIO.println(ErrorMessage.INVALID_MOVE.string)
         }
 
+        showBoard(grid)
+    }
+
+    fun computerPlayerMakeMoveMessages(grid: Grid, playersMark: String) {
+        playerTurnMessage(playersMark)
+        consoleIO.println(Prompt.CHOOSE_MOVE.string)
         showBoard(grid)
     }
 
@@ -29,11 +40,6 @@ internal class Displayer(private val consoleIO: ConsoleIO, private val boardPres
             false -> consoleIO.println(GameOutcomeMessage.CONGRATS.string +
                     outcome + GameOutcomeMessage.WINNER.string)
         }
-    }
-
-    fun playerTurnMessage(playerMark: String) {
-        clearScreen()
-        consoleIO.println(playerMark + Prompt.PLAYER_TURN.string)
     }
 
     fun goodbyeMessage() {
