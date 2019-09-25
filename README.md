@@ -6,7 +6,7 @@ A Kotlin application, which allows the user to play Tic Tac Toe on the command l
 
 ## Features 
 
-- Play a game of Tic Tac Toe against a human player
+- Play a game of Tic Tac Toe against a computer player. The computer player plays random moves.
 
 
 ## Getting Started
@@ -26,3 +26,6 @@ cd kotlin-tic-tac-toe
 ## Testing
 - The testing framework used is [JUnit 5](https://junit.org/junit5/).
 - Tests can be run by typing `./gradlew clean test` in your terminal
+
+### Test Coverage
+The test coverage report can be found here: `./build/reports/tests/test/index.html.`
