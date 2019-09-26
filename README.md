@@ -6,7 +6,7 @@ A Kotlin application, which allows the user to play Tic Tac Toe on the command l
 
 ## Features 
 
-- Play a game of Tic Tac Toe against a computer player. The computer player plays random moves.
+- Play a game of Tic Tac Toe against an unbeatable computer player
 
 
 ## Getting Started

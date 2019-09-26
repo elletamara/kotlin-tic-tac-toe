@@ -19,6 +19,16 @@ internal class SquareTest {
 
         assertEquals(square.getValue(), "x")
     }
+
+    @Test
+    fun `copies the value of the square into a new instance of Square`() {
+        var square = Square("7")
+
+        val squareCopy = square.copy()
+
+        assertEquals(square.getValue(), squareCopy.getValue())
+        assertNotEquals(square, squareCopy)
+    }
 }
 
 

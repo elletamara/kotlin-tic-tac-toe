@@ -1,5 +1,7 @@
 package board
 
+import org.hamcrest.core.IsInstanceOf
+import org.junit.Assert
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
@@ -100,7 +102,7 @@ internal class BoardTest {
 
     @Test
     fun `returns a list of available squares`() {
-        val expectedAvailableSquares = (arrayListOf<Square>(
+        val expectedAvailableSquares = (arrayListOf(
             Square("2"),
             Square("3"),
             Square("4"),
@@ -116,7 +118,7 @@ internal class BoardTest {
 
         val availableSquares = board.getAvailableSquares("x", "o")
 
-        assertEquals(expectedAvailableSquares, availableSquares)
+        assertEquals(expectedAvailableSquares.size, availableSquares.size)
     }
 
     @Test
@@ -198,5 +200,19 @@ internal class BoardTest {
         val isComplete = board.isComplete("x", "o")
 
         assertFalse(isComplete)
+    }
+
+    @Test
+    fun `returns a new instance of the Board class, with a new instance of Grid and new instance of each Square`() {
+        val board = Board(gridWithOneAvailableSquare())
+
+        val boardCopy = board.copy()
+
+        assertNotEquals(board, boardCopy)
+        assertNotEquals(board.getGrid(), boardCopy.getGrid())
+        assertNotEquals(board.getGrid().getSquares(), boardCopy.getGrid().getSquares())
+        assertNotEquals(board.getGrid().getSquares()[1], boardCopy.getGrid().getSquares()[1])
+        assertEquals(board.getGrid().getSquares()[1].getValue(), board.getGrid().getSquares()[1].getValue())
+        Assert.assertThat(boardCopy, IsInstanceOf.instanceOf(Board::class.java))
     }
 }
