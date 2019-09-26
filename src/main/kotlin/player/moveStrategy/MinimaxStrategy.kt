@@ -10,6 +10,16 @@ internal class MinimaxStrategy: MoveStrategy {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
+    fun scoreMove(
+        board: Board, depth: Int, currentPlayersMark: String, opponentsMark: String): Int {
+
+        return when {
+            board.isWinningPlayer(currentPlayersMark) -> 10 - depth
+            board.isWinningPlayer(opponentsMark) -> depth - 10
+            else -> 0
+        }
+    }
+
     fun evaluateMove(depth: Int, scores: HashMap<Int, Int>): Int {
         return if (depth == 0) bestMoveForMaximisingPlayer(scores) else bestScoreForMaximisingPlayer(scores)
      }
