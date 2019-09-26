@@ -14,7 +14,7 @@ import java.io.InputStreamReader
 internal class ComputerPlayerTest {
 
     @Test
-    fun `returns a random move as an integer` () {
+    fun `returns a move as an integer` () {
         val input = BufferedReader(InputStreamReader(System.`in`))
         val consoleIO = ConsoleIO(input)
         val boardPresenter = BoardPresenter3By3()

@@ -14,7 +14,5 @@ internal class ComputerPlayer(
         return this.moveStrategy.getMove(board, currentPlayersMark, opponentsMark)
     }
 
-    override fun getMark(): String {
-        return this.mark
-    }
+    override fun getMark(): String = this.mark
 }
