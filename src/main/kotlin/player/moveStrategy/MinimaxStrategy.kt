@@ -26,13 +26,11 @@ internal class MinimaxStrategy: MoveStrategy {
 
             boardCopy.takeSquare(squareValueInt, currentPlayersMark)
             movesAndScores[squareValueInt] = -1 * findBestMove(
-                boardCopy, depth + 1, opponentsMark, currentPlayersMark
-            )
+                boardCopy, depth + 1, opponentsMark, currentPlayersMark)
         }
 
         return evaluateMove(depth, movesAndScores)
     }
-
 
     fun scoreMove(
         board: Board, depth: Int, currentPlayersMark: String, opponentsMark: String): Int {

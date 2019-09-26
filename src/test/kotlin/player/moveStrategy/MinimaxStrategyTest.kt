@@ -207,6 +207,23 @@ internal class MinimaxStrategyTest {
 
         assertEquals(9, move)
     }
+
+    @Test
+    fun `returns 7 as the best move of two to block the opponent`() {
+        val squares: ArrayList<Square> = arrayListOf()
+        val squareValues: Array<String> = arrayOf("x", "o", "x", "x", "x", "o", "7", "8", "o")
+        for(value in squareValues) {
+            squares.add(Square(value))
+        }
+        val board = Board(Grid3By3(squares))
+        val minimaxStrategy = MinimaxStrategy()
+        val currentPlayersMark = "o"
+        val opponentsMark = "x"
+
+        val move = minimaxStrategy.getMove(board, currentPlayersMark, opponentsMark)
+
+        assertEquals(7, move)
+    }
 }
 
 

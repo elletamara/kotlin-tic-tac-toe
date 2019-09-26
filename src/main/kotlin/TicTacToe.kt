@@ -7,7 +7,7 @@ import io.Displayer
 import io.InputValidator
 import player.ComputerPlayer
 import player.HumanPlayer
-import player.moveStrategy.RandomMoveStrategy
+import player.moveStrategy.MinimaxStrategy
 import java.io.BufferedReader
 import java.io.InputStreamReader
 
@@ -18,7 +18,7 @@ fun main(args: Array<String>) {
     val boardPresenter = BoardPresenter3By3()
     val displayer = Displayer(consoleIO, boardPresenter)
     val inputValidator = InputValidator(consoleIO, displayer)
-    val strategy = RandomMoveStrategy()
+    val strategy = MinimaxStrategy()
     val player1 = HumanPlayer("x", inputValidator)
     val player2 = ComputerPlayer("o", displayer, strategy)
     val game = Game(board, player1, player2)
