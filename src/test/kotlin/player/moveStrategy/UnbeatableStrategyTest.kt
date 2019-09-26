@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 
 import org.junit.jupiter.api.Assertions.*
 
-internal class MinimaxStrategyTest {
+internal class UnbeatableStrategyTest {
 
     private val movesAndScores: HashMap<Int, Int> = hashMapOf(
         1 to -7,
@@ -67,7 +67,7 @@ internal class MinimaxStrategyTest {
 
     @Test
     fun `returns the best scores from the scores `() {
-        val strategy = MinimaxStrategy()
+        val strategy = UnbeatableStrategy()
 
         val bestScore = strategy.bestScoreForMaximisingPlayer(movesAndScores)
 
@@ -76,7 +76,7 @@ internal class MinimaxStrategyTest {
 
     @Test
     fun `returns the best move from the moves`() {
-        val strategy = MinimaxStrategy()
+        val strategy = UnbeatableStrategy()
 
         val bestMove = strategy.bestMoveForMaximisingPlayer(movesAndScores)
 
@@ -85,7 +85,7 @@ internal class MinimaxStrategyTest {
 
     @Test
     fun `returns the best move when the depth is 0`() {
-        val strategy = MinimaxStrategy()
+        val strategy = UnbeatableStrategy()
 
         val bestMove = strategy.evaluateMove(0, movesAndScores)
 
@@ -94,7 +94,7 @@ internal class MinimaxStrategyTest {
 
     @Test
     fun `returns the best score when the depth is not equal to 0`() {
-        val strategy = MinimaxStrategy()
+        val strategy = UnbeatableStrategy()
 
         val bestMove = strategy.evaluateMove(1, movesAndScores)
 
@@ -103,7 +103,7 @@ internal class MinimaxStrategyTest {
 
     @Test
     fun `returns 5 as the score when the current player is the winning player`() {
-        val strategy = MinimaxStrategy()
+        val strategy = UnbeatableStrategy()
         val board = boardWithTheCurrentPlayerAsTheWinner()
 
         val bestScore = strategy.scoreMove(board, 5, "x", "o")
@@ -113,7 +113,7 @@ internal class MinimaxStrategyTest {
 
     @Test
     fun `returns -5 as the score when the opponent is the winning player`() {
-        val strategy = MinimaxStrategy()
+        val strategy = UnbeatableStrategy()
         val board = boardWithTheOpponentAsTheWinner()
 
         val bestScore = strategy.scoreMove(board, 5, "x", "o")
@@ -123,7 +123,7 @@ internal class MinimaxStrategyTest {
 
     @Test
     fun `returns 0 as the score when neither player has a winning line`() {
-        val strategy = MinimaxStrategy()
+        val strategy = UnbeatableStrategy()
         val board = boardWithFullGrid()
 
         val bestScore = strategy.scoreMove(board, 5, "x", "o")
@@ -134,7 +134,7 @@ internal class MinimaxStrategyTest {
     @Test
     fun `returns 1 as the best move when the grid is empty`() {
         val board = boardWithEmptyGrid()
-        val minimaxStrategy = MinimaxStrategy()
+        val minimaxStrategy = UnbeatableStrategy()
 
         val currentPlayersMark = "x"
         val opponentsMark = "o"
@@ -147,7 +147,7 @@ internal class MinimaxStrategyTest {
     @Test
     fun `returns 5 as the optimum move when the opponent has made a first move`() {
         val board = boardWithCornerSquareTaken()
-        val minimaxStrategy = MinimaxStrategy()
+        val minimaxStrategy = UnbeatableStrategy()
         val currentPlayersMark = "o"
         val opponentsMark = "x"
 
@@ -164,7 +164,7 @@ internal class MinimaxStrategyTest {
             squares.add(Square(value))
         }
         val board = Board(Grid3By3(squares))
-        val minimaxStrategy = MinimaxStrategy()
+        val minimaxStrategy = UnbeatableStrategy()
         val currentPlayersMark = "x"
         val opponentsMark = "o"
 
@@ -182,7 +182,7 @@ internal class MinimaxStrategyTest {
             squares.add(Square(value))
         }
         val board = Board(Grid3By3(squares))
-        val minimaxStrategy = MinimaxStrategy()
+        val minimaxStrategy = UnbeatableStrategy()
         val currentPlayersMark = "x"
         val opponentsMark = "o"
 
@@ -199,7 +199,7 @@ internal class MinimaxStrategyTest {
             squares.add(Square(value))
         }
         val board = Board(Grid3By3(squares))
-        val minimaxStrategy = MinimaxStrategy()
+        val minimaxStrategy = UnbeatableStrategy()
         val currentPlayersMark = "o"
         val opponentsMark = "x"
 
@@ -216,7 +216,7 @@ internal class MinimaxStrategyTest {
             squares.add(Square(value))
         }
         val board = Board(Grid3By3(squares))
-        val minimaxStrategy = MinimaxStrategy()
+        val minimaxStrategy = UnbeatableStrategy()
         val currentPlayersMark = "o"
         val opponentsMark = "x"
 

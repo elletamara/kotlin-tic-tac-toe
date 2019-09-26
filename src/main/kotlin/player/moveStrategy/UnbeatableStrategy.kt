@@ -4,7 +4,7 @@ import board.Board
 import kotlin.collections.HashMap
 
 
-internal class MinimaxStrategy: MoveStrategy {
+internal class UnbeatableStrategy: MoveStrategy {
 
     override fun getMove(board: Board, currentPlayersMark: String, opponentsMark: String): Int {
         val boardCopy = board.copy()
