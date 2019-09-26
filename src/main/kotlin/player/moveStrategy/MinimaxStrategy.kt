@@ -10,6 +10,11 @@ internal class MinimaxStrategy: MoveStrategy {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
+    fun evaluateMove(depth: Int, scores: HashMap<Int, Int>): Int {
+        return if (depth == 0) bestMoveForMaximisingPlayer(scores) else bestScoreForMaximisingPlayer(scores)
+     }
+
+
     fun bestMoveForMaximisingPlayer(scores: HashMap<Int, Int>): Int {
         val max = scores.maxBy { it.value }
         return max!!.key
