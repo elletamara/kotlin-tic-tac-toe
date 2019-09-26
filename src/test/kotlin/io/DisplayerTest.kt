@@ -45,7 +45,7 @@ internal class DisplayerTest {
         val consoleIO = ConsoleIO(input, PrintStream(output))
         val boardPresenter = BoardPresenter3By3()
         val displayer = Displayer(consoleIO, boardPresenter)
-        val board = BoardFactory.create3by3Board()
+        val board = BoardFactory.createBoardWith3By3Grid()
 
         displayer.humanPlayerMakeMoveMessages(board.getGrid())
 
@@ -70,7 +70,7 @@ internal class DisplayerTest {
         val consoleIO = ConsoleIO(input, PrintStream(output))
         val boardPresenter = BoardPresenter3By3()
         val displayer = Displayer(consoleIO, boardPresenter)
-        val board = BoardFactory.create3by3Board()
+        val board = BoardFactory.createBoardWith3By3Grid()
 
         displayer.humanPlayerMakeMoveMessages(board.getGrid(), false)
 
@@ -96,7 +96,7 @@ internal class DisplayerTest {
         val consoleIO = ConsoleIO(input, PrintStream(output))
         val boardPresenter = BoardPresenter3By3()
         val displayer = Displayer(consoleIO, boardPresenter)
-        val board = BoardFactory.create3by3Board()
+        val board = BoardFactory.createBoardWith3By3Grid()
 
         displayer.computerPlayerMakeMoveMessages(board.getGrid(), "x")
 

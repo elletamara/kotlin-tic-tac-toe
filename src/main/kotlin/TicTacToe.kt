@@ -7,18 +7,18 @@ import io.Displayer
 import io.InputValidator
 import player.ComputerPlayer
 import player.HumanPlayer
-import player.moveStrategy.MinimaxStrategy
+import player.moveStrategy.UnbeatableStrategy
 import java.io.BufferedReader
 import java.io.InputStreamReader
 
 fun main(args: Array<String>) {
-    val board = BoardFactory.create3by3Board()
+    val board = BoardFactory.createBoardWith3By3Grid()
     val input = BufferedReader(InputStreamReader(System.`in`))
     val consoleIO = ConsoleIO(input)
     val boardPresenter = BoardPresenter3By3()
     val displayer = Displayer(consoleIO, boardPresenter)
     val inputValidator = InputValidator(consoleIO, displayer)
-    val strategy = MinimaxStrategy()
+    val strategy = UnbeatableStrategy()
     val player1 = HumanPlayer("x", inputValidator)
     val player2 = ComputerPlayer("o", displayer, strategy)
     val game = Game(board, player1, player2)

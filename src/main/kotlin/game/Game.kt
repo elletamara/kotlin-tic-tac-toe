@@ -12,38 +12,27 @@ internal class Game(val board: Board, private val player1: Player, private val p
         board.takeSquare(move, currentPlayersMark())
     }
 
-    fun currentPlayersMark():String {
-        return currentPlayer.getMark()
-    }
+    fun currentPlayersMark():String = currentPlayer.getMark()
 
-    fun opponentsMark():String {
-        return opponent.getMark()
-    }
+    fun opponentsMark():String = opponent.getMark()
 
     fun toggleCurrentPlayer() {
-        when (currentPlayer == player1) {
-            true -> { currentPlayer = player2; opponent = player1 }
-            false -> { currentPlayer = player1; opponent = player2 }
+        when (currentPlayer) {
+            player1 -> { currentPlayer = player2; opponent = player1 }
+            player2 -> { currentPlayer = player1; opponent = player2 }
         }
     }
 
     fun getWinnersMark(): String {
         val hasCurrentPlayerWon = board.isWinningPlayer(currentPlayersMark())
 
-        return when (hasCurrentPlayerWon) {
-            true -> currentPlayersMark()
-            false -> opponentsMark()
-        }
+        return if (hasCurrentPlayerWon) currentPlayersMark() else opponentsMark()
     }
 
     fun outcome(): String {
-        val doesWinningLineExist = board.winningLineExists(
-            currentPlayersMark(), opponentsMark())
+        val doesWinningLineExist = board.winningLineExists(currentPlayersMark(), opponentsMark())
 
-        return when (doesWinningLineExist) {
-            true -> getWinnersMark()
-            false -> GameOutcome.TIE.string
-        }
+        return if (doesWinningLineExist) getWinnersMark() else GameOutcome.TIE.string
     }
 
     fun isOver(): Boolean {

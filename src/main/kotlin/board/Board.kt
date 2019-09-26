@@ -2,24 +2,22 @@ package board
 
 internal class Board(private val grid: Grid) {
 
-    fun getGrid(): Grid {
-        return this.grid
-    }
+    fun getGrid(): Grid = this.grid
 
     fun takeSquare(position: Int, newValue: String) {
-        val index = position - 1
+        val index = getPositionAsSquaresIndex(position)
         this.grid.setSquare(index, newValue)
     }
 
     fun isMoveValid(position: Int, player1Mark: String, player2Mark: String): Boolean {
-        return isPositionValid(position) &&
-                isSquareAvailable(position, player1Mark, player2Mark)
+        return isPositionValid(position) && isSquareAvailable(position, player1Mark, player2Mark)
     }
 
     fun getAvailableSquares(player1Mark: String, player2Mark: String): ArrayList<Square> {
         val squares = getGrid().getSquares()
         val availableSquares = squares.filterNot {
-            it.getValue() == player1Mark || it.getValue() == player2Mark }
+            (it.getValue() == player1Mark) or (it.getValue() == player2Mark)
+        }
 
         return ArrayList(availableSquares)
     }
@@ -29,40 +27,39 @@ internal class Board(private val grid: Grid) {
     }
 
     fun isComplete(player1Mark: String, player2Mark: String): Boolean {
-        return isFull(player1Mark, player2Mark) ||
-                winningLineExists(player1Mark, player2Mark)
+        return isFull(player1Mark, player2Mark) or winningLineExists(player1Mark, player2Mark)
     }
 
     fun isWinningPlayer(playerMark: String): Boolean {
         val winningCombinations = this.grid.winningCombinations
         val squares = grid.getSquares()
 
-        return winningCombinations.any {
-            it.all {
-                squares[it].getValue() == playerMark
+        return winningCombinations.any { combination ->
+            combination.all {value ->
+                squares[value].getValue() == playerMark
             }
         }
     }
 
     fun winningLineExists(player1Mark: String, player2Mark: String): Boolean {
-        return isWinningPlayer(player1Mark) || isWinningPlayer(player2Mark)
+        return isWinningPlayer(player1Mark) or isWinningPlayer(player2Mark)
     }
 
-    fun copy():Board {
-        return Board(this.grid.copy())
-    }
+    fun copy():Board = Board(this.grid.copy())
 
     private fun isPositionValid(position: Int): Boolean {
-        val index = position - 1
+        val index = getPositionAsSquaresIndex(position)
         val gridSize = grid.size() - 1
 
         return index in 0..gridSize
     }
 
     private fun isSquareAvailable(position: Int, player1Mark: String, player2Mark: String): Boolean {
-        val index = position - 1
+        val index = getPositionAsSquaresIndex(position)
         val square = grid.getSquare(index)
 
         return square != player1Mark && square != player2Mark
     }
+
+    private fun getPositionAsSquaresIndex(position: Int ): Int = position - 1
 }

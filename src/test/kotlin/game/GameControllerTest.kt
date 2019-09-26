@@ -14,7 +14,7 @@ internal class GameControllerTest {
 
     @Test
     fun `displays the winner outcome message when a player has won`() {
-        val board = BoardFactory.create3by3Board()
+        val board = BoardFactory.createBoardWith3By3Grid()
         val output = ByteArrayOutputStream()
         val simulatedInput = ("1" + System.getProperty("line.separator")
                 + "4" + System.getProperty("line.separator")
@@ -41,7 +41,7 @@ internal class GameControllerTest {
 
     @Test
     fun `displays the tie outcome message when the game is a tie`() {
-        val board = BoardFactory.create3by3Board()
+        val board = BoardFactory.createBoardWith3By3Grid()
         val output = ByteArrayOutputStream()
         val simulatedInput = ("1" + System.getProperty("line.separator")
                 + "5" + System.getProperty("line.separator")

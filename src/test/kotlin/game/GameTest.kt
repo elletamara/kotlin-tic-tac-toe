@@ -14,37 +14,17 @@ import java.io.InputStreamReader
 
 internal class GameTest {
 
-    private fun gridWithWinningCombination(): Grid {
+    private fun boardSetup(squareValues: Array<String>): Board {
         val squares: ArrayList<Square> = arrayListOf()
-        val squareValues: Array<String> = arrayOf("o", "o", "o", "x", "x", "6", "x", "8", "9")
-        for(value in squareValues) {
-            squares.add(Square(value))
-        }
-        return Grid3By3(squares)
-    }
+        for (value in squareValues) squares.add(Square(value))
 
-    private fun fullGrid(): Grid {
-        val squares: ArrayList<Square> = arrayListOf()
-        val squareValues: Array<String> = arrayOf("x", "o", "o", "o", "x", "x", "o", "x", "o")
-        for(value in squareValues) {
-            squares.add(Square(value))
-        }
-        return Grid3By3(squares)
-    }
-
-    private fun gridWithOneAvailableSquare(): Grid {
-        val squares: ArrayList<Square> = arrayListOf()
-        val squareValues: Array<String> = arrayOf("1", "o", "o", "o", "x", "x", "o", "x", "o")
-        for(value in squareValues) {
-            squares.add(Square(value))
-        }
-        return Grid3By3(squares)
+        return Board(Grid3By3(squares))
     }
 
     @Test
     fun `puts the player's mark on the board at position 2`() {
-        val board = BoardFactory.create3by3Board()
-        var simulatedInput = "2"
+        val board = BoardFactory.createBoardWith3By3Grid()
+        val simulatedInput = "2"
         System.setIn(ByteArrayInputStream(simulatedInput.toByteArray()))
         val input = BufferedReader(InputStreamReader(System.`in`))
         val consoleIO = ConsoleIO(input)
@@ -62,7 +42,7 @@ internal class GameTest {
 
     @Test
     fun `toggles the current player`() {
-        val board = BoardFactory.create3by3Board()
+        val board = BoardFactory.createBoardWith3By3Grid()
         val input = BufferedReader(InputStreamReader(System.`in`))
         val consoleIO = ConsoleIO(input)
         val boardPresenter = BoardPresenter3By3()
@@ -85,7 +65,7 @@ internal class GameTest {
 
     @Test
     fun `returns the winning player's mark`() {
-        val board = Board(gridWithWinningCombination())
+        val board = boardSetup(arrayOf("o", "o", "o", "x", "x", "6", "x", "8", "9"))
         val input = BufferedReader(InputStreamReader(System.`in`))
         val consoleIO = ConsoleIO(input)
         val boardPresenter = BoardPresenter3By3()
@@ -102,7 +82,7 @@ internal class GameTest {
 
     @Test
     fun `returns the winning player's mark as the outcome`() {
-        val board = Board(gridWithWinningCombination())
+        val board = boardSetup(arrayOf("o", "o", "o", "x", "x", "6", "x", "8", "9"))
         val input = BufferedReader(InputStreamReader(System.`in`))
         val consoleIO = ConsoleIO(input)
         val boardPresenter = BoardPresenter3By3()
@@ -119,7 +99,7 @@ internal class GameTest {
 
     @Test
     fun `returns "tie" as the outcome when no players have a winning line`() {
-        val board = Board(fullGrid())
+        val board = boardSetup(arrayOf("x", "o", "o", "o", "x", "x", "o", "x", "o"))
         val input = BufferedReader(InputStreamReader(System.`in`))
         val consoleIO = ConsoleIO(input)
         val boardPresenter = BoardPresenter3By3()
@@ -136,7 +116,7 @@ internal class GameTest {
 
     @Test
     fun `returns true when the board is full`() {
-        val board = Board(fullGrid())
+        val board = boardSetup(arrayOf("x", "o", "o", "o", "x", "x", "o", "x", "o"))
         val input = BufferedReader(InputStreamReader(System.`in`))
         val consoleIO = ConsoleIO(input)
         val boardPresenter = BoardPresenter3By3()
@@ -153,7 +133,7 @@ internal class GameTest {
 
     @Test
     fun `returns true when a mark has a winning line`() {
-        val board = Board(gridWithWinningCombination())
+        val board = boardSetup(arrayOf("o", "o", "o", "x", "x", "6", "x", "8", "9"))
         val input = BufferedReader(InputStreamReader(System.`in`))
         val consoleIO = ConsoleIO(input)
         val boardPresenter = BoardPresenter3By3()
@@ -170,7 +150,7 @@ internal class GameTest {
 
     @Test
     fun `returns false when the board is not full and a mark does not have a winning line`() {
-        val board = Board(gridWithOneAvailableSquare())
+        val board = boardSetup(arrayOf("1", "o", "o", "o", "x", "x", "o", "x", "o"))
         val input = BufferedReader(InputStreamReader(System.`in`))
         val consoleIO = ConsoleIO(input)
         val boardPresenter = BoardPresenter3By3()
