@@ -7,8 +7,32 @@ import kotlin.collections.HashMap
 internal class MinimaxStrategy: MoveStrategy {
 
     override fun getMove(board: Board, currentPlayersMark: String, opponentsMark: String): Int {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val boardCopy = board.copy()
+        return findBestMove(boardCopy, 0, currentPlayersMark, opponentsMark)
+
     }
+
+    private fun findBestMove(board: Board, depth: Int, currentPlayersMark: String, opponentsMark: String): Int {
+        if (board.isComplete(currentPlayersMark, opponentsMark)) {
+            return scoreMove(board, depth, currentPlayersMark, opponentsMark)
+        }
+
+        val movesAndScores = HashMap<Int, Int>()
+        val availableSquares = board.getAvailableSquares(currentPlayersMark, opponentsMark)
+
+        availableSquares.forEach {
+            val squareValueInt = it.getValue().toInt()
+            val boardCopy = board.copy()
+
+            boardCopy.takeSquare(squareValueInt, currentPlayersMark)
+            movesAndScores[squareValueInt] = -1 * findBestMove(
+                boardCopy, depth + 1, opponentsMark, currentPlayersMark
+            )
+        }
+
+        return evaluateMove(depth, movesAndScores)
+    }
+
 
     fun scoreMove(
         board: Board, depth: Int, currentPlayersMark: String, opponentsMark: String): Int {
