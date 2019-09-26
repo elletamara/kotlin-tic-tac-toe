@@ -5,11 +5,7 @@ internal class Square(private var value: String) {
         this.value = newValue
     }
 
-    fun getValue(): String {
-        return this.value
-    }
+    fun getValue(): String = this.value
 
-    fun copy(): Square {
-        return Square(getValue())
-    }
+    fun copy(): Square = Square(getValue())
 }
