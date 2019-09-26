@@ -102,7 +102,7 @@ internal class BoardTest {
 
     @Test
     fun `returns a list of available squares`() {
-        val expectedAvailableSquares = (arrayListOf<Square>(
+        val expectedAvailableSquares = (arrayListOf(
             Square("2"),
             Square("3"),
             Square("4"),
@@ -118,7 +118,7 @@ internal class BoardTest {
 
         val availableSquares = board.getAvailableSquares("x", "o")
 
-        assertEquals(expectedAvailableSquares, availableSquares)
+        assertEquals(expectedAvailableSquares.size, availableSquares.size)
     }
 
     @Test

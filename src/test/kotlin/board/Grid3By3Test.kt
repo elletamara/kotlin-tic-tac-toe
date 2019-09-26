@@ -15,7 +15,7 @@ internal class Grid3By3Test {
         val squares = defaultSquares()
         val grid = Grid3By3(squares)
 
-        assertEquals(grid.getSquares(), defaultSquares())
+        assertEquals(grid.getSquares(), squares)
     }
 
     @Test
