@@ -43,7 +43,7 @@ internal class GameTest {
 
     @Test
     fun `puts the player's mark on the board at position 2`() {
-        val board = BoardFactory.create3by3Board()
+        val board = BoardFactory.createBoardWith3By3Grid()
         var simulatedInput = "2"
         System.setIn(ByteArrayInputStream(simulatedInput.toByteArray()))
         val input = BufferedReader(InputStreamReader(System.`in`))
@@ -62,7 +62,7 @@ internal class GameTest {
 
     @Test
     fun `toggles the current player`() {
-        val board = BoardFactory.create3by3Board()
+        val board = BoardFactory.createBoardWith3By3Grid()
         val input = BufferedReader(InputStreamReader(System.`in`))
         val consoleIO = ConsoleIO(input)
         val boardPresenter = BoardPresenter3By3()

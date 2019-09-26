@@ -15,7 +15,7 @@ internal class InputValidatorTest {
         val boardPresenter = BoardPresenter3By3()
         val displayer = Displayer(consoleIO, boardPresenter)
         val inputValidator = InputValidator(consoleIO, displayer)
-        val board = BoardFactory.create3by3Board()
+        val board = BoardFactory.createBoardWith3By3Grid()
 
         val move = inputValidator.validateMove(board, "x", "o")
 
@@ -32,7 +32,7 @@ internal class InputValidatorTest {
         val boardPresenter = BoardPresenter3By3()
         val displayer = Displayer(consoleIO, boardPresenter)
         val inputValidator = InputValidator(consoleIO, displayer)
-        val board = BoardFactory.create3by3Board()
+        val board = BoardFactory.createBoardWith3By3Grid()
 
         val move = inputValidator.validateMove(board, "x", "o")
 

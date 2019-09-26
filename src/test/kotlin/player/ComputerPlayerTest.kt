@@ -21,7 +21,7 @@ internal class ComputerPlayerTest {
         val displayer = Displayer(consoleIO, boardPresenter)
         val strategy = RandomMoveStrategy()
         val computerPlayer = ComputerPlayer("x", displayer, strategy)
-        val board = BoardFactory.create3by3Board()
+        val board = BoardFactory.createBoardWith3By3Grid()
         val gridSize = board.getGrid().size()
 
         val move = computerPlayer.chooseMove(board, "x", "o")

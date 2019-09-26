@@ -15,7 +15,7 @@ internal class BoardPresenter3By3Test {
             7 | 8 | 9
             
             """.trimIndent()
-        val board = BoardFactory.create3by3Board()
+        val board = BoardFactory.createBoardWith3By3Grid()
         val boardPresenter = BoardPresenter3By3()
 
         val presentedBoard = boardPresenter.presentBoard(board.getGrid())

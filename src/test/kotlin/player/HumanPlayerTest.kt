@@ -24,7 +24,7 @@ internal class HumanPlayerTest {
         val displayer = Displayer(consoleIO, boardPresenter)
         val inputValidator = InputValidator(consoleIO, displayer)
         val humanPlayer = HumanPlayer("x", inputValidator)
-        val board = BoardFactory.create3by3Board()
+        val board = BoardFactory.createBoardWith3By3Grid()
 
         val move = humanPlayer.chooseMove(board, "x", "o")
 
