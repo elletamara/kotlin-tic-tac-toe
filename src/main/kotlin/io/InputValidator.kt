@@ -20,13 +20,8 @@ internal class InputValidator(private val consoleIO: ConsoleIO, private val disp
     private fun getMoveFromUser(): Int {
         val input = getInput()
 
-        return when (input.matches(ValidMoveInput.DIGIT.value)) {
-            true -> input.toInt()
-            false -> 0
-        }
+        return if (input.matches(ValidMoveInput.DIGIT.value)) input.toInt() else 0
     }
 
-    private fun getInput(): String {
-        return consoleIO.getInput()
-    }
+    private fun getInput(): String  = consoleIO.getInput()
 }
