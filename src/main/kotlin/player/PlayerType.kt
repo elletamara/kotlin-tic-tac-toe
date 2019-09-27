@@ -2,7 +2,7 @@ package player
 
 enum class PlayerType(val string: String) {
     HUMAN("human"),
-    COMPUTER("computer"),
+    EASY("easy"),
     UNBEATABLE("unbeatable"),
     INVALID("invalid")
 }
