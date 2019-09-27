@@ -5,9 +5,7 @@ import io.ConsoleIO
 import io.Displayer
 import io.InputValidator
 import org.junit.jupiter.api.Test
-import org.hamcrest.CoreMatchers.instanceOf
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertThat
+import org.junit.Assert.*
 import java.io.BufferedReader
 import java.io.InputStreamReader
 
@@ -24,7 +22,7 @@ internal class PlayerFactoryTest {
 
         val player = playerFactory.createPlayer("x", "human")
 
-        assertThat(player, instanceOf(HumanPlayer::class.java))
+        assertTrue(player is HumanPlayer)
         assertEquals(player.getMark(), "x")
     }
 
@@ -34,7 +32,7 @@ internal class PlayerFactoryTest {
 
         val player = playerFactory.createPlayer("o", "computer")
 
-        assertThat(player, instanceOf(ComputerPlayer::class.java))
+        assertTrue(player is ComputerPlayer)
         assertEquals(PlayerType.EASY, player.getPlayerType())
         assertEquals(player.getMark(), "o")
     }
@@ -45,7 +43,7 @@ internal class PlayerFactoryTest {
 
         val player = playerFactory.createPlayer("i", "unbeatable")
 
-        assertThat(player, instanceOf(ComputerPlayer::class.java))
+        assertTrue(player is ComputerPlayer)
         assertEquals(PlayerType.UNBEATABLE, player.getPlayerType())
         assertEquals(player.getMark(), "i")
     }
