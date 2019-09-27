@@ -39,4 +39,36 @@ internal class InputValidatorTest {
 
         assertEquals(1, move)
     }
+
+    @Test
+    fun `returns the user's input when it matches a valid PlayerType`() {
+        val simulatedInput = "easy"
+        System.setIn(ByteArrayInputStream(simulatedInput.toByteArray()))
+        val input = BufferedReader(InputStreamReader(System.`in`))
+        val consoleIO = ConsoleIO(input)
+        val boardPresenter = BoardPresenter3By3()
+        val displayer = Displayer(consoleIO, boardPresenter)
+        val inputValidator = InputValidator(consoleIO, displayer)
+
+        val player = inputValidator.validatePlayerSelection()
+
+
+        assertEquals("easy", player)
+    }
+
+    @Test
+    fun `prompts the user for input again when the PlayerType is invalid`() {
+        val simulatedInput = "none\nunbeatable"
+        System.setIn(ByteArrayInputStream(simulatedInput.toByteArray()))
+        val input = BufferedReader(InputStreamReader(System.`in`))
+        val consoleIO = ConsoleIO(input)
+        val boardPresenter = BoardPresenter3By3()
+        val displayer = Displayer(consoleIO, boardPresenter)
+        val inputValidator = InputValidator(consoleIO, displayer)
+
+        val player = inputValidator.validatePlayerSelection()
+
+
+        assertEquals("unbeatable", player)
+    }
 }
