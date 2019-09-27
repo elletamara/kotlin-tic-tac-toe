@@ -13,8 +13,8 @@ fun main() {
     val boardPresenter = BoardPresenter3By3()
     val displayer = Displayer(consoleIO, boardPresenter)
     val inputValidator = InputValidator(consoleIO, displayer)
-    val game = GameFactory(inputValidator, displayer).createGameWith3By3Grid()
-    val gameController = GameController(game, displayer)
+    val gameFactory = GameFactory(inputValidator, displayer)
+    val gameController = GameController(gameFactory, displayer)
 
     gameController.startGame()
 }

@@ -8,6 +8,8 @@ import player.PlayerFactory
 internal class GameFactory(val inputValidator: InputValidator, val displayer: Displayer) {
 
     fun createGameWith3By3Grid():Game {
+        displayer.welcomeMessage()
+
         val playerFactory = PlayerFactory(inputValidator, displayer)
         val player1selection = inputValidator.validatePlayerSelection()
         val player1 = playerFactory.createPlayer("x", player1selection)
