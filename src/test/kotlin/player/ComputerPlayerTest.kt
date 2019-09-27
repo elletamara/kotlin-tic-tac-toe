@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test
 
 import org.junit.jupiter.api.Assertions.*
 import player.moveStrategy.RandomMoveStrategy
+import player.moveStrategy.UnbeatableStrategy
 import java.io.BufferedReader
 import java.io.InputStreamReader
 
@@ -41,5 +42,33 @@ internal class ComputerPlayerTest {
         val playerMark = computerPlayer.getMark()
 
         assertEquals("x", playerMark)
+    }
+
+    @Test
+    fun `returns the PlayerType EASY`() {
+        val input = BufferedReader(InputStreamReader(System.`in`))
+        val consoleIO = ConsoleIO(input)
+        val boardPresenter = BoardPresenter3By3()
+        val displayer = Displayer(consoleIO, boardPresenter)
+        val strategy = RandomMoveStrategy()
+        val computerPlayer = ComputerPlayer("x", displayer, strategy)
+
+        val playerType = computerPlayer.getPlayerType()
+
+        assertEquals(PlayerType.EASY, playerType)
+    }
+
+    @Test
+    fun `returns the PlayerType UNBEATABLE`() {
+        val input = BufferedReader(InputStreamReader(System.`in`))
+        val consoleIO = ConsoleIO(input)
+        val boardPresenter = BoardPresenter3By3()
+        val displayer = Displayer(consoleIO, boardPresenter)
+        val strategy = UnbeatableStrategy()
+        val computerPlayer = ComputerPlayer("x", displayer, strategy)
+
+        val playerType = computerPlayer.getPlayerType()
+
+        assertEquals(PlayerType.UNBEATABLE, playerType)
     }
 }
