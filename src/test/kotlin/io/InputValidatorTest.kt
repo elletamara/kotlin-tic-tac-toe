@@ -50,7 +50,7 @@ internal class InputValidatorTest {
         val displayer = Displayer(consoleIO, boardPresenter)
         val inputValidator = InputValidator(consoleIO, displayer)
 
-        val player = inputValidator.validatePlayerSelection()
+        val player = inputValidator.validatePlayerSelection(1)
 
 
         assertEquals("easy", player)
@@ -66,7 +66,7 @@ internal class InputValidatorTest {
         val displayer = Displayer(consoleIO, boardPresenter)
         val inputValidator = InputValidator(consoleIO, displayer)
 
-        val player = inputValidator.validatePlayerSelection()
+        val player = inputValidator.validatePlayerSelection(2)
 
 
         assertEquals("unbeatable", player)

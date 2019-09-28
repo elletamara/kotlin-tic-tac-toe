@@ -13,6 +13,12 @@ internal class Displayer(private val consoleIO: ConsoleIO, private val boardPres
         clearScreen()
     }
 
+    fun playerSelectionMessage(playerNumber: Int) {
+        consoleIO.println(Prompt.CHOOSE_PLAYER_TYPE.string
+                + playerNumber
+                + Prompt.PLAYER_TYPES.string)
+    }
+
     fun playerTurnMessage(playersMark: String) {
         clearScreen()
         consoleIO.println(playersMark + Prompt.PLAYER_TURN.string)

@@ -5,7 +5,8 @@ import io.InputValidator
 import player.moveStrategy.RandomMoveStrategy
 import player.moveStrategy.UnbeatableStrategy
 
-internal class PlayerFactory(private val inputValidator: InputValidator, private val displayer: Displayer) {
+internal class PlayerFactory(
+    private val inputValidator: InputValidator, private val displayer: Displayer) {
 
     fun createPlayer(mark: String, playerTypeString: String): Player {
         return when(playerTypeString) {
