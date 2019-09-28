@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test
 
 import org.junit.jupiter.api.Assertions.*
 import player.moveStrategy.RandomMoveStrategy
+import player.moveStrategy.UnbeatableStrategy
 import java.io.BufferedReader
 import java.io.InputStreamReader
 
@@ -35,7 +36,7 @@ internal class ComputerPlayerTest {
         val consoleIO = ConsoleIO(input)
         val boardPresenter = BoardPresenter3By3()
         val displayer = Displayer(consoleIO, boardPresenter)
-        val strategy = RandomMoveStrategy()
+        val strategy = UnbeatableStrategy()
         val computerPlayer = ComputerPlayer("x", displayer, strategy)
 
         val playerMark = computerPlayer.getMark()

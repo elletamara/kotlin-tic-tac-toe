@@ -1,13 +1,8 @@
 [![Build Status](https://travis-ci.com/elletamara/kotlin-tic-tac-toe.svg?branch=master)](https://travis-ci.com/elletamara/kotlin-tic-tac-toe)
 # Kotlin Tic Tac Toe 
 
-A Kotlin application, which allows the user to play Tic Tac Toe on the command line.
-
-
-## Features 
-
-- Play a game of Tic Tac Toe against an unbeatable computer player
-
+- A Kotlin application, which allows the user to play Tic Tac Toe on the command line.
+- The user can select from various player types: human, easy computer or unbeatable computer.
 
 ## Getting Started
 
@@ -22,6 +17,15 @@ cd kotlin-tic-tac-toe
 ./gradlew clean build
 ./gradlew --console plain run
 ```
+
+## Game Play
+
+### Game Mode Selection
+- When starting the application, the user is prompted to enter their player type choices for both players
+- The user can select from the following player types:
+    - Human - the player will be prompted to select a move by entering 1 - 9
+    - Easy - a computer player, which selects an available move at random
+    - Unbeatable - a computer player, which uses the minimax algorithm to select an optimum move
 
 ## Testing
 - The testing framework used is [JUnit 5](https://junit.org/junit5/).

@@ -1,7 +1,6 @@
 package board
 
-import org.hamcrest.CoreMatchers.instanceOf
-import org.junit.Assert.assertThat
+import org.junit.Assert.assertTrue
 import org.junit.jupiter.api.Test
 
 
@@ -11,6 +10,6 @@ internal class BoardFactoryTest {
 
         val board = BoardFactory.createBoardWith3By3Grid()
 
-        assertThat(board, instanceOf(Board::class.java))
+        assertTrue(board is Board)
     }
 }

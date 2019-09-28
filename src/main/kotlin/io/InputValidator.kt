@@ -1,6 +1,7 @@
 package io
 
 import board.Board
+import player.PlayerType
 
 internal class InputValidator(private val consoleIO: ConsoleIO, private val displayer: Displayer) {
 
@@ -15,6 +16,18 @@ internal class InputValidator(private val consoleIO: ConsoleIO, private val disp
         }
 
         return move
+    }
+
+    fun validatePlayerSelection(playerNumber: Int): String {
+        displayer.playerSelectionMessage(playerNumber)
+        var input = getInput().toUpperCase()
+
+        while (PlayerType.values().none { it.name == input }) {
+            displayer.invalidPlayerSelectionMessage()
+            input = getInput().toUpperCase()
+        }
+
+        return input.toLowerCase()
     }
 
     private fun getMoveFromUser(): Int {
