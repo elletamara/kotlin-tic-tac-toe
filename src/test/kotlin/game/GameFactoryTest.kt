@@ -4,8 +4,7 @@ import io.BoardPresenter3By3
 import io.ConsoleIO
 import io.Displayer
 import io.InputValidator
-import junit.framework.Assert.assertTrue
-import org.junit.Assert
+import org.junit.Assert.assertTrue
 import org.junit.jupiter.api.Test
 import java.io.BufferedReader
 import java.io.ByteArrayInputStream

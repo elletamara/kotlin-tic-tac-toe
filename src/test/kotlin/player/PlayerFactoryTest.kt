@@ -33,7 +33,6 @@ internal class PlayerFactoryTest {
         val player = playerFactory.createPlayer("o", "computer")
 
         assertTrue(player is ComputerPlayer)
-        assertEquals(PlayerType.EASY, player.getPlayerType())
         assertEquals(player.getMark(), "o")
     }
 
@@ -44,7 +43,6 @@ internal class PlayerFactoryTest {
         val player = playerFactory.createPlayer("i", "unbeatable")
 
         assertTrue(player is ComputerPlayer)
-        assertEquals(PlayerType.UNBEATABLE, player.getPlayerType())
         assertEquals(player.getMark(), "i")
     }
 }
