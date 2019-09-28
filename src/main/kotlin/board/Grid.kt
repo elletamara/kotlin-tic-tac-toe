@@ -1,15 +1,17 @@
 package board
 
 internal interface Grid {
-    val winningCombinations: ArrayList<ArrayList<Int>>
+    val winningCombinations: Array<Array<Int>>
 
     fun getSquares(): ArrayList<Square>
 
-    fun getSquare(index: Int): Any
+    fun getSquareValue(index: Int): String
 
-    fun setSquare(index: Int, newValue: String)
+    fun setSquareValue(index: Int, value: String)
 
-    fun size():Int
+    fun size(): Int
 
     fun copy(): Grid
+
+    fun availableSquares(mark1: String, mark2: String): List<Square>
 }

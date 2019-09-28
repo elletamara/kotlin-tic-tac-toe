@@ -1,11 +1,10 @@
 package board
 
 internal class Square(private var value: String) {
-    fun setValue(newValue: String) {
-        this.value = newValue
-    }
 
-    fun getValue(): String = this.value
+    fun setValue(newValue: String) { value = newValue }
 
-    fun copy(): Square = Square(getValue())
+    fun getValue() = value
+
+    fun copy() = Square(getValue())
 }

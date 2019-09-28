@@ -10,11 +10,14 @@ import java.io.BufferedReader
 import java.io.InputStreamReader
 
 internal class PlayerFactoryTest {
-    private val input = BufferedReader(InputStreamReader(System.`in`))
-    private val consoleIO = ConsoleIO(input)
-    private val boardPresenter = BoardPresenter3By3()
-    private val displayer = Displayer(consoleIO, boardPresenter)
-    private val inputValidator = InputValidator(consoleIO, displayer)
+
+    private fun consoleIOSetup(): ConsoleIO {
+        val input = BufferedReader(InputStreamReader(System.`in`))
+        return ConsoleIO(input)
+    }
+
+    private val displayer = Displayer(consoleIOSetup(), BoardPresenter3By3())
+    private val inputValidator = InputValidator(consoleIOSetup(), displayer)
 
     @Test
     fun `returns a new instance of a human player, with the mark "x"`() {

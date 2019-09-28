@@ -28,7 +28,5 @@ internal class ConsoleIOTest {
         val userInput = consoleIO.getInput()
 
         assertEquals("goodbye", userInput)
-
     }
-
 }

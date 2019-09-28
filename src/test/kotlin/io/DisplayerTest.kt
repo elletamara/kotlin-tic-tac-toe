@@ -7,6 +7,7 @@ import board.Square
 import game.GameOutcome
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
+import player.PlayerMark
 import java.io.BufferedReader
 import java.io.ByteArrayOutputStream
 import java.io.InputStreamReader
@@ -18,12 +19,17 @@ internal class DisplayerTest {
         return "\u001b[H\u001b[2J\n"
     }
 
+    private fun displayerSetup(input: BufferedReader, output: ByteArrayOutputStream): Displayer {
+        val consoleIO = ConsoleIO(input, PrintStream(output))
+        val boardPresenter = BoardPresenter3By3()
+        return Displayer(consoleIO, boardPresenter)
+    }
+
     private fun fullGrid(): Grid {
         val squares: ArrayList<Square> = arrayListOf()
         val squareValues: Array<String> = arrayOf("x", "o", "o", "o", "x", "x", "o", "x", "o")
-        for(value in squareValues) {
-            squares.add(Square(value))
-        }
+        for(value in squareValues) squares.add(Square(value))
+
         return Grid3By3(squares)
     }
 
@@ -40,11 +46,9 @@ internal class DisplayerTest {
             
             
         """.trimIndent()
-        val output = ByteArrayOutputStream()
         val input = BufferedReader(InputStreamReader(System.`in`))
-        val consoleIO = ConsoleIO(input, PrintStream(output))
-        val boardPresenter = BoardPresenter3By3()
-        val displayer = Displayer(consoleIO, boardPresenter)
+        val output = ByteArrayOutputStream()
+        val displayer = displayerSetup(input, output)
         val board = BoardFactory.createBoardWith3By3Grid()
 
         displayer.humanPlayerMakeMoveMessages(board.getGrid())
@@ -65,11 +69,9 @@ internal class DisplayerTest {
             
             
         """.trimIndent()
-        val output = ByteArrayOutputStream()
         val input = BufferedReader(InputStreamReader(System.`in`))
-        val consoleIO = ConsoleIO(input, PrintStream(output))
-        val boardPresenter = BoardPresenter3By3()
-        val displayer = Displayer(consoleIO, boardPresenter)
+        val output = ByteArrayOutputStream()
+        val displayer = displayerSetup(input, output)
         val board = BoardFactory.createBoardWith3By3Grid()
 
         displayer.humanPlayerMakeMoveMessages(board.getGrid(), false)
@@ -91,11 +93,9 @@ internal class DisplayerTest {
             
             
         """.trimIndent()
-        val output = ByteArrayOutputStream()
         val input = BufferedReader(InputStreamReader(System.`in`))
-        val consoleIO = ConsoleIO(input, PrintStream(output))
-        val boardPresenter = BoardPresenter3By3()
-        val displayer = Displayer(consoleIO, boardPresenter)
+        val output = ByteArrayOutputStream()
+        val displayer = displayerSetup(input, output)
         val board = BoardFactory.createBoardWith3By3Grid()
 
         displayer.computerPlayerMakeMoveMessages(board.getGrid(), "x")
@@ -105,25 +105,21 @@ internal class DisplayerTest {
 
     @Test
     fun `outputs 'Please select the player type for player 1'`() {
-        val output = ByteArrayOutputStream()
         val input = BufferedReader(InputStreamReader(System.`in`))
-        val consoleIO = ConsoleIO(input, PrintStream(output))
-        val boardPresenter = BoardPresenter3By3()
-        val displayer = Displayer(consoleIO, boardPresenter)
+        val output = ByteArrayOutputStream()
+        val displayer = displayerSetup(input, output)
 
-        displayer.playerSelectionMessage(1)
+        displayer.playerSelectionMessage(1, PlayerMark.ONE.string)
 
-        assertTrue(output.toString().contains("Please select the player type for player 1"))
+        assertTrue(output.toString().contains("Please select the player type for player 1 (X)"))
         assertTrue(output.toString().contains("Human, Easy, or Unbeatable:"))
     }
 
     @Test
     fun `outputs 'That's an invalid player type Please try again'`() {
-        val output = ByteArrayOutputStream()
         val input = BufferedReader(InputStreamReader(System.`in`))
-        val consoleIO = ConsoleIO(input, PrintStream(output))
-        val boardPresenter = BoardPresenter3By3()
-        val displayer = Displayer(consoleIO, boardPresenter)
+        val output = ByteArrayOutputStream()
+        val displayer = displayerSetup(input, output)
 
         displayer.invalidPlayerSelectionMessage()
 
@@ -132,11 +128,9 @@ internal class DisplayerTest {
 
     @Test
     fun `outputs 'x is thinking Please wait'`() {
-        val output = ByteArrayOutputStream()
         val input = BufferedReader(InputStreamReader(System.`in`))
-        val consoleIO = ConsoleIO(input, PrintStream(output))
-        val boardPresenter = BoardPresenter3By3()
-        val displayer = Displayer(consoleIO, boardPresenter)
+        val output = ByteArrayOutputStream()
+        val displayer = displayerSetup(input, output)
 
         displayer.computerIsThinkingMessage("x")
 
@@ -146,11 +140,9 @@ internal class DisplayerTest {
     @Test
     fun `outputs "Congratulations x, you're the winner!" when x has won `() {
         val expectedOutput = "Congratulations x, you're the winner!\n"
-        val output = ByteArrayOutputStream()
         val input = BufferedReader(InputStreamReader(System.`in`))
-        val consoleIO = ConsoleIO(input, PrintStream(output))
-        val boardPresenter = BoardPresenter3By3()
-        val displayer = Displayer(consoleIO, boardPresenter)
+        val output = ByteArrayOutputStream()
+        val displayer = displayerSetup(input, output)
         val grid = fullGrid()
         val outcome = "x"
 
@@ -162,11 +154,9 @@ internal class DisplayerTest {
     @Test
     fun `returns "It's a tie!" when the game is a tie `() {
         val expectedOutput = "It's a tie!\n"
-        val output = ByteArrayOutputStream()
         val input = BufferedReader(InputStreamReader(System.`in`))
-        val consoleIO = ConsoleIO(input, PrintStream(output))
-        val boardPresenter = BoardPresenter3By3()
-        val displayer = Displayer(consoleIO, boardPresenter)
+        val output = ByteArrayOutputStream()
+        val displayer = displayerSetup(input, output)
         val outcome = GameOutcome.TIE.string
         val grid = fullGrid()
 
@@ -177,11 +167,9 @@ internal class DisplayerTest {
 
     @Test
     fun `displays "x, it's your turn!`() {
-        val output = ByteArrayOutputStream()
         val input = BufferedReader(InputStreamReader(System.`in`))
-        val consoleIO = ConsoleIO(input, PrintStream(output))
-        val boardPresenter = BoardPresenter3By3()
-        val displayer = Displayer(consoleIO, boardPresenter)
+        val output = ByteArrayOutputStream()
+        val displayer = displayerSetup(input, output)
 
         displayer.playerTurnMessage("x")
 
@@ -191,11 +179,9 @@ internal class DisplayerTest {
 
     @Test
     fun `displays "Hello! Welcome to Elle's Tic Tac Toe!"`() {
-        val output = ByteArrayOutputStream()
         val input = BufferedReader(InputStreamReader(System.`in`))
-        val consoleIO = ConsoleIO(input, PrintStream(output))
-        val boardPresenter = BoardPresenter3By3()
-        val displayer = Displayer(consoleIO, boardPresenter)
+        val output = ByteArrayOutputStream()
+        val displayer = displayerSetup(input, output)
 
         displayer.welcomeMessage()
 
@@ -206,11 +192,9 @@ internal class DisplayerTest {
 
     @Test
     fun `displays "Thanks for playing Elle's Tic Tac Toe!"`() {
-        val output = ByteArrayOutputStream()
         val input = BufferedReader(InputStreamReader(System.`in`))
-        val consoleIO = ConsoleIO(input, PrintStream(output))
-        val boardPresenter = BoardPresenter3By3()
-        val displayer = Displayer(consoleIO, boardPresenter)
+        val output = ByteArrayOutputStream()
+        val displayer = displayerSetup(input, output)
 
         displayer.goodbyeMessage()
 

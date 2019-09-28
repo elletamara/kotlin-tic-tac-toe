@@ -3,7 +3,9 @@ package io
 import board.Grid
 import game.GameOutcome
 
-internal class Displayer(private val consoleIO: ConsoleIO, private val boardPresenter: BoardPresenter) {
+internal class Displayer(
+    private val consoleIO: ConsoleIO, private val boardPresenter: BoardPresenter) {
+
     private val clearScreen: String = "\u001b[H\u001b[2J"
     private val newLine: String = "\n"
 
@@ -14,9 +16,9 @@ internal class Displayer(private val consoleIO: ConsoleIO, private val boardPres
         clearScreen()
     }
 
-    fun playerSelectionMessage(playerNumber: Int) {
+    fun playerSelectionMessage(playerNumber: Int, playerMark: String) {
         consoleIO.println(Prompt.CHOOSE_PLAYER_TYPE.string
-                + playerNumber
+                + ("$playerNumber ($playerMark)")
                 + newLine
                 + Prompt.PLAYER_TYPES.string)
     }
@@ -35,7 +37,6 @@ internal class Displayer(private val consoleIO: ConsoleIO, private val boardPres
             true -> consoleIO.println(Prompt.CHOOSE_MOVE.string)
             false -> consoleIO.println(ErrorMessage.INVALID_MOVE.string)
         }
-
         showGrid(grid)
     }
 

@@ -1,43 +1,35 @@
 package board
 
-import org.hamcrest.core.IsInstanceOf
-import org.junit.Assert
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
 internal class BoardTest {
-    private fun defaultSquares(): ArrayList<Square> {
-        return SquaresGenerator.generateNineSquares()
-    }
 
-    private fun defaultGrid(): Grid {
-        return Grid3By3(defaultSquares())
-    }
+    private fun defaultSquares() = SquaresGenerator.generateNineSquares()
+
+    private fun defaultGrid() = Grid3By3(defaultSquares())
 
     private fun fullGrid(): Grid {
         val squares: ArrayList<Square> = arrayListOf()
         val squareValues: Array<String> = arrayOf("x", "o", "o", "o", "x", "x", "o", "x", "o")
-        for(value in squareValues) {
-            squares.add(Square(value))
-        }
+        for(value in squareValues) squares.add(Square(value))
+
         return Grid3By3(squares)
     }
 
     private fun gridWithOneAvailableSquare(): Grid {
         val squares: ArrayList<Square> = arrayListOf()
         val squareValues: Array<String> = arrayOf("1", "o", "o", "o", "x", "x", "o", "x", "o")
-        for(value in squareValues) {
-            squares.add(Square(value))
-        }
+        for(value in squareValues) squares.add(Square(value))
+
         return Grid3By3(squares)
     }
 
     private fun gridWithWinningCombination(): Grid {
         val squares: ArrayList<Square> = arrayListOf()
         val squareValues: Array<String> = arrayOf("x", "x", "x", "o", "o", "6", "o", "8", "9")
-        for(value in squareValues) {
-            squares.add(Square(value))
-        }
+        for(value in squareValues) squares.add(Square(value))
+
         return Grid3By3(squares)
     }
 
@@ -56,17 +48,17 @@ internal class BoardTest {
 
         board.takeSquare(5, "x")
 
-        assertEquals(grid.getSquare(4), "x")
+        assertEquals(grid.getSquareValue(4), "x")
     }
 
     @Test
-    fun `returns true when the position exists`() {
+    fun `returns true when the move is valid`() {
         val grid = defaultGrid()
         val board = Board(grid)
 
-        val isPositionValid = board.isMoveValid(4, "x", "o")
+        val isMoveValid = board.isMoveValid(4)
 
-        assertTrue(isPositionValid)
+        assertTrue(isMoveValid)
     }
 
     @Test
@@ -74,9 +66,9 @@ internal class BoardTest {
         val grid = defaultGrid()
         val board = Board(grid)
 
-        val isPositionValid = board.isMoveValid(10, "x", "o")
+        val isMoveValid = board.isMoveValid(10)
 
-        assertFalse(isPositionValid)
+        assertFalse(isMoveValid)
     }
 
     @Test
@@ -84,9 +76,9 @@ internal class BoardTest {
         val grid = defaultGrid()
         val board = Board(grid)
 
-        val isSquareAvailable = board.isMoveValid(1, "x", "o")
+        val isMoveValid = board.isMoveValid(1)
 
-        assertTrue(isSquareAvailable)
+        assertTrue(isMoveValid)
     }
 
     @Test
@@ -95,9 +87,9 @@ internal class BoardTest {
         val board = Board(grid)
         board.takeSquare(1, "x")
 
-        val isSquareAvailable = board.isMoveValid(1, "x", "o")
+        val isMoveValid = board.isMoveValid(1)
 
-        assertFalse(isSquareAvailable)
+        assertFalse(isMoveValid)
     }
 
     @Test
@@ -211,8 +203,7 @@ internal class BoardTest {
         assertNotEquals(board, boardCopy)
         assertNotEquals(board.getGrid(), boardCopy.getGrid())
         assertNotEquals(board.getGrid().getSquares(), boardCopy.getGrid().getSquares())
-        assertNotEquals(board.getGrid().getSquares()[1], boardCopy.getGrid().getSquares()[1])
-        assertEquals(board.getGrid().getSquares()[1].getValue(), board.getGrid().getSquares()[1].getValue())
-        Assert.assertThat(boardCopy, IsInstanceOf.instanceOf(Board::class.java))
+        assertEquals(board.getGrid().getSquareValue(1), boardCopy.getGrid().getSquareValue(1))
+        assertTrue(boardCopy is Board)
     }
 }
