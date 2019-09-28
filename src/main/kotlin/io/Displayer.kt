@@ -5,6 +5,7 @@ import game.GameOutcome
 
 internal class Displayer(private val consoleIO: ConsoleIO, private val boardPresenter: BoardPresenter) {
     private val clearScreen: String = "\u001b[H\u001b[2J"
+    private val newLine: String = "\n"
 
     fun welcomeMessage() {
         clearScreen()
@@ -16,7 +17,12 @@ internal class Displayer(private val consoleIO: ConsoleIO, private val boardPres
     fun playerSelectionMessage(playerNumber: Int) {
         consoleIO.println(Prompt.CHOOSE_PLAYER_TYPE.string
                 + playerNumber
+                + newLine
                 + Prompt.PLAYER_TYPES.string)
+    }
+
+    fun invalidPlayerSelectionMessage() {
+        consoleIO.println(ErrorMessage.INVALID_PLAYER_TYPE.string)
     }
 
     fun playerTurnMessage(playersMark: String) {

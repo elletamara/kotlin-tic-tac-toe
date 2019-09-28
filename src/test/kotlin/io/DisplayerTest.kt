@@ -118,6 +118,19 @@ internal class DisplayerTest {
     }
 
     @Test
+    fun `outputs 'That's an invalid player type Please try again'`() {
+        val output = ByteArrayOutputStream()
+        val input = BufferedReader(InputStreamReader(System.`in`))
+        val consoleIO = ConsoleIO(input, PrintStream(output))
+        val boardPresenter = BoardPresenter3By3()
+        val displayer = Displayer(consoleIO, boardPresenter)
+
+        displayer.invalidPlayerSelectionMessage()
+
+        assertTrue(output.toString().contains("That's an invalid player type. Please try again."))
+    }
+
+    @Test
     fun `outputs 'x is thinking Please wait'`() {
         val output = ByteArrayOutputStream()
         val input = BufferedReader(InputStreamReader(System.`in`))

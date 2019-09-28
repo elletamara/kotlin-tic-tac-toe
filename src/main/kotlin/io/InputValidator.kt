@@ -23,7 +23,7 @@ internal class InputValidator(private val consoleIO: ConsoleIO, private val disp
         var input = getInput().toUpperCase()
 
         while (PlayerType.values().none { it.name == input }) {
-            println("Invalid player type")
+            displayer.invalidPlayerSelectionMessage()
             input = getInput().toUpperCase()
         }
 
