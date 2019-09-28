@@ -4,6 +4,7 @@ import io.BoardPresenter3By3
 import io.ConsoleIO
 import io.Displayer
 import io.InputValidator
+import junit.framework.Assert.assertTrue
 import org.junit.Assert
 import org.junit.jupiter.api.Test
 import java.io.BufferedReader
@@ -24,6 +25,6 @@ internal class GameFactoryTest {
 
         val game = gameFactory.createGameWith3By3Grid()
 
-        Assert.assertTrue(game is Game)
+        assertTrue(game is Game)
     }
 }
