@@ -6,6 +6,7 @@ import board.Grid3By3
 import board.Square
 import game.GameOutcome
 import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import player.PlayerMark
 import java.io.BufferedReader
@@ -33,9 +34,12 @@ internal class DisplayerTest {
         return Grid3By3(squares)
     }
 
-    @Test
-    fun `displays the move prompt and the grid when the move is valid`() {
-        val expectedOutput = """
+    @Nested
+    inner class HumanPlayerMakeMoveMessages {
+
+        @Test
+        fun `displays the move prompt and the grid when the move is valid`() {
+            val expectedOutput = """
             Select an available move:
             
             1 | 2 | 3
@@ -46,20 +50,20 @@ internal class DisplayerTest {
             
             
         """.trimIndent()
-        val input = BufferedReader(InputStreamReader(System.`in`))
-        val output = ByteArrayOutputStream()
-        val displayer = displayerSetup(input, output)
-        val board = BoardFactory.createBoardWith3By3Grid()
+            val input = BufferedReader(InputStreamReader(System.`in`))
+            val output = ByteArrayOutputStream()
+            val displayer = displayerSetup(input, output)
+            val board = BoardFactory.createBoardWith3By3Grid()
 
-        displayer.humanPlayerMakeMoveMessages(board.getGrid())
+            displayer.humanPlayerMakeMoveMessages(board.getGrid())
 
-        assertEquals(expectedOutput, output.toString())
+            assertEquals(expectedOutput, output.toString())
+        }
 
-    }
 
-    @Test
-    fun `displays the error message when the move is invalid`() {
-        val expectedOutput = """
+        @Test
+        fun `displays the error message when the move is invalid`() {
+            val expectedOutput = """
             That's an invalid move. Please try again.
             1 | 2 | 3
             ---------
@@ -69,19 +73,23 @@ internal class DisplayerTest {
             
             
         """.trimIndent()
-        val input = BufferedReader(InputStreamReader(System.`in`))
-        val output = ByteArrayOutputStream()
-        val displayer = displayerSetup(input, output)
-        val board = BoardFactory.createBoardWith3By3Grid()
+            val input = BufferedReader(InputStreamReader(System.`in`))
+            val output = ByteArrayOutputStream()
+            val displayer = displayerSetup(input, output)
+            val board = BoardFactory.createBoardWith3By3Grid()
 
-        displayer.humanPlayerMakeMoveMessages(board.getGrid(), false)
+            displayer.humanPlayerMakeMoveMessages(board.getGrid(), false)
 
-        assertEquals(expectedOutput, output.toString())
+            assertEquals(expectedOutput, output.toString())
+        }
     }
 
-    @Test
-    fun `displays the move prompt and the grid`() {
-        val expectedOutput = clearScreen() + """
+    @Nested
+    inner class ComputerPlayerMakeMoveMessages {
+
+        @Test
+        fun `displays the move prompt and the grid`() {
+            val expectedOutput = clearScreen() + """
             x, it's your turn!
             Select an available move:
             
@@ -93,111 +101,144 @@ internal class DisplayerTest {
             
             
         """.trimIndent()
-        val input = BufferedReader(InputStreamReader(System.`in`))
-        val output = ByteArrayOutputStream()
-        val displayer = displayerSetup(input, output)
-        val board = BoardFactory.createBoardWith3By3Grid()
+            val input = BufferedReader(InputStreamReader(System.`in`))
+            val output = ByteArrayOutputStream()
+            val displayer = displayerSetup(input, output)
+            val board = BoardFactory.createBoardWith3By3Grid()
 
-        displayer.computerPlayerMakeMoveMessages(board.getGrid(), "x")
+            displayer.computerPlayerMakeMoveMessages(board.getGrid(), "x")
 
-        assertEquals(expectedOutput, output.toString())
+            assertEquals(expectedOutput, output.toString())
+        }
     }
 
-    @Test
-    fun `outputs 'Please select the player type for player 1'`() {
-        val input = BufferedReader(InputStreamReader(System.`in`))
-        val output = ByteArrayOutputStream()
-        val displayer = displayerSetup(input, output)
+    @Nested
+    inner class PlayerSelectionMessage {
 
-        displayer.playerSelectionMessage(1, PlayerMark.ONE.string)
+        @Test
+        fun `outputs 'Please select the player type for player 1'`() {
+            val input = BufferedReader(InputStreamReader(System.`in`))
+            val output = ByteArrayOutputStream()
+            val displayer = displayerSetup(input, output)
 
-        assertTrue(output.toString().contains("Please select the player type for player 1 (X)"))
-        assertTrue(output.toString().contains("Human, Easy, or Unbeatable:"))
+            displayer.playerSelectionMessage(1, PlayerMark.ONE.string)
+
+            assertTrue(output.toString().contains("Please select the player type for player 1 (X)"))
+            assertTrue(output.toString().contains("Human, Easy, or Unbeatable:"))
+        }
     }
 
-    @Test
-    fun `outputs 'That's an invalid player type Please try again'`() {
-        val input = BufferedReader(InputStreamReader(System.`in`))
-        val output = ByteArrayOutputStream()
-        val displayer = displayerSetup(input, output)
+    @Nested
+    inner class InvalidPlayerSelectionMessage {
 
-        displayer.invalidPlayerSelectionMessage()
+        @Test
+        fun `outputs 'That's an invalid player type Please try again'`() {
+            val input = BufferedReader(InputStreamReader(System.`in`))
+            val output = ByteArrayOutputStream()
+            val displayer = displayerSetup(input, output)
 
-        assertTrue(output.toString().contains("That's an invalid player type. Please try again."))
+            displayer.invalidPlayerSelectionMessage()
+
+            assertTrue(output.toString().contains("That's an invalid player type. Please try again."))
+        }
     }
 
-    @Test
-    fun `outputs 'x is thinking Please wait'`() {
-        val input = BufferedReader(InputStreamReader(System.`in`))
-        val output = ByteArrayOutputStream()
-        val displayer = displayerSetup(input, output)
+    @Nested
+    inner class ComputerIsThinkingMessage {
 
-        displayer.computerIsThinkingMessage("x")
+        @Test
+        fun `outputs 'x is thinking Please wait'`() {
+            val input = BufferedReader(InputStreamReader(System.`in`))
+            val output = ByteArrayOutputStream()
+            val displayer = displayerSetup(input, output)
 
-        assertEquals("x is thinking. Please wait...\n", output.toString())
+            displayer.computerIsThinkingMessage("x")
+
+            assertEquals("x is thinking. Please wait...\n", output.toString())
+        }
     }
 
-    @Test
-    fun `outputs "Congratulations x, you're the winner!" when x has won `() {
-        val expectedOutput = "Congratulations x, you're the winner!\n"
-        val input = BufferedReader(InputStreamReader(System.`in`))
-        val output = ByteArrayOutputStream()
-        val displayer = displayerSetup(input, output)
-        val grid = fullGrid()
-        val outcome = "x"
+    @Nested
+    inner class GameOutcomeMessage {
 
-        displayer.gameOutcomeMessage(grid, outcome)
+        @Test
+        fun `outputs "Congratulations x, you're the winner!" when x has won `() {
+            val expectedOutput = "Congratulations x, you're the winner!\n"
+            val input = BufferedReader(InputStreamReader(System.`in`))
+            val output = ByteArrayOutputStream()
+            val displayer = displayerSetup(input, output)
+            val grid = fullGrid()
+            val outcome = "x"
 
-        assertTrue(expectedOutput in output.toString())
+            displayer.gameOutcomeMessage(grid, outcome)
+
+            assertTrue(expectedOutput in output.toString())
+        }
+
+        @Test
+        fun `returns "It's a tie!" when the game is a tie `() {
+            val expectedOutput = "It's a tie!\n"
+            val input = BufferedReader(InputStreamReader(System.`in`))
+            val output = ByteArrayOutputStream()
+            val displayer = displayerSetup(input, output)
+            val outcome = GameOutcome.TIE.string
+            val grid = fullGrid()
+
+            displayer.gameOutcomeMessage(grid, outcome)
+
+            assertTrue(expectedOutput in output.toString())
+        }
     }
 
-    @Test
-    fun `returns "It's a tie!" when the game is a tie `() {
-        val expectedOutput = "It's a tie!\n"
-        val input = BufferedReader(InputStreamReader(System.`in`))
-        val output = ByteArrayOutputStream()
-        val displayer = displayerSetup(input, output)
-        val outcome = GameOutcome.TIE.string
-        val grid = fullGrid()
+    @Nested
+    inner class PlayerTurnMessage {
 
-        displayer.gameOutcomeMessage(grid, outcome)
+        @Test
+        fun `displays "x, it's your turn!`() {
+            val input = BufferedReader(InputStreamReader(System.`in`))
+            val output = ByteArrayOutputStream()
+            val displayer = displayerSetup(input, output)
 
-        assertTrue(expectedOutput in output.toString())
+            displayer.playerTurnMessage("x")
+
+            assertEquals(
+                clearScreen() +
+                        "x, it's your turn!\n", output.toString()
+            )
+        }
     }
 
-    @Test
-    fun `displays "x, it's your turn!`() {
-        val input = BufferedReader(InputStreamReader(System.`in`))
-        val output = ByteArrayOutputStream()
-        val displayer = displayerSetup(input, output)
+    @Nested
+    inner class WelcomeMessage {
 
-        displayer.playerTurnMessage("x")
+        @Test
+        fun `displays "Hello! Welcome to Elle's Tic Tac Toe!"`() {
+            val input = BufferedReader(InputStreamReader(System.`in`))
+            val output = ByteArrayOutputStream()
+            val displayer = displayerSetup(input, output)
 
-        assertEquals(clearScreen() +
-                "x, it's your turn!\n", output.toString())
+            displayer.welcomeMessage()
+
+            assertEquals(
+                clearScreen() +
+                        "Hello! Welcome to Elle's Tic Tac Toe.\n\n" +
+                        clearScreen(), output.toString()
+            )
+        }
     }
 
-    @Test
-    fun `displays "Hello! Welcome to Elle's Tic Tac Toe!"`() {
-        val input = BufferedReader(InputStreamReader(System.`in`))
-        val output = ByteArrayOutputStream()
-        val displayer = displayerSetup(input, output)
+    @Nested
+    inner class GoodbyeMessage {
 
-        displayer.welcomeMessage()
+        @Test
+        fun `displays "Thanks for playing Elle's Tic Tac Toe!"`() {
+            val input = BufferedReader(InputStreamReader(System.`in`))
+            val output = ByteArrayOutputStream()
+            val displayer = displayerSetup(input, output)
 
-        assertEquals(clearScreen() +
-                "Hello! Welcome to Elle's Tic Tac Toe.\n\n" +
-                clearScreen(), output.toString())
-    }
+            displayer.goodbyeMessage()
 
-    @Test
-    fun `displays "Thanks for playing Elle's Tic Tac Toe!"`() {
-        val input = BufferedReader(InputStreamReader(System.`in`))
-        val output = ByteArrayOutputStream()
-        val displayer = displayerSetup(input, output)
-
-        displayer.goodbyeMessage()
-
-        assertEquals("Thanks for playing Elle's Tic Tac Toe!\n\n", output.toString())
+            assertEquals("Thanks for playing Elle's Tic Tac Toe!\n\n", output.toString())
+        }
     }
 }

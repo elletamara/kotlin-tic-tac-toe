@@ -4,6 +4,7 @@ import board.*
 import org.junit.jupiter.api.Test
 
 import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Nested
 
 internal class RandomMoveStrategyTest {
 
@@ -17,29 +18,33 @@ internal class RandomMoveStrategyTest {
         return Grid3By3(squares)
     }
 
-    @Test
-    fun `returns a random available position from an empty grid, as an integer`() {
-        val grid = gridWithEmptySquares()
-        val currentPlayersMark = "x"
-        val opponentsMark = "o"
-        val board = Board(grid)
-        val strategy = RandomMoveStrategy()
+    @Nested
+    inner class GetMove {
 
-        val move = strategy.getMove(board, currentPlayersMark, opponentsMark)
+        @Test
+        fun `returns a random available position from an empty grid, as an integer`() {
+            val grid = gridWithEmptySquares()
+            val currentPlayersMark = "x"
+            val opponentsMark = "o"
+            val board = Board(grid)
+            val strategy = RandomMoveStrategy()
 
-        assertTrue(move in 1..9)
-    }
+            val move = strategy.getMove(board, currentPlayersMark, opponentsMark)
 
-    @Test
-    fun `returns a random available position from a grid with unavailable positions`() {
-        val grid = gridWithTakenSquares()
-        val currentPlayersMark = "x"
-        val opponentsMark = "o"
-        val board = Board(grid)
-        val strategy = RandomMoveStrategy()
+            assertTrue(move in 1..9)
+        }
 
-        val move = strategy.getMove(board, currentPlayersMark, opponentsMark)
+        @Test
+        fun `returns a random available position from a grid with unavailable positions`() {
+            val grid = gridWithTakenSquares()
+            val currentPlayersMark = "x"
+            val opponentsMark = "o"
+            val board = Board(grid)
+            val strategy = RandomMoveStrategy()
 
-        assertTrue(move in 3..6)
+            val move = strategy.getMove(board, currentPlayersMark, opponentsMark)
+
+            assertTrue(move in 3..6)
+        }
     }
 }

@@ -5,62 +5,67 @@ import io.ConsoleIO
 import io.Displayer
 import io.InputValidator
 import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import java.io.*
 
 internal class GameControllerTest {
 
-    @Test
-    fun `displays the winner outcome message when a player has won`() {
-        val output = ByteArrayOutputStream()
-        val simulatedInput = ("human" + System.getProperty("line.separator")
-                + "human" + System.getProperty("line.separator")
-                + "1" + System.getProperty("line.separator")
-                + "4" + System.getProperty("line.separator")
-                + "2" + System.getProperty("line.separator")
-                + "5" + System.getProperty("line.separator")
-                + "3" + System.getProperty("line.separator"))
-        System.setIn(ByteArrayInputStream(simulatedInput.toByteArray()))
-        val input = BufferedReader(InputStreamReader(System.`in`))
-        val consoleIO = ConsoleIO(input, PrintStream(output))
-        val boardPresenter = BoardPresenter3By3()
-        val displayer = Displayer(consoleIO, boardPresenter)
-        val inputValidator = InputValidator(consoleIO, displayer)
-        val gameFactory = GameFactory(inputValidator, displayer)
-        val gameController = GameController(gameFactory, displayer)
+    @Nested
+    inner class StartGame {
 
-        gameController.startGame()
+        @Test
+        fun `displays the winner outcome message when a player has won`() {
+            val output = ByteArrayOutputStream()
+            val simulatedInput = ("human" + System.getProperty("line.separator")
+                    + "human" + System.getProperty("line.separator")
+                    + "1" + System.getProperty("line.separator")
+                    + "4" + System.getProperty("line.separator")
+                    + "2" + System.getProperty("line.separator")
+                    + "5" + System.getProperty("line.separator")
+                    + "3" + System.getProperty("line.separator"))
+            System.setIn(ByteArrayInputStream(simulatedInput.toByteArray()))
+            val input = BufferedReader(InputStreamReader(System.`in`))
+            val consoleIO = ConsoleIO(input, PrintStream(output))
+            val boardPresenter = BoardPresenter3By3()
+            val displayer = Displayer(consoleIO, boardPresenter)
+            val inputValidator = InputValidator(consoleIO, displayer)
+            val gameFactory = GameFactory(inputValidator, displayer)
+            val gameController = GameController(gameFactory, displayer)
 
-        assertTrue("Hello! Welcome to Elle's Tic Tac Toe.\n" in output.toString())
-        assertTrue("Congratulations X, you're the winner!" in output.toString())
-    }
+            gameController.startGame()
 
-    @Test
-    fun `displays the tie outcome message when the game is a tie`() {
-        val output = ByteArrayOutputStream()
-        val simulatedInput = ("human" + System.getProperty("line.separator")
-                + "human" + System.getProperty("line.separator")
-                + "1" + System.getProperty("line.separator")
-                + "5" + System.getProperty("line.separator")
-                + "2" + System.getProperty("line.separator")
-                + "3" + System.getProperty("line.separator")
-                + "6" + System.getProperty("line.separator")
-                + "4" + System.getProperty("line.separator")
-                + "7" + System.getProperty("line.separator")
-                + "8" + System.getProperty("line.separator")
-                + "9" + System.getProperty("line.separator"))
-        System.setIn(ByteArrayInputStream(simulatedInput.toByteArray()))
-        val input = BufferedReader(InputStreamReader(System.`in`))
-        val consoleIO = ConsoleIO(input, PrintStream(output))
-        val boardPresenter = BoardPresenter3By3()
-        val displayer = Displayer(consoleIO, boardPresenter)
-        val inputValidator = InputValidator(consoleIO, displayer)
-        val gameFactory = GameFactory(inputValidator, displayer)
-        val gameController = GameController(gameFactory, displayer)
+            assertTrue("Hello! Welcome to Elle's Tic Tac Toe.\n" in output.toString())
+            assertTrue("Congratulations X, you're the winner!" in output.toString())
+        }
 
-        gameController.startGame()
+        @Test
+        fun `displays the tie outcome message when the game is a tie`() {
+            val output = ByteArrayOutputStream()
+            val simulatedInput = ("human" + System.getProperty("line.separator")
+                    + "human" + System.getProperty("line.separator")
+                    + "1" + System.getProperty("line.separator")
+                    + "5" + System.getProperty("line.separator")
+                    + "2" + System.getProperty("line.separator")
+                    + "3" + System.getProperty("line.separator")
+                    + "6" + System.getProperty("line.separator")
+                    + "4" + System.getProperty("line.separator")
+                    + "7" + System.getProperty("line.separator")
+                    + "8" + System.getProperty("line.separator")
+                    + "9" + System.getProperty("line.separator"))
+            System.setIn(ByteArrayInputStream(simulatedInput.toByteArray()))
+            val input = BufferedReader(InputStreamReader(System.`in`))
+            val consoleIO = ConsoleIO(input, PrintStream(output))
+            val boardPresenter = BoardPresenter3By3()
+            val displayer = Displayer(consoleIO, boardPresenter)
+            val inputValidator = InputValidator(consoleIO, displayer)
+            val gameFactory = GameFactory(inputValidator, displayer)
+            val gameController = GameController(gameFactory, displayer)
 
-        assertTrue("Hello! Welcome to Elle's Tic Tac Toe.\n" in output.toString())
-        assertTrue("It's a tie!" in output.toString())
+            gameController.startGame()
+
+            assertTrue("Hello! Welcome to Elle's Tic Tac Toe.\n" in output.toString())
+            assertTrue("It's a tie!" in output.toString())
+        }
     }
 }

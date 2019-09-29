@@ -3,7 +3,7 @@ package io
 import java.io.BufferedReader
 import java.io.PrintStream
 
-class ConsoleIO(
+internal class ConsoleIO(
     private val input: BufferedReader, private val output: PrintStream = PrintStream(System.out)) {
 
     private val emptyString: String = ""

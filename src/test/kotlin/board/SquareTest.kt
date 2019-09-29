@@ -1,32 +1,46 @@
 package board
 
 import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 
 internal class SquareTest {
-    @Test
-    fun `returns the value of the square`() {
-        val square = Square("7")
 
-        assertEquals(square.getValue(), "7")
+    @Nested
+    inner class GetValue {
+
+        @Test
+        fun `returns the value of the square`() {
+            val square = Square("7")
+
+            assertEquals(square.getValue(), "7")
+        }
     }
 
-    @Test
-    fun `sets the value of the square`() {
-        val square = Square("7")
+    @Nested
+    inner class SetValue {
 
-        square.setValue("x")
+        @Test
+        fun `sets the value of the square`() {
+            val square = Square("7")
 
-        assertEquals(square.getValue(), "x")
+            square.setValue("x")
+
+            assertEquals(square.getValue(), "x")
+        }
     }
 
-    @Test
-    fun `copies the value of the square into a new instance of Square`() {
-        val square = Square("7")
+    @Nested
+    inner class Copy {
 
-        val squareCopy = square.copy()
+        @Test
+        fun `copies the value of the square into a new instance of Square`() {
+            val square = Square("7")
 
-        assertEquals(square.getValue(), squareCopy.getValue())
-        assertNotEquals(square, squareCopy)
+            val squareCopy = square.copy()
+
+            assertEquals(square.getValue(), squareCopy.getValue())
+            assertNotEquals(square, squareCopy)
+        }
     }
 }

@@ -55,9 +55,9 @@ internal class Displayer(
         clearScreen()
         showGrid(grid)
 
-        when (outcome == GameOutcome.TIE.string) {
-            true -> consoleIO.println(GameOutcomeMessage.TIE.string)
-            false -> consoleIO.println(GameOutcomeMessage.CONGRATS.string +
+        when (outcome) {
+            GameOutcome.TIE.string -> consoleIO.println(GameOutcomeMessage.TIE.string)
+            else -> consoleIO.println(GameOutcomeMessage.CONGRATS.string +
                     outcome + GameOutcomeMessage.WINNER.string)
         }
     }

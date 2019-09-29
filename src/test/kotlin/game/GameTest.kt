@@ -6,6 +6,7 @@ import io.ConsoleIO
 import io.Displayer
 import io.InputValidator
 import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import player.HumanPlayer
 import java.io.BufferedReader
@@ -27,137 +28,157 @@ internal class GameTest {
         return ConsoleIO(input)
     }
 
-    @Test
-    fun `puts the player's mark on the board at position 2`() {
-        val consoleIO = consoleIOSetup("2")
-        val board = BoardFactory.createBoardWith3By3Grid()
-        val boardPresenter = BoardPresenter3By3()
-        val displayer = Displayer(consoleIO, boardPresenter)
-        val inputValidator = InputValidator(consoleIO, displayer)
-        val player1 = HumanPlayer("x", inputValidator)
-        val player2 = HumanPlayer("o", inputValidator)
-        val game = Game(board, player1, player2)
+    @Nested
+    inner class PlayMove {
 
-        game.playMove()
+        @Test
+        fun `puts the player's mark on the board at position 2`() {
+            val consoleIO = consoleIOSetup("2")
+            val board = BoardFactory.createBoardWith3By3Grid()
+            val boardPresenter = BoardPresenter3By3()
+            val displayer = Displayer(consoleIO, boardPresenter)
+            val inputValidator = InputValidator(consoleIO, displayer)
+            val player1 = HumanPlayer("x", inputValidator)
+            val player2 = HumanPlayer("o", inputValidator)
+            val game = Game(board, player1, player2)
 
-        assertEquals(board.getGrid().getSquareValue(1), "x")
+            game.playMove()
+
+            assertEquals(board.getGrid().getSquareValue(1), "x")
+        }
     }
 
-    @Test
-    fun `toggles the current player`() {
-        val consoleIO = consoleIOSetup()
-        val board = BoardFactory.createBoardWith3By3Grid()
-        val boardPresenter = BoardPresenter3By3()
-        val displayer = Displayer(consoleIO, boardPresenter)
-        val inputValidator = InputValidator(consoleIO, displayer)
-        val player1 = HumanPlayer("x", inputValidator)
-        val player2 = HumanPlayer("o", inputValidator)
-        val game = Game(board, player1, player2)
+    @Nested
+    inner class ToggleCurrentPlayer {
 
-        game.toggleCurrentPlayer()
+        @Test
+        fun `toggles the current player`() {
+            val consoleIO = consoleIOSetup()
+            val board = BoardFactory.createBoardWith3By3Grid()
+            val boardPresenter = BoardPresenter3By3()
+            val displayer = Displayer(consoleIO, boardPresenter)
+            val inputValidator = InputValidator(consoleIO, displayer)
+            val player1 = HumanPlayer("x", inputValidator)
+            val player2 = HumanPlayer("o", inputValidator)
+            val game = Game(board, player1, player2)
 
-        assertEquals("o", game.currentPlayersMark())
-        assertEquals("x", game.opponentsMark())
+            game.toggleCurrentPlayer()
 
-        game.toggleCurrentPlayer()
+            assertEquals("o", game.currentPlayersMark())
+            assertEquals("x", game.opponentsMark())
 
-        assertEquals("x", game.currentPlayersMark())
-        assertEquals("o", game.opponentsMark())
+            game.toggleCurrentPlayer()
+
+            assertEquals("x", game.currentPlayersMark())
+            assertEquals("o", game.opponentsMark())
+        }
     }
 
-    @Test
-    fun `returns the winning player's mark`() {
-        val consoleIO = consoleIOSetup()
-        val board = boardSetup(arrayOf("o", "o", "o", "x", "x", "6", "x", "8", "9"))
-        val boardPresenter = BoardPresenter3By3()
-        val displayer = Displayer(consoleIO, boardPresenter)
-        val inputValidator = InputValidator(consoleIO, displayer)
-        val player1 = HumanPlayer("x", inputValidator)
-        val player2 = HumanPlayer("o", inputValidator)
-        val game = Game(board, player1, player2)
+    @Nested
+    inner class GetWinnersMark {
 
-        val winnersMark = game.getWinnersMark()
+        @Test
+        fun `returns the winning player's mark`() {
+            val consoleIO = consoleIOSetup()
+            val board = boardSetup(arrayOf("o", "o", "o", "x", "x", "6", "x", "8", "9"))
+            val boardPresenter = BoardPresenter3By3()
+            val displayer = Displayer(consoleIO, boardPresenter)
+            val inputValidator = InputValidator(consoleIO, displayer)
+            val player1 = HumanPlayer("x", inputValidator)
+            val player2 = HumanPlayer("o", inputValidator)
+            val game = Game(board, player1, player2)
 
-        assertEquals("o", winnersMark)
+            val winnersMark = game.getWinnersMark()
+
+            assertEquals("o", winnersMark)
+        }
     }
 
-    @Test
-    fun `returns the winning player's mark as the outcome`() {
-        val consoleIO = consoleIOSetup()
-        val board = boardSetup(arrayOf("o", "o", "o", "x", "x", "6", "x", "8", "9"))
-        val boardPresenter = BoardPresenter3By3()
-        val displayer = Displayer(consoleIO, boardPresenter)
-        val inputValidator = InputValidator(consoleIO, displayer)
-        val player1 = HumanPlayer("x", inputValidator)
-        val player2 = HumanPlayer("o", inputValidator)
-        val game = Game(board, player1, player2)
+    @Nested
+    inner class Outcome {
 
-        val outcome = game.outcome()
+        @Test
+        fun `returns the winning player's mark as the outcome`() {
+            val consoleIO = consoleIOSetup()
+            val board = boardSetup(arrayOf("o", "o", "o", "x", "x", "6", "x", "8", "9"))
+            val boardPresenter = BoardPresenter3By3()
+            val displayer = Displayer(consoleIO, boardPresenter)
+            val inputValidator = InputValidator(consoleIO, displayer)
+            val player1 = HumanPlayer("x", inputValidator)
+            val player2 = HumanPlayer("o", inputValidator)
+            val game = Game(board, player1, player2)
 
-        assertEquals("o", outcome)
+            val outcome = game.outcome()
+
+            assertEquals("o", outcome)
+        }
+
+        @Test
+        fun `returns "tie" as the outcome when no players have a winning line`() {
+            val consoleIO = consoleIOSetup()
+            val board = boardSetup(arrayOf("x", "o", "o", "o", "x", "x", "o", "x", "o"))
+            val boardPresenter = BoardPresenter3By3()
+            val displayer = Displayer(consoleIO, boardPresenter)
+            val inputValidator = InputValidator(consoleIO, displayer)
+            val player1 = HumanPlayer("x", inputValidator)
+            val player2 = HumanPlayer("o", inputValidator)
+            val game = Game(board, player1, player2)
+
+            val outcome = game.outcome()
+
+            assertEquals("tie", outcome)
+        }
     }
 
-    @Test
-    fun `returns "tie" as the outcome when no players have a winning line`() {
-        val consoleIO = consoleIOSetup()
-        val board = boardSetup(arrayOf("x", "o", "o", "o", "x", "x", "o", "x", "o"))
-        val boardPresenter = BoardPresenter3By3()
-        val displayer = Displayer(consoleIO, boardPresenter)
-        val inputValidator = InputValidator(consoleIO, displayer)
-        val player1 = HumanPlayer("x", inputValidator)
-        val player2 = HumanPlayer("o", inputValidator)
-        val game = Game(board, player1, player2)
+    @Nested
+    inner class IsOver {
 
-        val outcome = game.outcome()
+        @Test
+        fun `returns true when the board is full`() {
+            val consoleIO = consoleIOSetup()
+            val board = boardSetup(arrayOf("x", "o", "o", "o", "x", "x", "o", "x", "o"))
+            val boardPresenter = BoardPresenter3By3()
+            val displayer = Displayer(consoleIO, boardPresenter)
+            val inputValidator = InputValidator(consoleIO, displayer)
+            val player1 = HumanPlayer("x", inputValidator)
+            val player2 = HumanPlayer("o", inputValidator)
+            val game = Game(board, player1, player2)
 
-        assertEquals("tie", outcome)
-    }
+            val isGameOver = game.isOver()
 
-    @Test
-    fun `returns true when the board is full`() {
-        val consoleIO = consoleIOSetup()
-        val board = boardSetup(arrayOf("x", "o", "o", "o", "x", "x", "o", "x", "o"))
-        val boardPresenter = BoardPresenter3By3()
-        val displayer = Displayer(consoleIO, boardPresenter)
-        val inputValidator = InputValidator(consoleIO, displayer)
-        val player1 = HumanPlayer("x", inputValidator)
-        val player2 = HumanPlayer("o", inputValidator)
-        val game = Game(board, player1, player2)
+            assertTrue(isGameOver)
+        }
 
-        val isGameOver = game.isOver()
+        @Test
+        fun `returns true when a mark has a winning line`() {
+            val consoleIO = consoleIOSetup()
+            val board = boardSetup(arrayOf("o", "o", "o", "x", "x", "6", "x", "8", "9"))
+            val boardPresenter = BoardPresenter3By3()
+            val displayer = Displayer(consoleIO, boardPresenter)
+            val inputValidator = InputValidator(consoleIO, displayer)
+            val player1 = HumanPlayer("x", inputValidator)
+            val player2 = HumanPlayer("o", inputValidator)
+            val game = Game(board, player1, player2)
 
-        assertTrue(isGameOver)
-    }
+            val isGameOver = game.isOver()
 
-    @Test
-    fun `returns true when a mark has a winning line`() {
-        val consoleIO = consoleIOSetup()
-        val board = boardSetup(arrayOf("o", "o", "o", "x", "x", "6", "x", "8", "9"))
-        val boardPresenter = BoardPresenter3By3()
-        val displayer = Displayer(consoleIO, boardPresenter)
-        val inputValidator = InputValidator(consoleIO, displayer)
-        val player1 = HumanPlayer("x", inputValidator)
-        val player2 = HumanPlayer("o", inputValidator)
-        val game = Game(board, player1, player2)
+            assertTrue(isGameOver)
+        }
 
-        val isGameOver = game.isOver()
+        @Test
+        fun `returns false when the board is not full and a mark does not have a winning line`() {
+            val consoleIO = consoleIOSetup()
+            val board = boardSetup(arrayOf("1", "o", "o", "o", "x", "x", "o", "x", "o"))
+            val boardPresenter = BoardPresenter3By3()
+            val displayer = Displayer(consoleIO, boardPresenter)
+            val inputValidator = InputValidator(consoleIO, displayer)
+            val player1 = HumanPlayer("x", inputValidator)
+            val player2 = HumanPlayer("o", inputValidator)
+            val game = Game(board, player1, player2)
 
-        assertTrue(isGameOver)
-    }
+            val isGameOver = game.isOver()
 
-    @Test
-    fun `returns false when the board is not full and a mark does not have a winning line`() {
-        val consoleIO = consoleIOSetup()
-        val board = boardSetup(arrayOf("1", "o", "o", "o", "x", "x", "o", "x", "o"))
-        val boardPresenter = BoardPresenter3By3()
-        val displayer = Displayer(consoleIO, boardPresenter)
-        val inputValidator = InputValidator(consoleIO, displayer)
-        val player1 = HumanPlayer("x", inputValidator)
-        val player2 = HumanPlayer("o", inputValidator)
-        val game = Game(board, player1, player2)
-
-        val isGameOver = game.isOver()
-
-        assertFalse(isGameOver)
+            assertFalse(isGameOver)
+        }
     }
 }
