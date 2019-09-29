@@ -1,5 +1,5 @@
 package io
 
-enum class ValidMoveInput(val value: Regex) {
+internal enum class ValidMoveInput(val value: Regex) {
     DIGIT("\\d+".toRegex())
 }

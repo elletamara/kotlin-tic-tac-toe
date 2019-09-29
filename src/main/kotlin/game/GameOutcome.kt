@@ -1,5 +1,5 @@
 package game
 
-enum class GameOutcome(val string: String) {
+internal enum class GameOutcome(val string: String) {
     TIE("tie")
 }

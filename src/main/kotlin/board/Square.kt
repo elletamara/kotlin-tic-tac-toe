@@ -1,6 +1,6 @@
 package board
 
-internal class Square(private var value: String) {
+internal class Square(internal var value: String) {
 
     fun setValue(newValue: String) { value = newValue }
 
