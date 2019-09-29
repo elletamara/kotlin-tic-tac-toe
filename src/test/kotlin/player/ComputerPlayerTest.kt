@@ -14,28 +14,29 @@ import java.io.InputStreamReader
 
 internal class ComputerPlayerTest {
 
-    @Test
-    fun `returns a move as an integer` () {
+    private fun displayerSetup(): Displayer {
         val input = BufferedReader(InputStreamReader(System.`in`))
         val consoleIO = ConsoleIO(input)
         val boardPresenter = BoardPresenter3By3()
-        val displayer = Displayer(consoleIO, boardPresenter)
+        return  Displayer(consoleIO, boardPresenter)
+    }
+
+    @Test
+    fun `returns a move as an integer` () {
+        val displayer = displayerSetup()
         val strategy = RandomMoveStrategy()
         val computerPlayer = ComputerPlayer("x", displayer, strategy)
         val board = BoardFactory.createBoardWith3By3Grid()
         val gridSize = board.getGrid().size()
 
-        val move = computerPlayer.chooseMove(board, "x", "o")
+        val move = computerPlayer.chooseMove(board, "o")
 
         assertTrue(move in 0..gridSize)
     }
 
     @Test
     fun `returns the computer player's mark`() {
-        val input = BufferedReader(InputStreamReader(System.`in`))
-        val consoleIO = ConsoleIO(input)
-        val boardPresenter = BoardPresenter3By3()
-        val displayer = Displayer(consoleIO, boardPresenter)
+        val displayer = displayerSetup()
         val strategy = UnbeatableStrategy()
         val computerPlayer = ComputerPlayer("x", displayer, strategy)
 

@@ -7,19 +7,18 @@ import org.junit.jupiter.api.Assertions.*
 
 internal class RandomMoveStrategyTest {
 
-    private fun gridWithEmptySquares(): Grid {
-        return Grid3By3(SquaresGenerator.generateNineSquares())
-    }
+    private fun gridWithEmptySquares() = Grid3By3(SquaresGenerator.generateNineSquares())
 
     private fun gridWithTakenSquares(): Grid {
         val squares: ArrayList<Square> = arrayListOf()
         val squareValues: Array<String> = arrayOf("x", "x", "3", "4", "5", "6", "o", "x", "o")
         for(value in squareValues) squares.add(Square(value))
+
         return Grid3By3(squares)
     }
 
     @Test
-    fun `returns a random available position on the grid as an integer`() {
+    fun `returns a random available position from an empty grid, as an integer`() {
         val grid = gridWithEmptySquares()
         val currentPlayersMark = "x"
         val opponentsMark = "o"

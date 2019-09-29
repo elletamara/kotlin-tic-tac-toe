@@ -3,20 +3,25 @@ package game
 import board.BoardFactory
 import io.Displayer
 import io.InputValidator
+import player.Player
 import player.PlayerFactory
+import player.PlayerMark
 
 internal class GameFactory(val inputValidator: InputValidator, val displayer: Displayer) {
 
-    fun createGameWith3By3Grid():Game {
+    fun createGameWith3By3Grid(): Game {
         displayer.welcomeMessage()
-
-        val playerFactory = PlayerFactory(inputValidator, displayer)
-        val player1selection = inputValidator.validatePlayerSelection(1)
-        val player1 = playerFactory.createPlayer("x", player1selection)
-        val player2selection = inputValidator.validatePlayerSelection(2)
-        val player2 = playerFactory.createPlayer("o", player2selection)
+        val player1 = createGamePlayer(1, PlayerMark.ONE.string)
+        val player2 = createGamePlayer(2, PlayerMark.TWO.string)
         val board = BoardFactory.createBoardWith3By3Grid()
 
         return Game(board, player1, player2)
+    }
+
+    private fun createGamePlayer(playerNumber: Int, mark: String): Player {
+        val playerFactory = PlayerFactory(inputValidator, displayer)
+        val playerSelection = inputValidator.validatePlayerSelection(playerNumber, mark)
+
+        return playerFactory.createPlayer(mark, playerSelection)
     }
 }

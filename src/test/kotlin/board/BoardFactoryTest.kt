@@ -1,5 +1,6 @@
 package board
 
+import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.jupiter.api.Test
 
@@ -11,5 +12,6 @@ internal class BoardFactoryTest {
         val board = BoardFactory.createBoardWith3By3Grid()
 
         assertTrue(board is Board)
+        assertEquals(board.getGrid().size(), 9)
     }
 }
