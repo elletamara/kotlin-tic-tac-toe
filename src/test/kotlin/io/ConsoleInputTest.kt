@@ -4,9 +4,7 @@ import org.junit.jupiter.api.Test
 
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Nested
-import java.io.BufferedReader
 import java.io.ByteArrayInputStream
-import java.io.InputStreamReader
 
 internal class ConsoleInputTest {
 
@@ -17,8 +15,7 @@ internal class ConsoleInputTest {
         fun `gets input from the user`() {
             val simulatedInput = "goodbye"
             System.setIn(ByteArrayInputStream(simulatedInput.toByteArray()))
-            val input = BufferedReader(InputStreamReader(System.`in`))
-            val consoleInput = ConsoleInput(input)
+            val consoleInput = ConsoleInput()
 
             val userInput = consoleInput.getInput()
 

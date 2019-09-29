@@ -9,7 +9,7 @@ import java.io.InputStreamReader
 
 fun main() {
     val input = BufferedReader(InputStreamReader(System.`in`))
-    val consoleInput = ConsoleInput(input)
+    val consoleInput = ConsoleInput()
     val consoleOutput = ConsoleOutput()
     val boardPresenter = BoardPresenter3By3()
     val displayer = Displayer(consoleOutput, boardPresenter)
