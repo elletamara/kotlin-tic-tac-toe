@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test
 
 
 internal class SquaresGeneratorTest {
+
     @Test
     fun `returns an array list containing nine Squares, numbered 1-9`() {
         val squares = SquaresGenerator.generateNineSquares()

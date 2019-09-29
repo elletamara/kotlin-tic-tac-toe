@@ -6,6 +6,7 @@ import io.Displayer
 import io.InputValidator
 import org.junit.jupiter.api.Test
 import org.junit.Assert.*
+import org.junit.jupiter.api.Nested
 import java.io.BufferedReader
 import java.io.InputStreamReader
 
@@ -19,33 +20,37 @@ internal class PlayerFactoryTest {
     private val displayer = Displayer(consoleIOSetup(), BoardPresenter3By3())
     private val inputValidator = InputValidator(consoleIOSetup(), displayer)
 
-    @Test
-    fun `returns a new instance of a human player, with the mark "x"`() {
-        val playerFactory = PlayerFactory(inputValidator, displayer)
+    @Nested
+    inner class CreatePlayer {
 
-        val player = playerFactory.createPlayer("x", "human")
+        @Test
+        fun `returns a new instance of a human player, with the mark "x"`() {
+            val playerFactory = PlayerFactory(inputValidator, displayer)
 
-        assertTrue(player is HumanPlayer)
-        assertEquals(player.getMark(), "x")
-    }
+            val player = playerFactory.createPlayer("x", "human")
 
-    @Test
-    fun `returns a new instance of a easy computer player, with the mark "o"`() {
-        val playerFactory = PlayerFactory(inputValidator, displayer)
+            assertTrue(player is HumanPlayer)
+            assertEquals(player.getMark(), "x")
+        }
 
-        val player = playerFactory.createPlayer("o", "computer")
+        @Test
+        fun `returns a new instance of a easy computer player, with the mark "o"`() {
+            val playerFactory = PlayerFactory(inputValidator, displayer)
 
-        assertTrue(player is ComputerPlayer)
-        assertEquals(player.getMark(), "o")
-    }
+            val player = playerFactory.createPlayer("o", "computer")
 
-    @Test
-    fun `returns a new instance of an unbeatable computer player, with the mark "i"`() {
-        val playerFactory = PlayerFactory(inputValidator, displayer)
+            assertTrue(player is ComputerPlayer)
+            assertEquals(player.getMark(), "o")
+        }
 
-        val player = playerFactory.createPlayer("i", "unbeatable")
+        @Test
+        fun `returns a new instance of an unbeatable computer player, with the mark "i"`() {
+            val playerFactory = PlayerFactory(inputValidator, displayer)
 
-        assertTrue(player is ComputerPlayer)
-        assertEquals(player.getMark(), "i")
+            val player = playerFactory.createPlayer("i", "unbeatable")
+
+            assertTrue(player is ComputerPlayer)
+            assertEquals(player.getMark(), "i")
+        }
     }
 }

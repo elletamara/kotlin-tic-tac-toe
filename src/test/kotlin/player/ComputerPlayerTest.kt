@@ -7,6 +7,7 @@ import io.Displayer
 import org.junit.jupiter.api.Test
 
 import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Nested
 import player.moveStrategy.RandomMoveStrategy
 import player.moveStrategy.UnbeatableStrategy
 import java.io.BufferedReader
@@ -21,27 +22,35 @@ internal class ComputerPlayerTest {
         return  Displayer(consoleIO, boardPresenter)
     }
 
-    @Test
-    fun `returns a move as an integer` () {
-        val displayer = displayerSetup()
-        val strategy = RandomMoveStrategy()
-        val computerPlayer = ComputerPlayer("x", displayer, strategy)
-        val board = BoardFactory.createBoardWith3By3Grid()
-        val gridSize = board.getGrid().size()
+    @Nested
+    inner class ChooseMove {
 
-        val move = computerPlayer.chooseMove(board, "o")
+        @Test
+        fun `returns a move as an integer`() {
+            val displayer = displayerSetup()
+            val strategy = RandomMoveStrategy()
+            val computerPlayer = ComputerPlayer("x", displayer, strategy)
+            val board = BoardFactory.createBoardWith3By3Grid()
+            val gridSize = board.getGrid().size()
 
-        assertTrue(move in 0..gridSize)
+            val move = computerPlayer.chooseMove(board, "o")
+
+            assertTrue(move in 0..gridSize)
+        }
     }
 
-    @Test
-    fun `returns the computer player's mark`() {
-        val displayer = displayerSetup()
-        val strategy = UnbeatableStrategy()
-        val computerPlayer = ComputerPlayer("x", displayer, strategy)
+    @Nested
+    inner class GetMark {
 
-        val playerMark = computerPlayer.getMark()
+        @Test
+        fun `returns the computer player's mark`() {
+            val displayer = displayerSetup()
+            val strategy = UnbeatableStrategy()
+            val computerPlayer = ComputerPlayer("x", displayer, strategy)
 
-        assertEquals("x", playerMark)
+            val playerMark = computerPlayer.getMark()
+
+            assertEquals("x", playerMark)
+        }
     }
 }
