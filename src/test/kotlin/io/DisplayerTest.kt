@@ -5,25 +5,18 @@ import board.Grid
 import board.Grid3By3
 import board.Square
 import game.GameOutcome
-import org.junit.jupiter.api.Assertions.*
+import io.mockk.*
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import player.PlayerMark
-import java.io.BufferedReader
-import java.io.ByteArrayOutputStream
-import java.io.InputStreamReader
-import java.io.PrintStream
 
 internal class DisplayerTest {
 
-    private fun clearScreen(): String {
-        return "\u001b[H\u001b[2J\n"
-    }
+    private val consoleIOMock = mockk<ConsoleIO>()
 
-    private fun displayerSetup(input: BufferedReader, output: ByteArrayOutputStream): Displayer {
-        val consoleIO = ConsoleIO(input, PrintStream(output))
+    private fun displayerSetup(): Displayer {
         val boardPresenter = BoardPresenter3By3()
-        return Displayer(consoleIO, boardPresenter)
+        return Displayer(consoleIOMock, boardPresenter)
     }
 
     private fun fullGrid(): Grid {
@@ -35,52 +28,67 @@ internal class DisplayerTest {
     }
 
     @Nested
+    inner class WelcomeMessage {
+
+        @Test
+        fun `displays "Hello! Welcome to Elle's Tic Tac Toe!"`() {
+            every { consoleIOMock.println(any()) } just Runs
+            val displayer = displayerSetup()
+
+            displayer.welcomeMessage()
+
+            verify {
+                consoleIOMock.println("Hello! Welcome to Elle's Tic Tac Toe.\n")
+            }
+        }
+    }
+
+    @Nested
     inner class HumanPlayerMakeMoveMessages {
 
         @Test
         fun `displays the move prompt and the grid when the move is valid`() {
-            val expectedOutput = """
-            Select an available move:
-            
+            every { consoleIOMock.println(any()) } just Runs
+            val expectedGridOutput = """
             1 | 2 | 3
             ---------
             4 | 5 | 6
             ---------
             7 | 8 | 9
             
-            
         """.trimIndent()
-            val input = BufferedReader(InputStreamReader(System.`in`))
-            val output = ByteArrayOutputStream()
-            val displayer = displayerSetup(input, output)
+            val displayer = displayerSetup()
             val board = BoardFactory.createBoardWith3By3Grid()
 
             displayer.humanPlayerMakeMoveMessages(board.getGrid())
 
-            assertEquals(expectedOutput, output.toString())
+            verify {
+                consoleIOMock.println("Select an available move:\n")
+                consoleIOMock.println(expectedGridOutput)
+            }
         }
 
 
         @Test
         fun `displays the error message when the move is invalid`() {
-            val expectedOutput = """
-            That's an invalid move. Please try again.
+            every { consoleIOMock.println(any()) } just Runs
+            val expectedGridOutput = """
             1 | 2 | 3
             ---------
             4 | 5 | 6
             ---------
             7 | 8 | 9
             
-            
         """.trimIndent()
-            val input = BufferedReader(InputStreamReader(System.`in`))
-            val output = ByteArrayOutputStream()
-            val displayer = displayerSetup(input, output)
+            val displayer = displayerSetup()
             val board = BoardFactory.createBoardWith3By3Grid()
 
             displayer.humanPlayerMakeMoveMessages(board.getGrid(), false)
 
-            assertEquals(expectedOutput, output.toString())
+            verify {
+                consoleIOMock.println("That's an invalid move. Please try again.")
+                consoleIOMock.println(expectedGridOutput)
+            }
         }
     }
 
@@ -89,26 +97,25 @@ internal class DisplayerTest {
 
         @Test
         fun `displays the move prompt and the grid`() {
-            val expectedOutput = clearScreen() + """
-            x, it's your turn!
-            Select an available move:
-            
+            every { consoleIOMock.println(any()) } just Runs
+            val expectedGridOutput = """
             1 | 2 | 3
             ---------
             4 | 5 | 6
             ---------
             7 | 8 | 9
             
-            
         """.trimIndent()
-            val input = BufferedReader(InputStreamReader(System.`in`))
-            val output = ByteArrayOutputStream()
-            val displayer = displayerSetup(input, output)
+            val displayer = displayerSetup()
             val board = BoardFactory.createBoardWith3By3Grid()
 
             displayer.computerPlayerMakeMoveMessages(board.getGrid(), "x")
 
-            assertEquals(expectedOutput, output.toString())
+            verify {
+                consoleIOMock.println("x, it's your turn!")
+                consoleIOMock.println("Select an available move:\n")
+                consoleIOMock.println(expectedGridOutput)
+            }
         }
     }
 
@@ -117,14 +124,19 @@ internal class DisplayerTest {
 
         @Test
         fun `outputs 'Please select the player type for player 1'`() {
-            val input = BufferedReader(InputStreamReader(System.`in`))
-            val output = ByteArrayOutputStream()
-            val displayer = displayerSetup(input, output)
+            every { consoleIOMock.println(any()) } just Runs
+            val displayer = displayerSetup()
+            val mark = PlayerMark.ONE.string
 
-            displayer.playerSelectionMessage(1, PlayerMark.ONE.string)
+            displayer.playerSelectionMessage(1, mark)
 
-            assertTrue(output.toString().contains("Please select the player type for player 1 (X)"))
-            assertTrue(output.toString().contains("Human, Easy, or Unbeatable:"))
+            verify {
+                consoleIOMock.println("Please select the player type for player "
+                        + "1 (X)"
+                        + "\n"
+                        + "Human, Easy, or Unbeatable:"
+                )
+            }
         }
     }
 
@@ -133,13 +145,14 @@ internal class DisplayerTest {
 
         @Test
         fun `outputs 'That's an invalid player type Please try again'`() {
-            val input = BufferedReader(InputStreamReader(System.`in`))
-            val output = ByteArrayOutputStream()
-            val displayer = displayerSetup(input, output)
+            every { consoleIOMock.println(any()) } just Runs
+            val displayer = displayerSetup()
 
             displayer.invalidPlayerSelectionMessage()
 
-            assertTrue(output.toString().contains("That's an invalid player type. Please try again."))
+            verify {
+                consoleIOMock.println("That's an invalid player type. Please try again.")
+            }
         }
     }
 
@@ -148,13 +161,14 @@ internal class DisplayerTest {
 
         @Test
         fun `outputs 'x is thinking Please wait'`() {
-            val input = BufferedReader(InputStreamReader(System.`in`))
-            val output = ByteArrayOutputStream()
-            val displayer = displayerSetup(input, output)
+            every { consoleIOMock.println(any()) } just Runs
+            val displayer = displayerSetup()
 
             displayer.computerIsThinkingMessage("x")
 
-            assertEquals("x is thinking. Please wait...\n", output.toString())
+            verify {
+                consoleIOMock.println("x is thinking. Please wait...")
+            }
         }
     }
 
@@ -162,31 +176,30 @@ internal class DisplayerTest {
     inner class GameOutcomeMessage {
 
         @Test
-        fun `outputs "Congratulations x, you're the winner!" when x has won `() {
-            val expectedOutput = "Congratulations x, you're the winner!\n"
-            val input = BufferedReader(InputStreamReader(System.`in`))
-            val output = ByteArrayOutputStream()
-            val displayer = displayerSetup(input, output)
+        fun `outputs "Congratulations X, you're the winner!" when x has won `() {
+            every { consoleIOMock.println(any()) } just Runs
+            val displayer = displayerSetup()
             val grid = fullGrid()
-            val outcome = "x"
 
-            displayer.gameOutcomeMessage(grid, outcome)
+            displayer.gameOutcomeMessage(grid, PlayerMark.ONE.string)
 
-            assertTrue(expectedOutput in output.toString())
+            verify {
+                consoleIOMock.println("Congratulations X, you're the winner!")
+            }
         }
 
         @Test
         fun `returns "It's a tie!" when the game is a tie `() {
-            val expectedOutput = "It's a tie!\n"
-            val input = BufferedReader(InputStreamReader(System.`in`))
-            val output = ByteArrayOutputStream()
-            val displayer = displayerSetup(input, output)
+            every { consoleIOMock.println(any()) } just Runs
+            val displayer = displayerSetup()
             val outcome = GameOutcome.TIE.string
             val grid = fullGrid()
 
             displayer.gameOutcomeMessage(grid, outcome)
 
-            assertTrue(expectedOutput in output.toString())
+            verify {
+                consoleIOMock.println("It's a tie!")
+            }
         }
     }
 
@@ -194,36 +207,15 @@ internal class DisplayerTest {
     inner class PlayerTurnMessage {
 
         @Test
-        fun `displays "x, it's your turn!`() {
-            val input = BufferedReader(InputStreamReader(System.`in`))
-            val output = ByteArrayOutputStream()
-            val displayer = displayerSetup(input, output)
+        fun `displays "X, it's your turn!`() {
+            every { consoleIOMock.println(any()) } just Runs
+            val displayer = displayerSetup()
 
-            displayer.playerTurnMessage("x")
+            displayer.playerTurnMessage(PlayerMark.ONE.string)
 
-            assertEquals(
-                clearScreen() +
-                        "x, it's your turn!\n", output.toString()
-            )
-        }
-    }
-
-    @Nested
-    inner class WelcomeMessage {
-
-        @Test
-        fun `displays "Hello! Welcome to Elle's Tic Tac Toe!"`() {
-            val input = BufferedReader(InputStreamReader(System.`in`))
-            val output = ByteArrayOutputStream()
-            val displayer = displayerSetup(input, output)
-
-            displayer.welcomeMessage()
-
-            assertEquals(
-                clearScreen() +
-                        "Hello! Welcome to Elle's Tic Tac Toe.\n\n" +
-                        clearScreen(), output.toString()
-            )
+            verify {
+                consoleIOMock.println("X, it's your turn!")
+            }
         }
     }
 
@@ -232,13 +224,14 @@ internal class DisplayerTest {
 
         @Test
         fun `displays "Thanks for playing Elle's Tic Tac Toe!"`() {
-            val input = BufferedReader(InputStreamReader(System.`in`))
-            val output = ByteArrayOutputStream()
-            val displayer = displayerSetup(input, output)
+            every { consoleIOMock.println(any()) } just Runs
+            val displayer = displayerSetup()
 
             displayer.goodbyeMessage()
 
-            assertEquals("Thanks for playing Elle's Tic Tac Toe!\n\n", output.toString())
+            verify {
+                consoleIOMock.println("Thanks for playing Elle's Tic Tac Toe!\n")
+            }
         }
     }
 }
