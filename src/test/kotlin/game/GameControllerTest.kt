@@ -1,19 +1,20 @@
 package game
 
 import io.*
-import org.junit.jupiter.api.Assertions.*
+import io.mockk.*
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import java.io.*
 
 internal class GameControllerTest {
+    private val consoleOutputMock = mockk<ConsoleOutput>()
 
     @Nested
     inner class StartGame {
 
         @Test
         fun `displays the winner outcome message when a player has won`() {
-            val output = ByteArrayOutputStream()
+            every { consoleOutputMock.println(any()) } just Runs
             val simulatedInput = ("human" + System.getProperty("line.separator")
                     + "human" + System.getProperty("line.separator")
                     + "1" + System.getProperty("line.separator")
@@ -25,23 +26,21 @@ internal class GameControllerTest {
             val input = BufferedReader(InputStreamReader(System.`in`))
             val consoleInput = ConsoleInput(input)
             val boardPresenter = BoardPresenter3By3()
-            val consoleOutput = ConsoleOutput(PrintStream(output))
-            val displayer = Displayer(consoleOutput, boardPresenter)
+            val displayer = Displayer(consoleOutputMock, boardPresenter)
             val inputValidator = InputValidator(consoleInput, displayer)
             val gameFactory = GameFactory(inputValidator, displayer)
             val gameController = GameController(gameFactory, displayer)
 
             gameController.startGame()
 
-            println(output.toString())
-
-            assertTrue("Hello! Welcome to Elle's Tic Tac Toe.\n" in output.toString())
-            assertTrue("Congratulations X, you're the winner!" in output.toString())
+            verify {
+                consoleOutputMock.println("Congratulations X, you're the winner!")
+            }
         }
 
         @Test
         fun `displays the tie outcome message when the game is a tie`() {
-            val output = ByteArrayOutputStream()
+            every { consoleOutputMock.println(any()) } just Runs
             val simulatedInput = ("human" + System.getProperty("line.separator")
                     + "human" + System.getProperty("line.separator")
                     + "1" + System.getProperty("line.separator")
@@ -57,16 +56,16 @@ internal class GameControllerTest {
             val input = BufferedReader(InputStreamReader(System.`in`))
             val consoleInput = ConsoleInput(input)
             val boardPresenter = BoardPresenter3By3()
-            val consoleOutput = ConsoleOutput(PrintStream(output))
-            val displayer = Displayer(consoleOutput, boardPresenter)
+            val displayer = Displayer(consoleOutputMock, boardPresenter)
             val inputValidator = InputValidator(consoleInput, displayer)
             val gameFactory = GameFactory(inputValidator, displayer)
             val gameController = GameController(gameFactory, displayer)
 
             gameController.startGame()
 
-            assertTrue("Hello! Welcome to Elle's Tic Tac Toe.\n" in output.toString())
-            assertTrue("It's a tie!" in output.toString())
+            verify {
+                consoleOutputMock.println("It's a tie!")
+            }
         }
     }
 }

@@ -1,10 +1,8 @@
 package io
 
-import java.io.PrintStream
-
-internal class ConsoleOutput(private val output: PrintStream = PrintStream(System.out)) {
+internal class ConsoleOutput {
 
     fun println(text: String) {
-        output.println(text)
+        kotlin.io.println(text)
     }
 }

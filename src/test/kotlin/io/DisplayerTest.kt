@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Test
 import player.PlayerMark
 
 internal class DisplayerTest {
-
     private val consoleOutputMock = mockk<ConsoleOutput>()
 
     private fun displayerSetup(): Displayer {
