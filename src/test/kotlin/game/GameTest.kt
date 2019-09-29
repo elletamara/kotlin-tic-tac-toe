@@ -1,10 +1,7 @@
 package game
 
 import board.*
-import io.BoardPresenter3By3
-import io.ConsoleIO
-import io.Displayer
-import io.InputValidator
+import io.*
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
@@ -36,7 +33,8 @@ internal class GameTest {
             val consoleIO = consoleIOSetup("2")
             val board = BoardFactory.createBoardWith3By3Grid()
             val boardPresenter = BoardPresenter3By3()
-            val displayer = Displayer(consoleIO, boardPresenter)
+            val consoleOutput = ConsoleOutput()
+            val displayer = Displayer(consoleOutput, boardPresenter)
             val inputValidator = InputValidator(consoleIO, displayer)
             val player1 = HumanPlayer("x", inputValidator)
             val player2 = HumanPlayer("o", inputValidator)
@@ -56,7 +54,8 @@ internal class GameTest {
             val consoleIO = consoleIOSetup()
             val board = BoardFactory.createBoardWith3By3Grid()
             val boardPresenter = BoardPresenter3By3()
-            val displayer = Displayer(consoleIO, boardPresenter)
+            val consoleOutput = ConsoleOutput()
+            val displayer = Displayer(consoleOutput, boardPresenter)
             val inputValidator = InputValidator(consoleIO, displayer)
             val player1 = HumanPlayer("x", inputValidator)
             val player2 = HumanPlayer("o", inputValidator)
@@ -82,7 +81,8 @@ internal class GameTest {
             val consoleIO = consoleIOSetup()
             val board = boardSetup(arrayOf("o", "o", "o", "x", "x", "6", "x", "8", "9"))
             val boardPresenter = BoardPresenter3By3()
-            val displayer = Displayer(consoleIO, boardPresenter)
+            val consoleOutput = ConsoleOutput()
+            val displayer = Displayer(consoleOutput, boardPresenter)
             val inputValidator = InputValidator(consoleIO, displayer)
             val player1 = HumanPlayer("x", inputValidator)
             val player2 = HumanPlayer("o", inputValidator)
@@ -102,7 +102,8 @@ internal class GameTest {
             val consoleIO = consoleIOSetup()
             val board = boardSetup(arrayOf("o", "o", "o", "x", "x", "6", "x", "8", "9"))
             val boardPresenter = BoardPresenter3By3()
-            val displayer = Displayer(consoleIO, boardPresenter)
+            val consoleOutput = ConsoleOutput()
+            val displayer = Displayer(consoleOutput, boardPresenter)
             val inputValidator = InputValidator(consoleIO, displayer)
             val player1 = HumanPlayer("x", inputValidator)
             val player2 = HumanPlayer("o", inputValidator)
@@ -118,7 +119,8 @@ internal class GameTest {
             val consoleIO = consoleIOSetup()
             val board = boardSetup(arrayOf("x", "o", "o", "o", "x", "x", "o", "x", "o"))
             val boardPresenter = BoardPresenter3By3()
-            val displayer = Displayer(consoleIO, boardPresenter)
+            val consoleOutput = ConsoleOutput()
+            val displayer = Displayer(consoleOutput, boardPresenter)
             val inputValidator = InputValidator(consoleIO, displayer)
             val player1 = HumanPlayer("x", inputValidator)
             val player2 = HumanPlayer("o", inputValidator)
@@ -138,7 +140,8 @@ internal class GameTest {
             val consoleIO = consoleIOSetup()
             val board = boardSetup(arrayOf("x", "o", "o", "o", "x", "x", "o", "x", "o"))
             val boardPresenter = BoardPresenter3By3()
-            val displayer = Displayer(consoleIO, boardPresenter)
+            val consoleOutput = ConsoleOutput()
+            val displayer = Displayer(consoleOutput, boardPresenter)
             val inputValidator = InputValidator(consoleIO, displayer)
             val player1 = HumanPlayer("x", inputValidator)
             val player2 = HumanPlayer("o", inputValidator)
@@ -154,7 +157,8 @@ internal class GameTest {
             val consoleIO = consoleIOSetup()
             val board = boardSetup(arrayOf("o", "o", "o", "x", "x", "6", "x", "8", "9"))
             val boardPresenter = BoardPresenter3By3()
-            val displayer = Displayer(consoleIO, boardPresenter)
+            val consoleOutput = ConsoleOutput()
+            val displayer = Displayer(consoleOutput, boardPresenter)
             val inputValidator = InputValidator(consoleIO, displayer)
             val player1 = HumanPlayer("x", inputValidator)
             val player2 = HumanPlayer("o", inputValidator)
@@ -170,7 +174,8 @@ internal class GameTest {
             val consoleIO = consoleIOSetup()
             val board = boardSetup(arrayOf("1", "o", "o", "o", "x", "x", "o", "x", "o"))
             val boardPresenter = BoardPresenter3By3()
-            val displayer = Displayer(consoleIO, boardPresenter)
+            val consoleOutput = ConsoleOutput()
+            val displayer = Displayer(consoleOutput, boardPresenter)
             val inputValidator = InputValidator(consoleIO, displayer)
             val player1 = HumanPlayer("x", inputValidator)
             val player2 = HumanPlayer("o", inputValidator)

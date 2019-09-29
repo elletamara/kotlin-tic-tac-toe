@@ -1,9 +1,6 @@
 package game
 
-import io.BoardPresenter3By3
-import io.ConsoleIO
-import io.Displayer
-import io.InputValidator
+import io.*
 import org.hamcrest.core.IsInstanceOf.instanceOf
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.jupiter.api.Nested
@@ -24,7 +21,8 @@ internal class GameFactoryTest {
             val input = BufferedReader(InputStreamReader(System.`in`))
             val consoleIO = ConsoleIO(input)
             val boardPresenter = BoardPresenter3By3()
-            val displayer = Displayer(consoleIO, boardPresenter)
+            val consoleOutput = ConsoleOutput()
+            val displayer = Displayer(consoleOutput, boardPresenter)
             val inputValidator = InputValidator(consoleIO, displayer)
             val gameFactory = GameFactory(inputValidator, displayer)
 

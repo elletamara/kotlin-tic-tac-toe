@@ -1,10 +1,7 @@
 package player
 
 import board.BoardFactory
-import io.BoardPresenter3By3
-import io.ConsoleIO
-import io.Displayer
-import io.InputValidator
+import io.*
 import org.junit.jupiter.api.Test
 
 import org.junit.jupiter.api.Assertions.*
@@ -25,7 +22,8 @@ internal class HumanPlayerTest {
             val input = BufferedReader(InputStreamReader(System.`in`))
             val consoleIO = ConsoleIO(input)
             val boardPresenter = BoardPresenter3By3()
-            val displayer = Displayer(consoleIO, boardPresenter)
+            val consoleOutput = ConsoleOutput()
+            val displayer = Displayer(consoleOutput, boardPresenter)
             val inputValidator = InputValidator(consoleIO, displayer)
             val humanPlayer = HumanPlayer("x", inputValidator)
             val board = BoardFactory.createBoardWith3By3Grid()
@@ -44,7 +42,8 @@ internal class HumanPlayerTest {
             val input = BufferedReader(InputStreamReader(System.`in`))
             val consoleIO = ConsoleIO(input)
             val boardPresenter = BoardPresenter3By3()
-            val displayer = Displayer(consoleIO, boardPresenter)
+            val consoleOutput = ConsoleOutput()
+            val displayer = Displayer(consoleOutput, boardPresenter)
             val inputValidator = InputValidator(consoleIO, displayer)
             val humanPlayer = HumanPlayer("x", inputValidator)
 

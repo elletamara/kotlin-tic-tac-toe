@@ -1,9 +1,6 @@
 package player
 
-import io.BoardPresenter3By3
-import io.ConsoleIO
-import io.Displayer
-import io.InputValidator
+import io.*
 import org.junit.jupiter.api.Test
 import org.junit.Assert.*
 import org.junit.jupiter.api.Nested
@@ -17,7 +14,7 @@ internal class PlayerFactoryTest {
         return ConsoleIO(input)
     }
 
-    private val displayer = Displayer(consoleIOSetup(), BoardPresenter3By3())
+    private val displayer = Displayer(ConsoleOutput(), BoardPresenter3By3())
     private val inputValidator = InputValidator(consoleIOSetup(), displayer)
 
     @Nested

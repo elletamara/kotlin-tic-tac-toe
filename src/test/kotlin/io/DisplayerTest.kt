@@ -12,11 +12,11 @@ import player.PlayerMark
 
 internal class DisplayerTest {
 
-    private val consoleIOMock = mockk<ConsoleIO>()
+    private val consoleOutputMock = mockk<ConsoleOutput>()
 
     private fun displayerSetup(): Displayer {
         val boardPresenter = BoardPresenter3By3()
-        return Displayer(consoleIOMock, boardPresenter)
+        return Displayer(consoleOutputMock, boardPresenter)
     }
 
     private fun fullGrid(): Grid {
@@ -32,13 +32,13 @@ internal class DisplayerTest {
 
         @Test
         fun `displays "Hello! Welcome to Elle's Tic Tac Toe!"`() {
-            every { consoleIOMock.println(any()) } just Runs
+            every { consoleOutputMock.println(any()) } just Runs
             val displayer = displayerSetup()
 
             displayer.welcomeMessage()
 
             verify {
-                consoleIOMock.println("Hello! Welcome to Elle's Tic Tac Toe.\n")
+                consoleOutputMock.println("Hello! Welcome to Elle's Tic Tac Toe.\n")
             }
         }
     }
@@ -48,7 +48,7 @@ internal class DisplayerTest {
 
         @Test
         fun `displays the move prompt and the grid when the move is valid`() {
-            every { consoleIOMock.println(any()) } just Runs
+            every { consoleOutputMock.println(any()) } just Runs
             val expectedGridOutput = """
             1 | 2 | 3
             ---------
@@ -63,15 +63,15 @@ internal class DisplayerTest {
             displayer.humanPlayerMakeMoveMessages(board.getGrid())
 
             verify {
-                consoleIOMock.println("Select an available move:\n")
-                consoleIOMock.println(expectedGridOutput)
+                consoleOutputMock.println("Select an available move:\n")
+                consoleOutputMock.println(expectedGridOutput)
             }
         }
 
 
         @Test
         fun `displays the error message when the move is invalid`() {
-            every { consoleIOMock.println(any()) } just Runs
+            every { consoleOutputMock.println(any()) } just Runs
             val expectedGridOutput = """
             1 | 2 | 3
             ---------
@@ -86,8 +86,8 @@ internal class DisplayerTest {
             displayer.humanPlayerMakeMoveMessages(board.getGrid(), false)
 
             verify {
-                consoleIOMock.println("That's an invalid move. Please try again.")
-                consoleIOMock.println(expectedGridOutput)
+                consoleOutputMock.println("That's an invalid move. Please try again.")
+                consoleOutputMock.println(expectedGridOutput)
             }
         }
     }
@@ -97,7 +97,7 @@ internal class DisplayerTest {
 
         @Test
         fun `displays the move prompt and the grid`() {
-            every { consoleIOMock.println(any()) } just Runs
+            every { consoleOutputMock.println(any()) } just Runs
             val expectedGridOutput = """
             1 | 2 | 3
             ---------
@@ -112,9 +112,9 @@ internal class DisplayerTest {
             displayer.computerPlayerMakeMoveMessages(board.getGrid(), "x")
 
             verify {
-                consoleIOMock.println("x, it's your turn!")
-                consoleIOMock.println("Select an available move:\n")
-                consoleIOMock.println(expectedGridOutput)
+                consoleOutputMock.println("x, it's your turn!")
+                consoleOutputMock.println("Select an available move:\n")
+                consoleOutputMock.println(expectedGridOutput)
             }
         }
     }
@@ -124,14 +124,14 @@ internal class DisplayerTest {
 
         @Test
         fun `outputs 'Please select the player type for player 1'`() {
-            every { consoleIOMock.println(any()) } just Runs
+            every { consoleOutputMock.println(any()) } just Runs
             val displayer = displayerSetup()
             val mark = PlayerMark.ONE.string
 
             displayer.playerSelectionMessage(1, mark)
 
             verify {
-                consoleIOMock.println("Please select the player type for player "
+                consoleOutputMock.println("Please select the player type for player "
                         + "1 (X)"
                         + "\n"
                         + "Human, Easy, or Unbeatable:"
@@ -145,13 +145,13 @@ internal class DisplayerTest {
 
         @Test
         fun `outputs 'That's an invalid player type Please try again'`() {
-            every { consoleIOMock.println(any()) } just Runs
+            every { consoleOutputMock.println(any()) } just Runs
             val displayer = displayerSetup()
 
             displayer.invalidPlayerSelectionMessage()
 
             verify {
-                consoleIOMock.println("That's an invalid player type. Please try again.")
+                consoleOutputMock.println("That's an invalid player type. Please try again.")
             }
         }
     }
@@ -161,13 +161,13 @@ internal class DisplayerTest {
 
         @Test
         fun `outputs 'x is thinking Please wait'`() {
-            every { consoleIOMock.println(any()) } just Runs
+            every { consoleOutputMock.println(any()) } just Runs
             val displayer = displayerSetup()
 
             displayer.computerIsThinkingMessage("x")
 
             verify {
-                consoleIOMock.println("x is thinking. Please wait...")
+                consoleOutputMock.println("x is thinking. Please wait...")
             }
         }
     }
@@ -177,20 +177,20 @@ internal class DisplayerTest {
 
         @Test
         fun `outputs "Congratulations X, you're the winner!" when x has won `() {
-            every { consoleIOMock.println(any()) } just Runs
+            every { consoleOutputMock.println(any()) } just Runs
             val displayer = displayerSetup()
             val grid = fullGrid()
 
             displayer.gameOutcomeMessage(grid, PlayerMark.ONE.string)
 
             verify {
-                consoleIOMock.println("Congratulations X, you're the winner!")
+                consoleOutputMock.println("Congratulations X, you're the winner!")
             }
         }
 
         @Test
         fun `returns "It's a tie!" when the game is a tie `() {
-            every { consoleIOMock.println(any()) } just Runs
+            every { consoleOutputMock.println(any()) } just Runs
             val displayer = displayerSetup()
             val outcome = GameOutcome.TIE.string
             val grid = fullGrid()
@@ -198,7 +198,7 @@ internal class DisplayerTest {
             displayer.gameOutcomeMessage(grid, outcome)
 
             verify {
-                consoleIOMock.println("It's a tie!")
+                consoleOutputMock.println("It's a tie!")
             }
         }
     }
@@ -208,13 +208,13 @@ internal class DisplayerTest {
 
         @Test
         fun `displays "X, it's your turn!`() {
-            every { consoleIOMock.println(any()) } just Runs
+            every { consoleOutputMock.println(any()) } just Runs
             val displayer = displayerSetup()
 
             displayer.playerTurnMessage(PlayerMark.ONE.string)
 
             verify {
-                consoleIOMock.println("X, it's your turn!")
+                consoleOutputMock.println("X, it's your turn!")
             }
         }
     }
@@ -224,13 +224,13 @@ internal class DisplayerTest {
 
         @Test
         fun `displays "Thanks for playing Elle's Tic Tac Toe!"`() {
-            every { consoleIOMock.println(any()) } just Runs
+            every { consoleOutputMock.println(any()) } just Runs
             val displayer = displayerSetup()
 
             displayer.goodbyeMessage()
 
             verify {
-                consoleIOMock.println("Thanks for playing Elle's Tic Tac Toe!\n")
+                consoleOutputMock.println("Thanks for playing Elle's Tic Tac Toe!\n")
             }
         }
     }

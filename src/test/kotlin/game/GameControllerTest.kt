@@ -1,9 +1,6 @@
 package game
 
-import io.BoardPresenter3By3
-import io.ConsoleIO
-import io.Displayer
-import io.InputValidator
+import io.*
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
@@ -28,7 +25,8 @@ internal class GameControllerTest {
             val input = BufferedReader(InputStreamReader(System.`in`))
             val consoleIO = ConsoleIO(input, PrintStream(output))
             val boardPresenter = BoardPresenter3By3()
-            val displayer = Displayer(consoleIO, boardPresenter)
+            val consoleOutput = ConsoleOutput()
+            val displayer = Displayer(consoleOutput, boardPresenter)
             val inputValidator = InputValidator(consoleIO, displayer)
             val gameFactory = GameFactory(inputValidator, displayer)
             val gameController = GameController(gameFactory, displayer)
@@ -55,9 +53,10 @@ internal class GameControllerTest {
                     + "9" + System.getProperty("line.separator"))
             System.setIn(ByteArrayInputStream(simulatedInput.toByteArray()))
             val input = BufferedReader(InputStreamReader(System.`in`))
-            val consoleIO = ConsoleIO(input, PrintStream(output))
+            val consoleIO = ConsoleIO(input)
             val boardPresenter = BoardPresenter3By3()
-            val displayer = Displayer(consoleIO, boardPresenter)
+            val consoleOutput = ConsoleOutput(PrintStream(output))
+            val displayer = Displayer(consoleOutput, boardPresenter)
             val inputValidator = InputValidator(consoleIO, displayer)
             val gameFactory = GameFactory(inputValidator, displayer)
             val gameController = GameController(gameFactory, displayer)
