@@ -1,70 +1,43 @@
 package game
 
+import board.Board
+import board.Grid3By3
+import board.SquaresGenerator
 import io.*
 import io.mockk.*
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
-import java.io.*
+import player.ComputerPlayer
+import player.PlayerMark
 
 internal class GameControllerTest {
-    private val consoleOutputMock = mockk<ConsoleOutput>()
+    private val displayerMock = mockk<Displayer>()
+    private val gameFactoryMock = mockk<GameFactory>()
+    private val playerMock = mockk<ComputerPlayer>()
+
+    private fun gameSetup():Game {
+        val board = Board(Grid3By3(SquaresGenerator.generateNineSquares()))
+        return Game(board, playerMock, playerMock)
+    }
 
     @Nested
     inner class StartGame {
 
         @Test
-        fun `displays the winner outcome message when a player has won`() {
-            every { consoleOutputMock.println(any()) } just Runs
-            val simulatedInput = ("human" + System.getProperty("line.separator")
-                    + "human" + System.getProperty("line.separator")
-                    + "1" + System.getProperty("line.separator")
-                    + "4" + System.getProperty("line.separator")
-                    + "2" + System.getProperty("line.separator")
-                    + "5" + System.getProperty("line.separator")
-                    + "3" + System.getProperty("line.separator"))
-            System.setIn(ByteArrayInputStream(simulatedInput.toByteArray()))
-            val input = BufferedReader(InputStreamReader(System.`in`))
-            val consoleInput = ConsoleInput(input)
-            val boardPresenter = BoardPresenter3By3()
-            val displayer = Displayer(consoleOutputMock, boardPresenter)
-            val inputValidator = InputValidator(consoleInput, displayer)
-            val gameFactory = GameFactory(inputValidator, displayer)
-            val gameController = GameController(gameFactory, displayer)
+        fun `calls Displayer's gameOutcomeMessage and goodbyeMessage when the game is complete`() {
+            every { playerMock.chooseMove(any(), any()) } returnsMany listOf(1, 9, 2, 8, 3)
+            every { playerMock.getMark() } returns PlayerMark.ONE.string
+            every { gameFactoryMock.createGameWith3By3Grid() } returns gameSetup()
+            every { displayerMock.gameOutcomeMessage(any(), any()) } just Runs
+            every { displayerMock.goodbyeMessage() } just Runs
+
+            val gameController = GameController(gameFactoryMock, displayerMock)
 
             gameController.startGame()
 
             verify {
-                consoleOutputMock.println("Congratulations X, you're the winner!")
-            }
-        }
-
-        @Test
-        fun `displays the tie outcome message when the game is a tie`() {
-            every { consoleOutputMock.println(any()) } just Runs
-            val simulatedInput = ("human" + System.getProperty("line.separator")
-                    + "human" + System.getProperty("line.separator")
-                    + "1" + System.getProperty("line.separator")
-                    + "5" + System.getProperty("line.separator")
-                    + "2" + System.getProperty("line.separator")
-                    + "3" + System.getProperty("line.separator")
-                    + "6" + System.getProperty("line.separator")
-                    + "4" + System.getProperty("line.separator")
-                    + "7" + System.getProperty("line.separator")
-                    + "8" + System.getProperty("line.separator")
-                    + "9" + System.getProperty("line.separator"))
-            System.setIn(ByteArrayInputStream(simulatedInput.toByteArray()))
-            val input = BufferedReader(InputStreamReader(System.`in`))
-            val consoleInput = ConsoleInput(input)
-            val boardPresenter = BoardPresenter3By3()
-            val displayer = Displayer(consoleOutputMock, boardPresenter)
-            val inputValidator = InputValidator(consoleInput, displayer)
-            val gameFactory = GameFactory(inputValidator, displayer)
-            val gameController = GameController(gameFactory, displayer)
-
-            gameController.startGame()
-
-            verify {
-                consoleOutputMock.println("It's a tie!")
+                displayerMock.gameOutcomeMessage(any(), any())
+                displayerMock.goodbyeMessage()
             }
         }
     }
