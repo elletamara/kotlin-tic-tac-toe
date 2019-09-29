@@ -1,7 +1,7 @@
 package board
 
+import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.core.IsInstanceOf.instanceOf
-import org.junit.Assert
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
@@ -55,7 +55,7 @@ internal class Grid3By3Test {
         assertNotEquals(grid, gridCopy)
         assertNotEquals(grid.getSquares(), gridCopy.getSquares())
         assertEquals(grid.getSquareValue(1), gridCopy.getSquareValue(1))
-        assertTrue(gridCopy is Grid)
+        assertThat(gridCopy, instanceOf(Grid::class.java))
 
     }
 

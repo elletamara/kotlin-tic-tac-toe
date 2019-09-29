@@ -4,7 +4,8 @@ import io.BoardPresenter3By3
 import io.ConsoleIO
 import io.Displayer
 import io.InputValidator
-import org.junit.Assert.assertTrue
+import org.hamcrest.core.IsInstanceOf.instanceOf
+import org.hamcrest.MatcherAssert.assertThat
 import org.junit.jupiter.api.Test
 import java.io.BufferedReader
 import java.io.ByteArrayInputStream
@@ -24,6 +25,6 @@ internal class GameFactoryTest {
 
         val game = gameFactory.createGameWith3By3Grid()
 
-        assertTrue(game is Game)
+        assertThat(game, instanceOf(Game::class.java))
     }
 }
