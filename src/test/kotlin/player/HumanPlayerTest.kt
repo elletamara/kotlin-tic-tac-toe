@@ -2,29 +2,24 @@ package player
 
 import board.BoardFactory
 import io.*
+import io.mockk.every
+import io.mockk.mockk
 import org.junit.jupiter.api.Test
 
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Nested
-import java.io.BufferedReader
-import java.io.ByteArrayInputStream
-import java.io.InputStreamReader
 
 internal class HumanPlayerTest {
+    private val consoleInputMock = mockk<ConsoleInput>()
 
     @Nested
     inner class ChooseMove {
 
         @Test
         fun `returns the user's move as an integer`() {
-            val simulatedInput = "2"
-            System.setIn(ByteArrayInputStream(simulatedInput.toByteArray()))
-            val input = BufferedReader(InputStreamReader(System.`in`))
-            val consoleInput = ConsoleInput(input)
-            val boardPresenter = BoardPresenter3By3()
-            val consoleOutput = ConsoleOutput()
-            val displayer = Displayer(consoleOutput, boardPresenter)
-            val inputValidator = InputValidator(consoleInput, displayer)
+            every { consoleInputMock.getInput() } returns "2"
+            val displayer = Displayer(ConsoleOutput(), BoardPresenter3By3())
+            val inputValidator = InputValidator(consoleInputMock, displayer)
             val humanPlayer = HumanPlayer("x", inputValidator)
             val board = BoardFactory.createBoardWith3By3Grid()
 
@@ -39,12 +34,8 @@ internal class HumanPlayerTest {
 
         @Test
         fun `returns the player's mark`() {
-            val input = BufferedReader(InputStreamReader(System.`in`))
-            val consoleInput = ConsoleInput(input)
-            val boardPresenter = BoardPresenter3By3()
-            val consoleOutput = ConsoleOutput()
-            val displayer = Displayer(consoleOutput, boardPresenter)
-            val inputValidator = InputValidator(consoleInput, displayer)
+            val displayer = Displayer(ConsoleOutput(), BoardPresenter3By3())
+            val inputValidator = InputValidator(consoleInputMock, displayer)
             val humanPlayer = HumanPlayer("x", inputValidator)
 
             val playerMark = humanPlayer.getMark()

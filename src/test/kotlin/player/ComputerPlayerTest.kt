@@ -10,8 +10,6 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Nested
 import player.moveStrategy.RandomMoveStrategy
 import player.moveStrategy.UnbeatableStrategy
-import java.io.BufferedReader
-import java.io.InputStreamReader
 
 internal class ComputerPlayerTest {
 

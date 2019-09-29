@@ -29,14 +29,14 @@ internal class InputValidator(
         return input.toLowerCase()
     }
 
-    private fun getInput() = consoleInput.getInput()
+    private fun getInput() = consoleInput.getInput()!!
 
     private fun getMoveFromUser(): Int {
         val input = getInput()
-        return if (input!!.matches(ValidMoveInput.DIGIT.value)) input.toInt() else 0
+        return if (input.matches(ValidMoveInput.DIGIT.value)) input.toInt() else 0
     }
 
-    private fun getPlayerSelectionFromUser() = getInput()!!.toUpperCase()
+    private fun getPlayerSelectionFromUser() = getInput().toUpperCase()
 
     private fun playerTypeExists(input: String) = PlayerType.values().any { it.name == input }
 
