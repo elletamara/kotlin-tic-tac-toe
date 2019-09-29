@@ -20,11 +20,11 @@ internal class HumanPlayerTest {
             val simulatedInput = "2"
             System.setIn(ByteArrayInputStream(simulatedInput.toByteArray()))
             val input = BufferedReader(InputStreamReader(System.`in`))
-            val consoleIO = ConsoleIO(input)
+            val consoleInput = ConsoleInput(input)
             val boardPresenter = BoardPresenter3By3()
             val consoleOutput = ConsoleOutput()
             val displayer = Displayer(consoleOutput, boardPresenter)
-            val inputValidator = InputValidator(consoleIO, displayer)
+            val inputValidator = InputValidator(consoleInput, displayer)
             val humanPlayer = HumanPlayer("x", inputValidator)
             val board = BoardFactory.createBoardWith3By3Grid()
 
@@ -40,11 +40,11 @@ internal class HumanPlayerTest {
         @Test
         fun `returns the player's mark`() {
             val input = BufferedReader(InputStreamReader(System.`in`))
-            val consoleIO = ConsoleIO(input)
+            val consoleInput = ConsoleInput(input)
             val boardPresenter = BoardPresenter3By3()
             val consoleOutput = ConsoleOutput()
             val displayer = Displayer(consoleOutput, boardPresenter)
-            val inputValidator = InputValidator(consoleIO, displayer)
+            val inputValidator = InputValidator(consoleInput, displayer)
             val humanPlayer = HumanPlayer("x", inputValidator)
 
             val playerMark = humanPlayer.getMark()

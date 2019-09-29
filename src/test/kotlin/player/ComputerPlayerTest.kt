@@ -2,7 +2,6 @@ package player
 
 import board.BoardFactory
 import io.BoardPresenter3By3
-import io.ConsoleIO
 import io.ConsoleOutput
 import io.Displayer
 import org.junit.jupiter.api.Test
@@ -17,7 +16,6 @@ import java.io.InputStreamReader
 internal class ComputerPlayerTest {
 
     private fun displayerSetup(): Displayer {
-        val input = BufferedReader(InputStreamReader(System.`in`))
         val boardPresenter = BoardPresenter3By3()
         val consoleOutput = ConsoleOutput()
         return Displayer(consoleOutput, boardPresenter)

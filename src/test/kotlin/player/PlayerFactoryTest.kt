@@ -9,13 +9,13 @@ import java.io.InputStreamReader
 
 internal class PlayerFactoryTest {
 
-    private fun consoleIOSetup(): ConsoleIO {
+    private fun consoleInputSetup(): ConsoleInput {
         val input = BufferedReader(InputStreamReader(System.`in`))
-        return ConsoleIO(input)
+        return ConsoleInput(input)
     }
 
     private val displayer = Displayer(ConsoleOutput(), BoardPresenter3By3())
-    private val inputValidator = InputValidator(consoleIOSetup(), displayer)
+    private val inputValidator = InputValidator(consoleInputSetup(), displayer)
 
     @Nested
     inner class CreatePlayer {

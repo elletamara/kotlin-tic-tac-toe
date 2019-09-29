@@ -5,7 +5,7 @@ import board.Grid
 import player.PlayerType
 
 internal class InputValidator(
-    private val consoleIO: ConsoleIO, private val displayer: Displayer) {
+    internal val consoleInput: ConsoleInput, private val displayer: Displayer) {
 
     fun validateMove(board: Board, mark: String): Int {
         playerMessages(mark, board.getGrid())
@@ -29,7 +29,7 @@ internal class InputValidator(
         return input.toLowerCase()
     }
 
-    private fun getInput() = consoleIO.getInput()
+    private fun getInput() = consoleInput.getInput()
 
     private fun getMoveFromUser(): Int {
         val input = getInput()

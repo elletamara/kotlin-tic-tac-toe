@@ -19,11 +19,11 @@ internal class GameFactoryTest {
             val simulatedInput = "human\nunbeatable"
             System.setIn(ByteArrayInputStream(simulatedInput.toByteArray()))
             val input = BufferedReader(InputStreamReader(System.`in`))
-            val consoleIO = ConsoleIO(input)
+            val consoleInput = ConsoleInput(input)
             val boardPresenter = BoardPresenter3By3()
             val consoleOutput = ConsoleOutput()
             val displayer = Displayer(consoleOutput, boardPresenter)
-            val inputValidator = InputValidator(consoleIO, displayer)
+            val inputValidator = InputValidator(consoleInput, displayer)
             val gameFactory = GameFactory(inputValidator, displayer)
 
             val game = gameFactory.createGameWith3By3Grid()
