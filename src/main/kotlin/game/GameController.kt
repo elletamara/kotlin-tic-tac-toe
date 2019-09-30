@@ -6,7 +6,7 @@ import io.Displayer
 internal class GameController(
     private val gameFactory: GameFactory, private val displayer: Displayer) {
 
-    lateinit var game: Game
+    private lateinit var game: Game
 
     fun startGame() {
         game = gameFactory.createGameWith3By3Grid()
@@ -18,7 +18,7 @@ internal class GameController(
             }
         }
 
-        displayGameOutcomeAndGoodbyeMessage(game.board.getGrid())
+        displayGameOutcomeAndGoodbyeMessage(game.board.getGrid)
     }
 
     private fun displayGameOutcomeAndGoodbyeMessage(grid: Grid) {

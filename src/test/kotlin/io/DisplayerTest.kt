@@ -59,7 +59,7 @@ internal class DisplayerTest {
             val displayer = displayerSetup()
             val board = BoardFactory.createBoardWith3By3Grid()
 
-            displayer.humanPlayerMakeMoveMessages(board.getGrid())
+            displayer.humanPlayerMakeMoveMessages(board.getGrid)
 
             verify {
                 consoleOutputMock.println("Select an available move:\n")
@@ -82,7 +82,7 @@ internal class DisplayerTest {
             val displayer = displayerSetup()
             val board = BoardFactory.createBoardWith3By3Grid()
 
-            displayer.humanPlayerMakeMoveMessages(board.getGrid(), false)
+            displayer.humanPlayerMakeMoveMessages(board.getGrid, false)
 
             verify {
                 consoleOutputMock.println("That's an invalid move. Please try again.")
@@ -108,7 +108,7 @@ internal class DisplayerTest {
             val displayer = displayerSetup()
             val board = BoardFactory.createBoardWith3By3Grid()
 
-            displayer.computerPlayerMakeMoveMessages(board.getGrid(), "x")
+            displayer.computerPlayerMakeMoveMessages(board.getGrid, "x")
 
             verify {
                 consoleOutputMock.println("x, it's your turn!")

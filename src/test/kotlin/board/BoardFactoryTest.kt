@@ -18,7 +18,7 @@ internal class BoardFactoryTest {
             val board = BoardFactory.createBoardWith3By3Grid()
 
             assertThat(board, instanceOf(Board::class.java))
-            assertEquals(board.getGrid().size(), 9)
+            assertEquals(board.getGrid.size(), 9)
         }
     }
 

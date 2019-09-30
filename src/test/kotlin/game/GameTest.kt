@@ -34,7 +34,7 @@ internal class GameTest {
 
             game.playMove()
 
-            assertEquals(board.getGrid().getSquareValue(1), "x")
+            assertEquals(board.getGrid.getSquareValue(1), "x")
         }
     }
 
