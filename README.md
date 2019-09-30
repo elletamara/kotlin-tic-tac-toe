@@ -33,3 +33,7 @@ cd kotlin-tic-tac-toe
 
 ### Test Coverage
 The test coverage report can be found here: `./build/reports/tests/test/index.html.`
+
+### Mocking
+[MockK](https://github.com/mockk/mockk) (a mocking library) is used to mock input and output in the tests.
+
