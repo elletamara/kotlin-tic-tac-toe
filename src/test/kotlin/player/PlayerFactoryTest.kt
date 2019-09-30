@@ -1,24 +1,14 @@
 package player
 
-import io.BoardPresenter3By3
-import io.ConsoleIO
-import io.Displayer
-import io.InputValidator
+import io.*
 import org.junit.jupiter.api.Test
 import org.junit.Assert.*
 import org.junit.jupiter.api.Nested
-import java.io.BufferedReader
-import java.io.InputStreamReader
 
 internal class PlayerFactoryTest {
 
-    private fun consoleIOSetup(): ConsoleIO {
-        val input = BufferedReader(InputStreamReader(System.`in`))
-        return ConsoleIO(input)
-    }
-
-    private val displayer = Displayer(consoleIOSetup(), BoardPresenter3By3())
-    private val inputValidator = InputValidator(consoleIOSetup(), displayer)
+    private val displayer = Displayer(ConsoleOutput(), BoardPresenter3By3())
+    private val inputValidator = InputValidator(ConsoleInput(), displayer)
 
     @Nested
     inner class CreatePlayer {

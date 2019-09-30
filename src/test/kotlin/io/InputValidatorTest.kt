@@ -1,48 +1,40 @@
 package io
 
 import board.BoardFactory
+import io.mockk.every
+import io.mockk.mockk
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import player.PlayerMark
-import java.io.*
 
 internal class InputValidatorTest {
     private val currentPlayerMark = PlayerMark.ONE.string
-
-    private fun consoleIOSetup(simulatedInput: String): ConsoleIO {
-        System.setIn(ByteArrayInputStream(simulatedInput.toByteArray()))
-        val input = BufferedReader(InputStreamReader(System.`in`))
-        return ConsoleIO(input)
-    }
+    private val consoleInputMock = mockk<ConsoleInput>()
 
     @Nested
     inner class ValidateMove {
 
         @Test
         fun `returns the input as a digit, when the string contains digits only`() {
-            val consoleIO = consoleIOSetup("9")
-            val boardPresenter = BoardPresenter3By3()
-            val displayer = Displayer(consoleIO, boardPresenter)
-            val inputValidator = InputValidator(consoleIO, displayer)
+            every { consoleInputMock.getInput() } returns "9"
+            val displayer = Displayer(ConsoleOutput(), BoardPresenter3By3())
+            val inputValidator = InputValidator(consoleInputMock, displayer)
             val board = BoardFactory.createBoardWith3By3Grid()
 
             val move = inputValidator.validateMove(board, currentPlayerMark)
-
 
             assertEquals(9, move)
         }
 
         @Test
         fun `prompts user for input again when it is not valid`() {
-            val consoleIO = consoleIOSetup("h\n1")
-            val boardPresenter = BoardPresenter3By3()
-            val displayer = Displayer(consoleIO, boardPresenter)
-            val inputValidator = InputValidator(consoleIO, displayer)
+            every { consoleInputMock.getInput() } returnsMany listOf("h", "1")
+            val displayer = Displayer(ConsoleOutput(), BoardPresenter3By3())
+            val inputValidator = InputValidator(consoleInputMock, displayer)
             val board = BoardFactory.createBoardWith3By3Grid()
 
             val move = inputValidator.validateMove(board, currentPlayerMark)
-
 
             assertEquals(1, move)
         }
@@ -53,26 +45,22 @@ internal class InputValidatorTest {
 
         @Test
         fun `returns the user's input when it matches a valid PlayerType`() {
-            val consoleIO = consoleIOSetup("easy")
-            val boardPresenter = BoardPresenter3By3()
-            val displayer = Displayer(consoleIO, boardPresenter)
-            val inputValidator = InputValidator(consoleIO, displayer)
+            every { consoleInputMock.getInput() } returns "easy"
+            val displayer = Displayer(ConsoleOutput(), BoardPresenter3By3())
+            val inputValidator = InputValidator(consoleInputMock, displayer)
 
             val player = inputValidator.validatePlayerSelection(1, PlayerMark.TWO.string)
-
 
             assertEquals("easy", player)
         }
 
         @Test
         fun `prompts the user for input again when the PlayerType is invalid`() {
-            val consoleIO = consoleIOSetup("none\nunbeatable")
-            val boardPresenter = BoardPresenter3By3()
-            val displayer = Displayer(consoleIO, boardPresenter)
-            val inputValidator = InputValidator(consoleIO, displayer)
+            every { consoleInputMock.getInput() } returnsMany listOf("none", "unbeatable")
+            val displayer = Displayer(ConsoleOutput(), BoardPresenter3By3())
+            val inputValidator = InputValidator(consoleInputMock, displayer)
 
             val player = inputValidator.validatePlayerSelection(2, PlayerMark.TWO.string)
-
 
             assertEquals("unbeatable", player)
         }

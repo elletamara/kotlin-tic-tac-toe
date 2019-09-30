@@ -1,31 +1,22 @@
 package game
 
 import board.*
-import io.BoardPresenter3By3
-import io.ConsoleIO
-import io.Displayer
-import io.InputValidator
+import io.*
+import io.mockk.every
+import io.mockk.mockk
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import player.HumanPlayer
-import java.io.BufferedReader
-import java.io.ByteArrayInputStream
-import java.io.InputStreamReader
+
 
 internal class GameTest {
+    private val consoleInputMock = mockk<ConsoleInput>()
 
     private fun boardSetup(squareValues: Array<String>): Board {
         val squares: ArrayList<Square> = arrayListOf()
         for (value in squareValues) squares.add(Square(value))
-
         return Board(Grid3By3(squares))
-    }
-
-    private fun consoleIOSetup(simulatedInput: String = ""): ConsoleIO {
-        System.setIn(ByteArrayInputStream(simulatedInput.toByteArray()))
-        val input = BufferedReader(InputStreamReader(System.`in`))
-        return ConsoleIO(input)
     }
 
     @Nested
@@ -33,11 +24,10 @@ internal class GameTest {
 
         @Test
         fun `puts the player's mark on the board at position 2`() {
-            val consoleIO = consoleIOSetup("2")
+            every { consoleInputMock.getInput() } returns "2"
             val board = BoardFactory.createBoardWith3By3Grid()
-            val boardPresenter = BoardPresenter3By3()
-            val displayer = Displayer(consoleIO, boardPresenter)
-            val inputValidator = InputValidator(consoleIO, displayer)
+            val displayer = Displayer(ConsoleOutput(), BoardPresenter3By3())
+            val inputValidator = InputValidator(consoleInputMock, displayer)
             val player1 = HumanPlayer("x", inputValidator)
             val player2 = HumanPlayer("o", inputValidator)
             val game = Game(board, player1, player2)
@@ -53,11 +43,9 @@ internal class GameTest {
 
         @Test
         fun `toggles the current player`() {
-            val consoleIO = consoleIOSetup()
             val board = BoardFactory.createBoardWith3By3Grid()
-            val boardPresenter = BoardPresenter3By3()
-            val displayer = Displayer(consoleIO, boardPresenter)
-            val inputValidator = InputValidator(consoleIO, displayer)
+            val displayer = Displayer(ConsoleOutput(), BoardPresenter3By3())
+            val inputValidator = InputValidator(consoleInputMock, displayer)
             val player1 = HumanPlayer("x", inputValidator)
             val player2 = HumanPlayer("o", inputValidator)
             val game = Game(board, player1, player2)
@@ -79,11 +67,9 @@ internal class GameTest {
 
         @Test
         fun `returns the winning player's mark`() {
-            val consoleIO = consoleIOSetup()
             val board = boardSetup(arrayOf("o", "o", "o", "x", "x", "6", "x", "8", "9"))
-            val boardPresenter = BoardPresenter3By3()
-            val displayer = Displayer(consoleIO, boardPresenter)
-            val inputValidator = InputValidator(consoleIO, displayer)
+            val displayer = Displayer(ConsoleOutput(), BoardPresenter3By3())
+            val inputValidator = InputValidator(consoleInputMock, displayer)
             val player1 = HumanPlayer("x", inputValidator)
             val player2 = HumanPlayer("o", inputValidator)
             val game = Game(board, player1, player2)
@@ -99,11 +85,9 @@ internal class GameTest {
 
         @Test
         fun `returns the winning player's mark as the outcome`() {
-            val consoleIO = consoleIOSetup()
             val board = boardSetup(arrayOf("o", "o", "o", "x", "x", "6", "x", "8", "9"))
-            val boardPresenter = BoardPresenter3By3()
-            val displayer = Displayer(consoleIO, boardPresenter)
-            val inputValidator = InputValidator(consoleIO, displayer)
+            val displayer = Displayer(ConsoleOutput(), BoardPresenter3By3())
+            val inputValidator = InputValidator(consoleInputMock, displayer)
             val player1 = HumanPlayer("x", inputValidator)
             val player2 = HumanPlayer("o", inputValidator)
             val game = Game(board, player1, player2)
@@ -115,11 +99,9 @@ internal class GameTest {
 
         @Test
         fun `returns "tie" as the outcome when no players have a winning line`() {
-            val consoleIO = consoleIOSetup()
             val board = boardSetup(arrayOf("x", "o", "o", "o", "x", "x", "o", "x", "o"))
-            val boardPresenter = BoardPresenter3By3()
-            val displayer = Displayer(consoleIO, boardPresenter)
-            val inputValidator = InputValidator(consoleIO, displayer)
+            val displayer = Displayer(ConsoleOutput(), BoardPresenter3By3())
+            val inputValidator = InputValidator(consoleInputMock, displayer)
             val player1 = HumanPlayer("x", inputValidator)
             val player2 = HumanPlayer("o", inputValidator)
             val game = Game(board, player1, player2)
@@ -135,11 +117,9 @@ internal class GameTest {
 
         @Test
         fun `returns true when the board is full`() {
-            val consoleIO = consoleIOSetup()
             val board = boardSetup(arrayOf("x", "o", "o", "o", "x", "x", "o", "x", "o"))
-            val boardPresenter = BoardPresenter3By3()
-            val displayer = Displayer(consoleIO, boardPresenter)
-            val inputValidator = InputValidator(consoleIO, displayer)
+            val displayer = Displayer(ConsoleOutput(), BoardPresenter3By3())
+            val inputValidator = InputValidator(consoleInputMock, displayer)
             val player1 = HumanPlayer("x", inputValidator)
             val player2 = HumanPlayer("o", inputValidator)
             val game = Game(board, player1, player2)
@@ -151,11 +131,9 @@ internal class GameTest {
 
         @Test
         fun `returns true when a mark has a winning line`() {
-            val consoleIO = consoleIOSetup()
             val board = boardSetup(arrayOf("o", "o", "o", "x", "x", "6", "x", "8", "9"))
-            val boardPresenter = BoardPresenter3By3()
-            val displayer = Displayer(consoleIO, boardPresenter)
-            val inputValidator = InputValidator(consoleIO, displayer)
+            val displayer = Displayer(ConsoleOutput(), BoardPresenter3By3())
+            val inputValidator = InputValidator(consoleInputMock, displayer)
             val player1 = HumanPlayer("x", inputValidator)
             val player2 = HumanPlayer("o", inputValidator)
             val game = Game(board, player1, player2)
@@ -167,11 +145,9 @@ internal class GameTest {
 
         @Test
         fun `returns false when the board is not full and a mark does not have a winning line`() {
-            val consoleIO = consoleIOSetup()
             val board = boardSetup(arrayOf("1", "o", "o", "o", "x", "x", "o", "x", "o"))
-            val boardPresenter = BoardPresenter3By3()
-            val displayer = Displayer(consoleIO, boardPresenter)
-            val inputValidator = InputValidator(consoleIO, displayer)
+            val displayer = Displayer(ConsoleOutput(), BoardPresenter3By3())
+            val inputValidator = InputValidator(consoleInputMock, displayer)
             val player1 = HumanPlayer("x", inputValidator)
             val player2 = HumanPlayer("o", inputValidator)
             val game = Game(board, player1, player2)

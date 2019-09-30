@@ -4,50 +4,50 @@ import board.Grid
 import game.GameOutcome
 
 internal class Displayer(
-    private val consoleIO: ConsoleIO, private val boardPresenter: BoardPresenter) {
+    internal val consoleOutput: ConsoleOutput, private val boardPresenter: BoardPresenter) {
 
     private val clearScreen: String = "\u001b[H\u001b[2J"
     private val newLine: String = "\n"
 
     fun welcomeMessage() {
         clearScreen()
-        consoleIO.println(GreetingMessage.WELCOME.string)
+        consoleOutput.println(GreetingMessage.WELCOME.string)
         sleep(3500L)
         clearScreen()
     }
 
     fun playerSelectionMessage(playerNumber: Int, playerMark: String) {
-        consoleIO.println(Prompt.CHOOSE_PLAYER_TYPE.string
+        consoleOutput.println(Prompt.CHOOSE_PLAYER_TYPE.string
                 + ("$playerNumber ($playerMark)")
                 + newLine
                 + Prompt.PLAYER_TYPES.string)
     }
 
     fun invalidPlayerSelectionMessage() {
-        consoleIO.println(ErrorMessage.INVALID_PLAYER_TYPE.string)
+        consoleOutput.println(ErrorMessage.INVALID_PLAYER_TYPE.string)
     }
 
     fun playerTurnMessage(playersMark: String) {
         clearScreen()
-        consoleIO.println(playersMark + Prompt.PLAYER_TURN.string)
+        consoleOutput.println(playersMark + Prompt.PLAYER_TURN.string)
     }
 
     fun humanPlayerMakeMoveMessages(grid: Grid, isMoveValid: Boolean = true) {
         when (isMoveValid) {
-            true -> consoleIO.println(Prompt.CHOOSE_MOVE.string)
-            false -> consoleIO.println(ErrorMessage.INVALID_MOVE.string)
+            true -> consoleOutput.println(Prompt.CHOOSE_MOVE.string)
+            false -> consoleOutput.println(ErrorMessage.INVALID_MOVE.string)
         }
         showGrid(grid)
     }
 
     fun computerPlayerMakeMoveMessages(grid: Grid, playersMark: String) {
         playerTurnMessage(playersMark)
-        consoleIO.println(Prompt.CHOOSE_MOVE.string)
+        consoleOutput.println(Prompt.CHOOSE_MOVE.string)
         showGrid(grid)
     }
 
     fun computerIsThinkingMessage(playersMark: String) {
-        consoleIO.println(playersMark + Prompt.WAIT.string)
+        consoleOutput.println(playersMark + Prompt.WAIT.string)
         sleep(3500L)
     }
 
@@ -56,22 +56,22 @@ internal class Displayer(
         showGrid(grid)
 
         when (outcome) {
-            GameOutcome.TIE.string -> consoleIO.println(GameOutcomeMessage.TIE.string)
-            else -> consoleIO.println(GameOutcomeMessage.CONGRATS.string +
+            GameOutcome.TIE.string -> consoleOutput.println(GameOutcomeMessage.TIE.string)
+            else -> consoleOutput.println(GameOutcomeMessage.CONGRATS.string +
                     outcome + GameOutcomeMessage.WINNER.string)
         }
     }
 
     fun goodbyeMessage() {
-        consoleIO.println(GreetingMessage.GOODBYE.string)
+        consoleOutput.println(GreetingMessage.GOODBYE.string)
     }
 
     private fun showGrid(grid: Grid) {
-        consoleIO.println(boardPresenter.presentBoard(grid))
+        consoleOutput.println(boardPresenter.presentBoard(grid))
     }
 
     private fun clearScreen() {
-        consoleIO.println(clearScreen)
+        consoleOutput.println(clearScreen)
     }
 
     private fun sleep(delay: Long) {

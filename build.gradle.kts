@@ -30,6 +30,9 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-api:$junitPlatformVersion")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$junitPlatformVersion")
     testRuntime("org.junit.platform:junit-platform-console:1.2.0")
+    
+    // mockK
+    testImplementation("io.mockk:mockk:1.9")
 }
 
 configure<JavaPluginConvention> {
