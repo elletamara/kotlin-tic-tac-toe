@@ -8,11 +8,11 @@ internal class InputValidator(
     internal val consoleInput: ConsoleInput, private val displayer: Displayer) {
 
     fun validateMove(board: Board, mark: String): Int {
-        playerMessages(mark, board.getGrid())
+        playerMessages(mark, board.getGrid)
         var move = getMoveFromUser()
 
         while (!board.isMoveValid(move)) {
-            displayer.humanPlayerMakeMoveMessages(board.getGrid(), false)
+            displayer.humanPlayerMakeMoveMessages(board.getGrid, false)
             move = getMoveFromUser()
         }
         return move

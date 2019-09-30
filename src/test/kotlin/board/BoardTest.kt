@@ -44,7 +44,7 @@ internal class BoardTest {
             val grid = defaultGrid()
             val board = Board(grid)
 
-            assertEquals(board.getGrid(), grid)
+            assertEquals(board.getGrid, grid)
         }
     }
 
@@ -238,9 +238,9 @@ internal class BoardTest {
             val boardCopy = board.copy()
 
             assertNotEquals(board, boardCopy)
-            assertNotEquals(board.getGrid(), boardCopy.getGrid())
-            assertNotEquals(board.getGrid().getSquares(), boardCopy.getGrid().getSquares())
-            assertEquals(board.getGrid().getSquareValue(1), boardCopy.getGrid().getSquareValue(1))
+            assertNotEquals(board.getGrid, boardCopy.getGrid)
+            assertNotEquals(board.getGrid.getSquares(), boardCopy.getGrid.getSquares())
+            assertEquals(board.getGrid.getSquareValue(1), boardCopy.getGrid.getSquareValue(1))
             assertThat(boardCopy, instanceOf(Board::class.java))
         }
     }

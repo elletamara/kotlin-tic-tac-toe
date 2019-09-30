@@ -23,7 +23,7 @@ internal class BoardPresenter3By3Test {
             val board = BoardFactory.createBoardWith3By3Grid()
             val boardPresenter = BoardPresenter3By3()
 
-            val presentedBoard = boardPresenter.presentBoard(board.getGrid())
+            val presentedBoard = boardPresenter.presentBoard(board.getGrid)
 
             assertEquals(expected, presentedBoard)
         }

@@ -4,7 +4,7 @@ before_install:
   - chmod +x gradlew
 
 jdk: oraclejdk11
-sudo: false
+sudo: true
 install: true
 
 script:

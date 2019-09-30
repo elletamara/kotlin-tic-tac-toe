@@ -2,7 +2,7 @@ package board
 
 internal class Board(private val grid: Grid) {
 
-    fun getGrid() = grid
+    val getGrid: Grid by lazy { grid }
 
     fun takeSquare(position: Int, newValue: String) {
         grid.setSquareValue(position - 1, newValue)

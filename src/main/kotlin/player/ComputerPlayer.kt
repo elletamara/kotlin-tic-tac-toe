@@ -9,7 +9,7 @@ internal class ComputerPlayer(
 
     override fun chooseMove(board: Board, opponentsMark: String): Int {
         with(displayer) {
-            computerPlayerMakeMoveMessages(board.getGrid(), mark)
+            computerPlayerMakeMoveMessages(board.getGrid, mark)
             computerIsThinkingMessage(mark)
         }
         return moveStrategy.getMove(board, mark, opponentsMark)

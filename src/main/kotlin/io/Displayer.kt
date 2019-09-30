@@ -4,10 +4,10 @@ import board.Grid
 import game.GameOutcome
 
 internal class Displayer(
-    internal val consoleOutput: ConsoleOutput, private val boardPresenter: BoardPresenter) {
+    private val consoleOutput: ConsoleOutput, private val boardPresenter: BoardPresenter) {
 
-    private val clearScreen: String = "\u001b[H\u001b[2J"
-    private val newLine: String = "\n"
+    private val clearScreen: String by lazy {"\u001b[H\u001b[2J"}
+    private val newLine: String by lazy {"\n"}
 
     fun welcomeMessage() {
         clearScreen()
@@ -17,6 +17,7 @@ internal class Displayer(
     }
 
     fun playerSelectionMessage(playerNumber: Int, playerMark: String) {
+        clearScreen()
         consoleOutput.println(Prompt.CHOOSE_PLAYER_TYPE.string
                 + ("$playerNumber ($playerMark)")
                 + newLine
@@ -35,7 +36,10 @@ internal class Displayer(
     fun humanPlayerMakeMoveMessages(grid: Grid, isMoveValid: Boolean = true) {
         when (isMoveValid) {
             true -> consoleOutput.println(Prompt.CHOOSE_MOVE.string)
-            false -> consoleOutput.println(ErrorMessage.INVALID_MOVE.string)
+            false -> {
+                clearScreen()
+                consoleOutput.println(ErrorMessage.INVALID_MOVE.string)
+            }
         }
         showGrid(grid)
     }
