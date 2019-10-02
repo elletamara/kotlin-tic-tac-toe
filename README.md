@@ -20,6 +20,9 @@ cd kotlin-tic-tac-toe
 ./gradlew --console plain run
 ```
 
+Note: If you receive a similar error to `./gradlew: Permission denied`, enter `chmod +x gradlew`
+
+
 ## Game Play
 
 ### Game Mode / Player Type Selection
